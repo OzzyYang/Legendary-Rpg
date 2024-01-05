@@ -123,6 +123,23 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &189639329 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3206474695100040348, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+  m_PrefabInstance: {fileID: 6529526858113034723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &189639333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189639329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f96fee0a5da1a44b038a8161fe744d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +193,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.7818475
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -232,11 +249,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.51
+      value: 11.11
       objectReference: {fileID: 0}
     - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.51
+      value: -4.77
       objectReference: {fileID: 0}
     - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -301,7 +318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6529526857648604369, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.09
+      value: -4.51
       objectReference: {fileID: 0}
     - target: {fileID: 6529526857648604369, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -361,7 +378,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7361302310939129549, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: moveSpeed
-      value: 450
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7361302310939129549, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: dashCooldownTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7361302310939129549, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: whatIsGround.m_Bits
@@ -389,12 +410,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 23.18383
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.33
+      value: -1.0885
       objectReference: {fileID: 0}
     - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3
+      value: -6.1
       objectReference: {fileID: 0}
     - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
       propertyPath: m_LocalPosition.z
