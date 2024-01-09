@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 	[Header("Attack Info")]
 	[SerializeField] private bool isAttacking = false;
 	[SerializeField] private int attackCounter = 0;
+	[SerializeField] private float attackComboTimer = 0f;
+	[SerializeField] private float attackComboTime = 0.3f;
 
 	[Header("Check Ground Info")]
 	[SerializeField] private float checkGroundDistance = 0.9f;
@@ -41,13 +43,14 @@ public class PlayerController : MonoBehaviour
 	{
 		CheckInput();
 		CheckGround();
+		CheckTimer();
 		Move();
 		Dash();
 		CheckAnimation();
 	}
 	void Move()
 	{
-		currentMoveSpeed = Input.GetAxisRaw("Horizontal") * moveSpeed;
+		currentMoveSpeed = isAttacking ? 0 : Input.GetAxisRaw("Horizontal") * moveSpeed;
 		switch (Input.GetAxisRaw("Horizontal"))
 		{
 			case 1:
@@ -66,24 +69,29 @@ public class PlayerController : MonoBehaviour
 				}
 		}
 		rb.velocity = new Vector2(currentMoveSpeed, rb.velocity.y);
+		//ResetAttackCounter();
 	}
 	void Jump()
 	{
 		if (isGrounded)
+		{
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+			ResetAttackCounter();
+		}
 	}
+
+	private void ResetAttackCounter()
+	{
+		attackCounter = 0;
+		isAttacking = false;
+	}
+
 	void Dash()
 	{
-		if (dashCooldownTimer >= 0)
-		{
-			dashCooldownTimer -= Time.deltaTime;
-
-		}
-
 		if (dashTime >= 0)
 		{
 			rb.velocity = new Vector2(dashSpeed * dashDiretion, rb.velocity.y);
-			dashTime -= Time.deltaTime;
+			ResetAttackCounter();
 		}
 	}
 	void Flip(bool facingRight)
@@ -97,12 +105,23 @@ public class PlayerController : MonoBehaviour
 	}
 	private void Attack()
 	{
-		isAttacking= true;
+		if (!isGrounded) return;
+		isAttacking = true;
 	}
 
 	public void AttackOver()
 	{
 		isAttacking = false;
+		attackComboTimer = attackComboTime;
+		if (attackCounter >= 2)
+		{
+			attackCounter = 0;
+		}
+		else
+		{
+			attackCounter++;
+		}
+
 	}
 	private bool CheckGround()
 	{
@@ -135,10 +154,25 @@ public class PlayerController : MonoBehaviour
 		}
 		if (Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.X))
 		{
-			Attack();
+			if (!isAttacking) Attack();
 		}
 	}
+	private void CheckTimer()
+	{
+		if (dashCooldownTimer >= 0) dashCooldownTimer -= Time.deltaTime;
+		if (dashTime >= 0) dashTime -= Time.deltaTime;
 
+		if (attackComboTimer >= 0)
+		{
+			attackComboTimer -= Time.deltaTime;
+		}
+		else
+		{
+	
+			attackCounter = 0;
+			//ResetAttackCounter();
+		}
+	}
 
 
 	//private void OnDrawGizmos()
