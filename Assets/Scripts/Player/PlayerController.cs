@@ -121,7 +121,6 @@ public class PlayerController : MonoBehaviour
 		{
 			attackCounter++;
 		}
-
 	}
 	private bool CheckGround()
 	{
@@ -168,9 +167,8 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-	
-			attackCounter = 0;
-			//ResetAttackCounter();
+			//if the attacking isn't finished, do not change attackCounter
+			attackCounter = isAttacking? attackCounter:0;
 		}
 	}
 
