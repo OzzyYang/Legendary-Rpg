@@ -1,13 +1,8 @@
 using System;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController :CharacterController
 {
-	private Rigidbody2D rb;
-	private Animator ani;
-
-	private bool isFacingRight = true;
-	private bool isGrounded = false;
 	private float currentMoveSpeed;
 
 	[Header("Movement Info")]
@@ -28,27 +23,24 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float attackComboTimer = 0f;
 	[SerializeField] private float attackComboTime = 0.3f;
 
-	[Header("Check Ground Info")]
-	[SerializeField] private float checkGroundDistance = 0.9f;
-	[SerializeField] private LayerMask whatIsGround;
 	// Start is called before the first frame update
 	void Start()
 	{
-		rb = GetComponent<Rigidbody2D>();
-		ani = GetComponentInChildren<Animator>();
+		base.Start();
+
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		base.Update();
 		CheckInput();
-		CheckGround();
 		CheckTimer();
 		Move();
 		Dash();
 		CheckAnimation();
 	}
-	void Move()
+	protected override void Move()
 	{
 		currentMoveSpeed = isAttacking ? 0 : Input.GetAxisRaw("Horizontal") * moveSpeed;
 		switch (Input.GetAxisRaw("Horizontal"))
@@ -94,16 +86,9 @@ public class PlayerController : MonoBehaviour
 			ResetAttackCounter();
 		}
 	}
-	void Flip(bool facingRight)
-	{
-		if (facingRight == isFacingRight) return;
-		else
-		{
-			isFacingRight = facingRight;
-		}
-		transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, facingRight ? 0 : 180, 0));
-	}
-	private void Attack()
+
+
+	protected override void Attack()
 	{
 		if (!isGrounded) return;
 		isAttacking = true;
@@ -122,10 +107,7 @@ public class PlayerController : MonoBehaviour
 			attackCounter++;
 		}
 	}
-	private bool CheckGround()
-	{
-		return isGrounded = Physics2D.Raycast(transform.position, Vector2.down, checkGroundDistance, whatIsGround);
-	}
+
 	private void CheckAnimation()
 	{
 		ani.SetBool("isMoving", currentMoveSpeed != 0);
@@ -173,9 +155,6 @@ public class PlayerController : MonoBehaviour
 	}
 
 
-	//private void OnDrawGizmos()
-	//{
-	//	Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - checkGroundDistance));
-	//}
+
 }
 
