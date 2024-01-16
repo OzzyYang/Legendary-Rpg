@@ -47,13 +47,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3bbe5825549aa44b96316018eecef21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkGroundDistance: 1.13
-  checkWallDistance: 0.9
+  checkGroundDistance: 1.1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  isFacingWall: 0
-  moveSpeed: 0.5
+  checkWallDistance: 0.9
+  whatToFaceWall: {fileID: 8675263310799591572}
+  normalMoveSpeed: 2
+  attackArrange: 0.9
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 64
+  checkPlayerDistance: 5
+  isFacingPlayer: 0
+  isAttacking: 0
 --- !u!70 &715880280323863726
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -63,7 +70,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 8675263310799591573}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3c349814e1d44f649ae6bd941688caf5, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

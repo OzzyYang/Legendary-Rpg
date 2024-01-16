@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3757760828490350241}
   - component: {fileID: 6513061488046253187}
   - component: {fileID: 6950536225763940530}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 7361302310939129549}
   - component: {fileID: 6529526857648604375}
   - component: {fileID: 8962225258272315429}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,6 +153,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41f8ae16b8e70c4f9b09e8549d47cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkGroundDistance: 0.9
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  checkWallDistance: 0.9
+  whatToFaceWall: {fileID: 0}
   jumpForce: 10
   moveSpeed: 5
   dashDuration: 0.2
@@ -162,10 +168,6 @@ MonoBehaviour:
   attackCounter: 0
   attackComboTimer: 0
   attackComboTime: 0.3
-  checkGroundDistance: 0.9
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!50 &6529526857648604375
 Rigidbody2D:
   serializedVersion: 4

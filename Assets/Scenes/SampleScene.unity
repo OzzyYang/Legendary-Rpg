@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.62
+      value: -1.23
       objectReference: {fileID: 0}
     - target: {fileID: 8520588777119495310, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -346,6 +346,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cee420e758c3505448412e1ab18d49c8, type: 3}
+--- !u!4 &1584047960 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6529526857648604369, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+  m_PrefabInstance: {fileID: 6529526858113034723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1755533318
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -418,6 +423,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3206474695100040348, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3757760828490350241, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -478,6 +487,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6529526857648604371, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6529526857648604371, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6529526857648604375, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_Material
       value: 
@@ -502,6 +519,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7361302310939129549, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: whatToFaceWall
+      value: 
+      objectReference: {fileID: 1584047960}
     - target: {fileID: 7361302310939129549, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: attackComboTime
       value: 0.3

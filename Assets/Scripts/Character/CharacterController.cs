@@ -12,30 +12,39 @@ public class CharacterController : MonoBehaviour
 
 	[Header("Check Collision Info")]
 	[SerializeField] protected float checkGroundDistance = 0.9f;
-	[SerializeField] protected float checkWallDistance = 0.9f;
 	[SerializeField] protected LayerMask whatIsGround;
-	[SerializeField] protected bool isFacingWall = false;
+	[Space]
+	[SerializeField] protected float checkWallDistance = 0.9f;
+	[SerializeField] protected Transform whatToFaceWall;
+	protected bool isFacingWall = false;
 
 	protected bool isGrounded = false;
 
 	// Start is called before the first frame update
 	protected virtual void Start()
-    {
+	{
 		rb = GetComponent<Rigidbody2D>();
 		ani = GetComponentInChildren<Animator>();
+		if (whatToFaceWall == null) whatToFaceWall = transform;
 	}
 
-    // Update is called once per frame
-    protected virtual void Update()
-    {
+	// Update is called once per frame
+	protected virtual void Update()
+	{
 		CollisionCheck();
 		Move();
 	}
-
-	protected void CollisionCheck()
+	protected virtual void OnDrawGizmos()
 	{
-		isGrounded = Physics2D.Raycast(new Vector2(transform.position.x + checkWallDistance*(isFacingRight? 1:-1) ,transform.position.y), Vector2.down, checkGroundDistance, whatIsGround);
-		isFacingWall=Physics2D.Raycast(transform.position,Vector2.right* (isFacingRight ? 1 : -1), checkWallDistance,whatIsGround);
+		//Draw check ground ray
+		Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - checkGroundDistance));
+		//Draw check wall ray
+		Gizmos.DrawLine(whatToFaceWall.position, new Vector3(whatToFaceWall.position.x + checkWallDistance * (isFacingRight ? 1 : -1), whatToFaceWall.position.y));
+	}
+	protected virtual void CollisionCheck()
+	{
+		isGrounded = Physics2D.Raycast(new Vector2(transform.position.x + checkWallDistance * (isFacingRight ? 1 : -1), transform.position.y), Vector2.down, checkGroundDistance, whatIsGround);
+		isFacingWall = Physics2D.Raycast(whatToFaceWall.position, Vector2.right * (isFacingRight ? 1 : -1), checkWallDistance, whatIsGround);
 	}
 
 	protected void Flip(bool facingRight)
@@ -52,8 +61,5 @@ public class CharacterController : MonoBehaviour
 	protected virtual void Move() { }
 
 
-	protected virtual void OnDrawGizmos()
-	{
-		Gizmos.DrawLine(new Vector3(transform.position.x+checkWallDistance * (isFacingRight ? 1 : -1), transform.position.y), new Vector3(transform.position.x + checkWallDistance * (isFacingRight ? 1 : -1), transform.position.y - checkGroundDistance));
-	}
+
 }
