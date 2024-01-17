@@ -23,11 +23,23 @@ public class PlayerController :CharacterController
 	[SerializeField] private float attackComboTimer = 0f;
 	[SerializeField] private float attackComboTime = 0.3f;
 
+	//State machine info
+	public PlayerStateMachine stateMachine {  get; private set; }
+	public PlayerIdleState idleState { get; private set; }
+	public PlayerMoveState moveState { get; private set; }
+
 	// Start is called before the first frame update
 	void Start()
 	{
 		base.Start();
+		stateMachine.Initialize(idleState);
+	}
 
+	private void Awake()
+	{
+		stateMachine=new PlayerStateMachine();
+		idleState = new PlayerIdleState(this,stateMachine,"Idle");
+		moveState = new PlayerMoveState(this, stateMachine, "Move");
 	}
 
 	// Update is called once per frame
@@ -39,6 +51,11 @@ public class PlayerController :CharacterController
 		Move();
 		Dash();
 		CheckAnimation();
+		stateMachine.currentState.Update();
+		if (Input.GetKeyDown(KeyCode.N))
+		{
+			stateMachine.ChangeState(stateMachine.currentState == idleState ? moveState : idleState);
+		}
 	}
 	protected override void Move()
 	{

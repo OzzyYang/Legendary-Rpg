@@ -16,6 +16,7 @@ public class CharacterController : MonoBehaviour
 	[Space]
 	[SerializeField] protected float checkWallDistance = 0.9f;
 	[SerializeField] protected Transform whatToFaceWall;
+	[SerializeField] protected Transform whatToCheckGround;
 	protected bool isFacingWall = false;
 
 	protected bool isGrounded = false;
@@ -26,6 +27,7 @@ public class CharacterController : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 		ani = GetComponentInChildren<Animator>();
 		if (whatToFaceWall == null) whatToFaceWall = transform;
+		if (whatToCheckGround == null) whatToCheckGround = transform;
 	}
 
 	// Update is called once per frame
@@ -43,7 +45,7 @@ public class CharacterController : MonoBehaviour
 	}
 	protected virtual void CollisionCheck()
 	{
-		isGrounded = Physics2D.Raycast(new Vector2(transform.position.x + checkWallDistance * (isFacingRight ? 1 : -1), transform.position.y), Vector2.down, checkGroundDistance, whatIsGround);
+		isGrounded = Physics2D.Raycast(whatToCheckGround.position, Vector2.down, checkGroundDistance, whatIsGround);
 		isFacingWall = Physics2D.Raycast(whatToFaceWall.position, Vector2.right * (isFacingRight ? 1 : -1), checkWallDistance, whatIsGround);
 	}
 
