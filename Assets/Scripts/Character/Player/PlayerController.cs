@@ -1,13 +1,8 @@
 using System;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController :CharacterController
 {
-	private Rigidbody2D rb;
-	private Animator ani;
-
-	private bool isFacingRight = true;
-	private bool isGrounded = false;
 	private float currentMoveSpeed;
 
 	[Header("Movement Info")]
@@ -25,29 +20,46 @@ public class PlayerController : MonoBehaviour
 	[Header("Attack Info")]
 	[SerializeField] private bool isAttacking = false;
 	[SerializeField] private int attackCounter = 0;
+	[SerializeField] private float attackComboTimer = 0f;
+	[SerializeField] private float attackComboTime = 0.3f;
 
-	[Header("Check Ground Info")]
-	[SerializeField] private float checkGroundDistance = 0.9f;
-	[SerializeField] private LayerMask whatIsGround;
+	//State machine info
+	public PlayerStateMachine stateMachine {  get; private set; }
+	public PlayerIdleState idleState { get; private set; }
+	public PlayerMoveState moveState { get; private set; }
+
 	// Start is called before the first frame update
 	void Start()
 	{
-		rb = GetComponent<Rigidbody2D>();
-		ani = GetComponentInChildren<Animator>();
+		base.Start();
+		stateMachine.Initialize(idleState);
+	}
+
+	private void Awake()
+	{
+		stateMachine=new PlayerStateMachine();
+		idleState = new PlayerIdleState(this,stateMachine,"Idle");
+		moveState = new PlayerMoveState(this, stateMachine, "Move");
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		base.Update();
 		CheckInput();
-		CheckGround();
+		CheckTimer();
 		Move();
 		Dash();
 		CheckAnimation();
+		stateMachine.currentState.Update();
+		if (Input.GetKeyDown(KeyCode.N))
+		{
+			stateMachine.ChangeState(stateMachine.currentState == idleState ? moveState : idleState);
+		}
 	}
-	void Move()
+	protected override void Move()
 	{
-		currentMoveSpeed = Input.GetAxisRaw("Horizontal") * moveSpeed;
+		currentMoveSpeed = isAttacking ? 0 : Input.GetAxisRaw("Horizontal") * moveSpeed;
 		switch (Input.GetAxisRaw("Horizontal"))
 		{
 			case 1:
@@ -66,48 +78,53 @@ public class PlayerController : MonoBehaviour
 				}
 		}
 		rb.velocity = new Vector2(currentMoveSpeed, rb.velocity.y);
+		//ResetAttackCounter();
 	}
 	void Jump()
 	{
 		if (isGrounded)
+		{
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+			ResetAttackCounter();
+		}
 	}
+
+	private void ResetAttackCounter()
+	{
+		attackCounter = 0;
+		isAttacking = false;
+	}
+
 	void Dash()
 	{
-		if (dashCooldownTimer >= 0)
-		{
-			dashCooldownTimer -= Time.deltaTime;
-
-		}
-
 		if (dashTime >= 0)
 		{
 			rb.velocity = new Vector2(dashSpeed * dashDiretion, rb.velocity.y);
-			dashTime -= Time.deltaTime;
+			ResetAttackCounter();
 		}
 	}
-	void Flip(bool facingRight)
+
+
+	protected override void Attack()
 	{
-		if (facingRight == isFacingRight) return;
-		else
-		{
-			isFacingRight = facingRight;
-		}
-		transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, facingRight ? 0 : 180, 0));
-	}
-	private void Attack()
-	{
-		isAttacking= true;
+		if (!isGrounded) return;
+		isAttacking = true;
 	}
 
 	public void AttackOver()
 	{
 		isAttacking = false;
+		attackComboTimer = attackComboTime;
+		if (attackCounter >= 2)
+		{
+			attackCounter = 0;
+		}
+		else
+		{
+			attackCounter++;
+		}
 	}
-	private bool CheckGround()
-	{
-		return isGrounded = Physics2D.Raycast(transform.position, Vector2.down, checkGroundDistance, whatIsGround);
-	}
+
 	private void CheckAnimation()
 	{
 		ani.SetBool("isMoving", currentMoveSpeed != 0);
@@ -135,15 +152,26 @@ public class PlayerController : MonoBehaviour
 		}
 		if (Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.X))
 		{
-			Attack();
+			if (!isAttacking) Attack();
+		}
+	}
+	private void CheckTimer()
+	{
+		if (dashCooldownTimer >= 0) dashCooldownTimer -= Time.deltaTime;
+		if (dashTime >= 0) dashTime -= Time.deltaTime;
+
+		if (attackComboTimer >= 0)
+		{
+			attackComboTimer -= Time.deltaTime;
+		}
+		else
+		{
+			//if the attacking isn't finished, do not change attackCounter
+			attackCounter = isAttacking? attackCounter:0;
 		}
 	}
 
 
 
-	//private void OnDrawGizmos()
-	//{
-	//	Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - checkGroundDistance));
-	//}
 }
 
