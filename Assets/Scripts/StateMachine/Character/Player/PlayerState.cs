@@ -7,7 +7,10 @@ public class PlayerState
 	protected PlayerStateMachine stateMachine;
 	protected PlayerController player;
 
-	private string animBoolName;
+	protected string animBoolName;
+	protected float xInput;
+	
+	protected Rigidbody2D rb;
 
 	public PlayerState(PlayerController _player, PlayerStateMachine _stateMachine,string _animBoolName)
 	{
@@ -18,16 +21,20 @@ public class PlayerState
 
 	public virtual void Enter()
 	{
-		Debug.Log("I enter " + animBoolName);
+		player.animator.SetBool(animBoolName, true);
+		rb = player.rb;
 	}
 
 	public virtual void Update()
 	{
-		Debug.Log("I am " + animBoolName);
+		xInput = Input.GetAxis("Horizontal");
+		player.animator.SetBool("isLevitating", !player.isGroundedDetected());
+		player.animator.SetBool("isGrounded", player.isGroundedDetected());
 	}
 
 	public virtual void Exit()
 	{
-		Debug.Log("I exit " + animBoolName);
+		player.animator.SetBool(animBoolName, false);
+
 	}
 }

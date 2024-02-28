@@ -3,64 +3,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CharacterController : MonoBehaviour
 {
-	protected Rigidbody2D rb;
-	protected Animator ani;
-	protected bool isFacingRight = true;
 
-	[Header("Check Collision Info")]
-	[SerializeField] protected float checkGroundDistance = 0.9f;
+	public Animator animator { get; private set; }
+	public Rigidbody2D rb { get; private set; }
+
+
+	[Header("Collision Check Info")]
+	[SerializeField] protected Transform groundCheck;
+	[SerializeField] protected float groundCheckDistance = 0.1f;
+	[SerializeField] protected Transform wallCheck;
+	[SerializeField] protected float wallCheckDistance=0.1f;
 	[SerializeField] protected LayerMask whatIsGround;
-	[Space]
-	[SerializeField] protected float checkWallDistance = 0.9f;
-	[SerializeField] protected Transform whatToFaceWall;
-	[SerializeField] protected Transform whatToCheckGround;
-	protected bool isFacingWall = false;
 
-	protected bool isGrounded = false;
 
 	// Start is called before the first frame update
 	protected virtual void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
-		ani = GetComponentInChildren<Animator>();
-		if (whatToFaceWall == null) whatToFaceWall = transform;
-		if (whatToCheckGround == null) whatToCheckGround = transform;
+		animator = GetComponentInChildren<Animator>();
+		if (groundCheck == null) groundCheck = transform;
+		if (wallCheck == null) wallCheck = transform;
 	}
 
 	// Update is called once per frame
 	protected virtual void Update()
 	{
-		CollisionCheck();
-		Move();
+
 	}
+
+	public bool isGroundedDetected() { return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround) && (rb.velocity.y == 0); }
 	protected virtual void OnDrawGizmos()
 	{
-		//Draw check ground ray
-		Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - checkGroundDistance));
-		//Draw check wall ray
-		Gizmos.DrawLine(whatToFaceWall.position, new Vector3(whatToFaceWall.position.x + checkWallDistance * (isFacingRight ? 1 : -1), whatToFaceWall.position.y));
+		Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
+		Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
 	}
 	protected virtual void CollisionCheck()
 	{
-		isGrounded = Physics2D.Raycast(whatToCheckGround.position, Vector2.down, checkGroundDistance, whatIsGround);
-		isFacingWall = Physics2D.Raycast(whatToFaceWall.position, Vector2.right * (isFacingRight ? 1 : -1), checkWallDistance, whatIsGround);
 	}
 
 	protected void Flip(bool facingRight)
 	{
-		if (facingRight == isFacingRight) return;
-		else
-		{
-			isFacingRight = facingRight;
-		}
-		transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, facingRight ? 0 : 180, 0));
 	}
 
 	protected virtual void Attack() { }
-	protected virtual void Move() { }
+	public virtual void SetVelocity(float _xVelocity, float _yVelocity)
+	{
+		rb.velocity = new Vector2(_xVelocity, _yVelocity);
+	}
 
 
 
