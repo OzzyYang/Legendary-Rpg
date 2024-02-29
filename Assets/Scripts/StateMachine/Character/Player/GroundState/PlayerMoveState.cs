@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundedState
@@ -23,10 +21,10 @@ public class PlayerMoveState : PlayerGroundedState
 	{
 		base.Update();
 
-		player.SetVelocity(xInput*player.playerSpeed,rb.velocity.y);
-		if (Input.GetAxis("Horizontal")==0)
+		player.SetVelocity(xInput * player.playerSpeed, rb.velocity.y);
+		if (Input.GetAxis("Horizontal") == 0)
 		{
-			stateMachine.ChangeState(player.idleState);	
+			stateMachine.ChangeState(player.idleState);
 		}
 	}
 }

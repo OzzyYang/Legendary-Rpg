@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGroundedState : PlayerState
@@ -22,7 +20,11 @@ public class PlayerGroundedState : PlayerState
 	{
 		base.Update();
 
+		if (!player.isGroundedDetected())
+			stateMachine.ChangeState(player.levitateState);
+
 		if (Input.GetKeyDown(KeyCode.Space) && player.isGroundedDetected())
 			stateMachine.ChangeState(player.jumpState);
+
 	}
 }
