@@ -9,7 +9,7 @@ public class PlayerDashState : PlayerState
 		base.Enter();
 		stateDuration = player.dashDuration;
 		stateTimer = stateDuration;
-
+		player.FlipController(player.dashDirection);
 	}
 
 	public override void Exit()

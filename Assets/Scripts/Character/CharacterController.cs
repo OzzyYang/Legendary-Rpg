@@ -70,5 +70,10 @@ public class CharacterController : MonoBehaviour
 	}
 
 
-
+#if DEBUG
+	public void ShowInfo(string _info)
+	{
+		Debug.Log(_info);
+	}
+#endif
 }

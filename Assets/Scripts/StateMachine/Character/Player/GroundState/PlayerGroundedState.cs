@@ -26,5 +26,21 @@ public class PlayerGroundedState : PlayerState
 		if (Input.GetKeyDown(KeyCode.Space) && player.isGroundedDetected())
 			stateMachine.ChangeState(player.jumpState);
 
+
+		if (Input.GetKey(KeyCode.Mouse0))
+		{
+			stateMachine.ChangeState(player.attackState);
+			return;
+		}
+
+		if (xInput != 0 && player.isGroundedDetected() && !player.isBusy)
+		{
+			//when a wall standing in front of the player, do not move;
+			if (xInput == player.facingDirection && player.isWallDectected())
+				return;
+			stateMachine.ChangeState(player.moveState);
+			player.FlipController(xInput);
+		}
+
 	}
 }

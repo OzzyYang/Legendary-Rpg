@@ -8,9 +8,12 @@ public class PlayerState
 
 	protected string animBoolName;
 	protected float xInput;
+	protected float yInput;
 
 	protected float stateTimer;
 	protected float stateDuration;
+
+	protected bool isTrrigerCalled;
 
 
 	public PlayerState(PlayerController _player, PlayerStateMachine _stateMachine, string _animBoolName)
@@ -24,18 +27,18 @@ public class PlayerState
 	{
 		player.animator.SetBool(animBoolName, true);
 		rb = player.rb;
+		isTrrigerCalled = false;
 	}
 
 	public virtual void Update()
 	{
-		xInput = Input.GetAxis("Horizontal");
+		xInput = Input.GetAxisRaw("Horizontal");
+		yInput = Input.GetAxisRaw("Vertical");
 
 		player.animator.SetBool("isLevitating", !player.isGroundedDetected());
 		player.animator.SetBool("isGrounded", player.isGroundedDetected());
 
 		StateTimerController();
-
-
 	}
 
 	private void StateTimerController()
@@ -48,5 +51,10 @@ public class PlayerState
 	{
 		player.animator.SetBool(animBoolName, false);
 
+	}
+
+	public virtual void AnimationFinishTrigger()
+	{
+		isTrrigerCalled = true;
 	}
 }

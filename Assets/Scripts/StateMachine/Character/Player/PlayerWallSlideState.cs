@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerWallSlideState : PlayerState
@@ -22,7 +21,7 @@ public class PlayerWallSlideState : PlayerState
 		base.Update();
 
 		//if playe do not controll or input direction is not same as facing direction, exit state.
-		if (xInput == 0 || Math.Sign(xInput) != Math.Sign(player.facingDirection))
+		if (yInput < 0)
 		{
 			stateMachine.ChangeState(player.idleState);
 			return;

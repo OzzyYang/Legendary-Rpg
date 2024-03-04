@@ -1,5 +1,3 @@
-using System;
-
 public class PlayerLevitationState : PlayerState
 {
 	public PlayerLevitationState(PlayerController _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
@@ -23,17 +21,18 @@ public class PlayerLevitationState : PlayerState
 
 		//Player can move in lower speed when levitating
 		if (xInput != 0)
+		{
 			player.SetVelocity(xInput * player.playerSpeed * 0.8f, rb.velocity.y);
-
+			player.FlipController(xInput);
+		}
 
 		if (player.isGroundedDetected())
 			stateMachine.ChangeState(player.idleState);
 		else
 		{
-			if (player.isWallDectected() && rb.velocity.y <= 0 && Math.Sign(xInput) == player.facingDirection)
+			if (player.isWallDectected() && rb.velocity.y <= 0 && yInput >= 0)
 			{
 				stateMachine.ChangeState(player.wallSlideState);
-				return;
 			}
 		}
 	}

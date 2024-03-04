@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : CharacterController
@@ -13,9 +14,13 @@ public class PlayerController : CharacterController
 	public PlayerLevitationState levitateState { get; private set; }
 	public PlayerWallSlideState wallSlideState { get; private set; }
 	public PlayerWallJumpState wallJumpState { get; private set; }
+	public PlayerAttackState attackState { get; private set; }
 	#endregion
 
 	#region Player info
+	public bool isBusy { get; private set; }
+	[Header("Attack Info")]
+	public Vector2[] attackMovement;
 	[Header("Movement info")]
 	public float playerSpeed = 8f;
 	public float jumpForce = 10f;
@@ -40,10 +45,11 @@ public class PlayerController : CharacterController
 		idleState = new PlayerIdleState(this, stateMachine, "isIdling");
 		moveState = new PlayerMoveState(this, stateMachine, "isMoving");
 		dashState = new PlayerDashState(this, stateMachine, "isDashing");
-		jumpState = new PlayerJumpState(this, stateMachine, "isJumping");
+		jumpState = new PlayerJumpState(this, stateMachine, "isLevitating");
 		levitateState = new PlayerLevitationState(this, stateMachine, "isLevitating");
 		wallSlideState = new PlayerWallSlideState(this, stateMachine, "isWallSliding");
-		wallJumpState = new PlayerWallJumpState(this, stateMachine, "isJumping");
+		wallJumpState = new PlayerWallJumpState(this, stateMachine, "isLevitating");
+		attackState = new PlayerAttackState(this, stateMachine, "isAttacking");
 	}
 
 	// Update is called once per frame
@@ -63,25 +69,26 @@ public class PlayerController : CharacterController
 
 	private void CheckForInput()
 	{
+		//check dash input
 		if (Input.GetKeyDown(KeyCode.LeftShift) && dashCoolDownTimer <= 0)
 		{
-			DashDirectionController(Input.GetAxis("Horizontal"));
-			Debug.Log(Input.GetAxis("Horizontal") + "     " + dashDirection);
+			if (isWallDectected()) return;
+			DashDirectionController(Input.GetAxisRaw("Horizontal"));
+			Debug.Log(Input.GetAxisRaw("Horizontal") + "     " + dashDirection);
 			dashCoolDownTimer = dashCoolDownTime;
 			stateMachine.ChangeState(dashState);
-
 		}
+
 	}
 
-	void Jump()
+	public IEnumerator BusyFor(float _seconds)
 	{
-
+		isBusy = true;
+		yield return new WaitForSeconds(_seconds);
+		isBusy = false;
 	}
 
-	private void ResetAttackCounter()
-	{
-
-	}
+	public void AnimationTrrier() => stateMachine.currentState.AnimationFinishTrigger();
 
 	public void DashDirectionController(float _xInput)
 	{

@@ -7,27 +7,26 @@ public class PlayerMoveState : PlayerGroundedState
 	public override void Enter()
 	{
 		base.Enter();
+		player.SetVelocity(xInput * player.playerSpeed, rb.velocity.y);
 	}
 
 	public override void Exit()
 	{
 		base.Exit();
-
+		player.SetVelocity(0, 0);
 	}
 
 	public override void Update()
 	{
 		base.Update();
 
-
 		if (xInput == 0 || player.isWallDectected())
 		{
 			stateMachine.ChangeState(player.idleState);
+			return;
 		}
-		else
-		{
-			player.SetVelocity(xInput * player.playerSpeed, rb.velocity.y);
-		}
+
+
 
 
 	}
