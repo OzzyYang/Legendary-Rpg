@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 3757760828490350241}
   - component: {fileID: 6513061488046253187}
   - component: {fileID: 6950536225763940530}
+  - component: {fileID: 189639333}
   m_Layer: 6
   m_Name: Animator
   m_TagString: Untagged
@@ -137,6 +138,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &189639333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3206474695100040348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f96fee0a5da1a44b038a8161fe744d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6529526857648604371
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +164,7 @@ GameObject:
   - component: {fileID: 8962225258272315429}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -194,7 +207,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   playerSpeed: 8
-  jumpForce: 10
+  jumpForce: 19
+  dashSpeed: 25
+  dashDuration: 0.2
+  dashCoolDownTime: 1
+  dashCoolDownTimer: 0
 --- !u!50 &6529526857648604375
 Rigidbody2D:
   serializedVersion: 4
@@ -210,11 +227,11 @@ Rigidbody2D:
   m_Mass: 15
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 1792151c64566a34dabf3ce71af55e65, type: 2}
-  m_Interpolate: 0
+  m_GravityScale: 6
+  m_Material: {fileID: 0}
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &8962225258272315429
 CapsuleCollider2D:
@@ -256,7 +273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9013151514516684358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.087, y: 0, z: 0}
+  m_LocalPosition: {x: 0.0731, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

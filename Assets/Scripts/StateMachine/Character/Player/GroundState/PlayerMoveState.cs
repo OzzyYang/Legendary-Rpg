@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class PlayerMoveState : PlayerGroundedState
 {
 	public PlayerMoveState(PlayerController _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
@@ -21,10 +19,16 @@ public class PlayerMoveState : PlayerGroundedState
 	{
 		base.Update();
 
-		player.SetVelocity(xInput * player.playerSpeed, rb.velocity.y);
-		if (Input.GetAxis("Horizontal") == 0)
+
+		if (xInput == 0 || player.isWallDectected())
 		{
 			stateMachine.ChangeState(player.idleState);
 		}
+		else
+		{
+			player.SetVelocity(xInput * player.playerSpeed, rb.velocity.y);
+		}
+
+
 	}
 }

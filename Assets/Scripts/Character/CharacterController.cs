@@ -31,10 +31,17 @@ public class CharacterController : MonoBehaviour
 	// Update is called once per frame
 	protected virtual void Update()
 	{
-		//FlipController();
 	}
 
-	public bool isGroundedDetected() { return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround) && (rb.velocity.y == 0); }
+	public bool isGroundedDetected()
+	{
+		return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround) && (rb.velocity.y == 0);
+	}
+
+	public bool isWallDectected()
+	{
+		return Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
+	}
 	protected virtual void OnDrawGizmos()
 	{
 		Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));

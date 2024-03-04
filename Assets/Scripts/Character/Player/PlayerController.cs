@@ -11,6 +11,8 @@ public class PlayerController : CharacterController
 	public PlayerDashState dashState { get; private set; }
 	public PlayerJumpState jumpState { get; private set; }
 	public PlayerLevitationState levitateState { get; private set; }
+	public PlayerWallSlideState wallSlideState { get; private set; }
+	public PlayerWallJumpState wallJumpState { get; private set; }
 	#endregion
 
 	#region Player info
@@ -40,7 +42,8 @@ public class PlayerController : CharacterController
 		dashState = new PlayerDashState(this, stateMachine, "isDashing");
 		jumpState = new PlayerJumpState(this, stateMachine, "isJumping");
 		levitateState = new PlayerLevitationState(this, stateMachine, "isLevitating");
-
+		wallSlideState = new PlayerWallSlideState(this, stateMachine, "isWallSliding");
+		wallJumpState = new PlayerWallJumpState(this, stateMachine, "isJumping");
 	}
 
 	// Update is called once per frame
@@ -114,7 +117,6 @@ public class PlayerController : CharacterController
 	{
 
 	}
-
 
 
 }

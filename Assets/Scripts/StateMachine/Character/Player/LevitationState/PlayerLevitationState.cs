@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public class PlayerLevitationState : PlayerState
 {
@@ -22,7 +20,21 @@ public class PlayerLevitationState : PlayerState
 	{
 		base.Update();
 		player.animator.SetFloat("yVelocity", rb.velocity.y / player.jumpForce);
+
+		//Player can move in lower speed when levitating
+		if (xInput != 0)
+			player.SetVelocity(xInput * player.playerSpeed * 0.8f, rb.velocity.y);
+
+
 		if (player.isGroundedDetected())
 			stateMachine.ChangeState(player.idleState);
+		else
+		{
+			if (player.isWallDectected() && rb.velocity.y <= 0 && Math.Sign(xInput) == player.facingDirection)
+			{
+				stateMachine.ChangeState(player.wallSlideState);
+				return;
+			}
+		}
 	}
 }
