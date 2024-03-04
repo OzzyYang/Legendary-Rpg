@@ -538,6 +538,8 @@ PrefabInstance:
     - target: {fileID: 8962225258272315429, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_Material
       value: 
+      propertyPath: attackMovement.Array.data[2].x
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
