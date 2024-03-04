@@ -1,33 +1,36 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
-public class PlayerController :CharacterController
+public class PlayerController : CharacterController
 {
-	private float currentMoveSpeed;
 
-	[Header("Movement Info")]
-	[SerializeField] private float jumpForce = 10f;
-	[SerializeField] private float moveSpeed = 5f;
-
-	[Header("Dash Info")]
-	[SerializeField] private float dashDuration = 0.2f;
-	[SerializeField] private float dashCooldownTime = 2f;
-	[SerializeField] private float dashSpeed = 19.0f;
-	private float dashTime;
-	private float dashCooldownTimer = 0;
-	private int dashDiretion = 1;
-
-	[Header("Attack Info")]
-	[SerializeField] private bool isAttacking = false;
-	[SerializeField] private int attackCounter = 0;
-	[SerializeField] private float attackComboTimer = 0f;
-	[SerializeField] private float attackComboTime = 0.3f;
-
-	//State machine info
-	public PlayerStateMachine stateMachine {  get; private set; }
+	#region State machine info
+	public PlayerStateMachine stateMachine { get; private set; }
+	public PlayerGroundedState groundedState { get; private set; }
 	public PlayerIdleState idleState { get; private set; }
 	public PlayerMoveState moveState { get; private set; }
+	public PlayerDashState dashState { get; private set; }
+	public PlayerJumpState jumpState { get; private set; }
+	public PlayerLevitationState levitateState { get; private set; }
+	public PlayerWallSlideState wallSlideState { get; private set; }
+	public PlayerWallJumpState wallJumpState { get; private set; }
+	public PlayerAttackState attackState { get; private set; }
+	#endregion
 
+	#region Player info
+	public bool isBusy { get; private set; }
+	[Header("Attack Info")]
+	public Vector2[] attackMovement;
+	[Header("Movement info")]
+	public float playerSpeed = 8f;
+	public float jumpForce = 10f;
+	public float dashSpeed = 25f;
+	public float dashDuration = 0.2f;
+	public float dashDirection { get; private set; } = 1;
+
+	public float dashCoolDownTime = 1.0f;
+	public float dashCoolDownTimer;
+	#endregion
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -37,140 +40,90 @@ public class PlayerController :CharacterController
 
 	private void Awake()
 	{
-		stateMachine=new PlayerStateMachine();
-		idleState = new PlayerIdleState(this,stateMachine,"Idle");
-		moveState = new PlayerMoveState(this, stateMachine, "Move");
+		stateMachine = new PlayerStateMachine();
+		groundedState = new PlayerGroundedState(this, stateMachine, "isGrounded");
+		idleState = new PlayerIdleState(this, stateMachine, "isIdling");
+		moveState = new PlayerMoveState(this, stateMachine, "isMoving");
+		dashState = new PlayerDashState(this, stateMachine, "isDashing");
+		jumpState = new PlayerJumpState(this, stateMachine, "isLevitating");
+		levitateState = new PlayerLevitationState(this, stateMachine, "isLevitating");
+		wallSlideState = new PlayerWallSlideState(this, stateMachine, "isWallSliding");
+		wallJumpState = new PlayerWallJumpState(this, stateMachine, "isLevitating");
+		attackState = new PlayerAttackState(this, stateMachine, "isAttacking");
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		base.Update();
-		CheckInput();
-		CheckTimer();
-		Move();
-		Dash();
-		CheckAnimation();
 		stateMachine.currentState.Update();
-		if (Input.GetKeyDown(KeyCode.N))
+
+		CheckForInput();
+
+		if (dashCoolDownTimer > 0)
 		{
-			stateMachine.ChangeState(stateMachine.currentState == idleState ? moveState : idleState);
+			dashCoolDownTimer -= Time.deltaTime;
 		}
-	}
-	protected override void Move()
-	{
-		currentMoveSpeed = isAttacking ? 0 : Input.GetAxisRaw("Horizontal") * moveSpeed;
-		switch (Input.GetAxisRaw("Horizontal"))
-		{
-			case 1:
-				{
-					Flip(true);
-					break;
-				}
-			case -1:
-				{
-					Flip(false);
-					break;
-				}
-			default:
-				{
-					break;
-				}
-		}
-		rb.velocity = new Vector2(currentMoveSpeed, rb.velocity.y);
-		//ResetAttackCounter();
-	}
-	void Jump()
-	{
-		if (isGrounded)
-		{
-			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-			ResetAttackCounter();
-		}
+
 	}
 
-	private void ResetAttackCounter()
+	private void CheckForInput()
 	{
-		attackCounter = 0;
-		isAttacking = false;
+		//check dash input
+		if (Input.GetKeyDown(KeyCode.LeftShift) && dashCoolDownTimer <= 0)
+		{
+			if (isWallDectected()) return;
+			DashDirectionController(Input.GetAxisRaw("Horizontal"));
+			Debug.Log(Input.GetAxisRaw("Horizontal") + "     " + dashDirection);
+			dashCoolDownTimer = dashCoolDownTime;
+			stateMachine.ChangeState(dashState);
+		}
+
 	}
 
-	void Dash()
+	public IEnumerator BusyFor(float _seconds)
 	{
-		if (dashTime >= 0)
+		isBusy = true;
+		yield return new WaitForSeconds(_seconds);
+		isBusy = false;
+	}
+
+	public void AnimationTrrier() => stateMachine.currentState.AnimationFinishTrigger();
+
+	public void DashDirectionController(float _xInput)
+	{
+		if (_xInput == 0)
 		{
-			rb.velocity = new Vector2(dashSpeed * dashDiretion, rb.velocity.y);
-			ResetAttackCounter();
+			dashDirection = facingDirection;
+			return;
 		}
+		dashDirection = _xInput > 0 ? 1 : -1;
+
 	}
 
 
 	protected override void Attack()
 	{
-		if (!isGrounded) return;
-		isAttacking = true;
+
 	}
 
 	public void AttackOver()
 	{
-		isAttacking = false;
-		attackComboTimer = attackComboTime;
-		if (attackCounter >= 2)
-		{
-			attackCounter = 0;
-		}
-		else
-		{
-			attackCounter++;
-		}
+
 	}
 
 	private void CheckAnimation()
 	{
-		ani.SetBool("isMoving", currentMoveSpeed != 0);
-		ani.SetBool("isGrounded", isGrounded);
-		ani.SetFloat("yVelocity", rb.velocity.y);
-		ani.SetBool("isDashing", dashTime >= 0);
-		ani.SetBool("isAttacking", isAttacking);
-		ani.SetInteger("attackCounter", attackCounter);
+
 	}
 	private void CheckInput()
 	{
-		if (Input.GetKey(KeyCode.Space)) Jump();
-		if (Input.GetKey(KeyCode.LeftShift))
-		{
-			//dash only when cd ends
-			if (dashCooldownTimer <= 0)
-			{
-				//reset timer
-				dashCooldownTimer = dashCooldownTime;
-				//reset duratoion time
-				dashTime = dashDuration;
-				//record dash diretion
-				dashDiretion = transform.rotation.eulerAngles.y == 0f ? 1 : -1;
-			}
-		}
-		if (Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.X))
-		{
-			if (!isAttacking) Attack();
-		}
+
 	}
 	private void CheckTimer()
 	{
-		if (dashCooldownTimer >= 0) dashCooldownTimer -= Time.deltaTime;
-		if (dashTime >= 0) dashTime -= Time.deltaTime;
 
-		if (attackComboTimer >= 0)
-		{
-			attackComboTimer -= Time.deltaTime;
-		}
-		else
-		{
-			//if the attacking isn't finished, do not change attackCounter
-			attackCounter = isAttacking? attackCounter:0;
-		}
 	}
-
 
 
 }
