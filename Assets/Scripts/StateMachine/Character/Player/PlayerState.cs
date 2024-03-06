@@ -15,6 +15,8 @@ public class PlayerState
 
 	protected bool isTrrigerCalled;
 
+	private readonly bool needDebug = false;
+
 
 	public PlayerState(PlayerController _player, PlayerStateMachine _stateMachine, string _animBoolName)
 	{
@@ -25,6 +27,7 @@ public class PlayerState
 
 	public virtual void Enter()
 	{
+		if (needDebug) player.ShowInfo(animBoolName + " enter");
 		player.animator.SetBool(animBoolName, true);
 		rb = player.rb;
 		isTrrigerCalled = false;
@@ -49,6 +52,7 @@ public class PlayerState
 
 	public virtual void Exit()
 	{
+		if (needDebug) player.ShowInfo(animBoolName + " exit");
 		player.animator.SetBool(animBoolName, false);
 
 	}

@@ -13,7 +13,7 @@ public class PlayerMoveState : PlayerGroundedState
 	public override void Exit()
 	{
 		base.Exit();
-		player.SetVelocity(0, 0);
+		player.SetVelocity(0, rb.velocity.y);
 	}
 
 	public override void Update()
@@ -23,6 +23,7 @@ public class PlayerMoveState : PlayerGroundedState
 		if (xInput == 0 || player.isWallDectected())
 		{
 			stateMachine.ChangeState(player.idleState);
+			//player.ShowInfo("Change Idle");
 			return;
 		}
 

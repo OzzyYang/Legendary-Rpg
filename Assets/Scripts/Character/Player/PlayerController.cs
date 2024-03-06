@@ -19,6 +19,7 @@ public class PlayerController : CharacterController
 
 	#region Player info
 	public bool isBusy { get; private set; }
+	public Vector2 initialPos { get; private set; }
 	[Header("Attack Info")]
 	public Vector2[] attackMovement;
 	[Header("Movement info")]
@@ -36,6 +37,7 @@ public class PlayerController : CharacterController
 	{
 		base.Start();
 		stateMachine.Initialize(idleState);
+		initialPos = transform.position;
 	}
 
 	private void Awake()
@@ -78,6 +80,9 @@ public class PlayerController : CharacterController
 			dashCoolDownTimer = dashCoolDownTime;
 			stateMachine.ChangeState(dashState);
 		}
+
+		if (Input.GetKeyDown(KeyCode.R))
+			transform.position = initialPos;
 
 	}
 

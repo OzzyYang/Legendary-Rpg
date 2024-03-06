@@ -27,10 +27,14 @@ public class PlayerLevitationState : PlayerState
 		}
 
 		if (player.isGroundedDetected())
+		{
+			//player.SetVelocity(0, 0);
 			stateMachine.ChangeState(player.idleState);
+
+		}
 		else
 		{
-			if (player.isWallDectected() && rb.velocity.y <= 0 && yInput >= 0)
+			if (player.isWallDectected() && rb.velocity.y < 0 && yInput >= 0)
 			{
 				stateMachine.ChangeState(player.wallSlideState);
 			}

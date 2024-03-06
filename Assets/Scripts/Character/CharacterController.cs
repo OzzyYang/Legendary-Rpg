@@ -35,7 +35,7 @@ public class CharacterController : MonoBehaviour
 
 	public bool isGroundedDetected()
 	{
-		return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround) && (rb.velocity.y == 0);
+		return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
 	}
 
 	public bool isWallDectected()
@@ -67,6 +67,11 @@ public class CharacterController : MonoBehaviour
 	public virtual void SetVelocity(float _xVelocity, float _yVelocity)
 	{
 		rb.velocity = new Vector2(_xVelocity, _yVelocity);
+	}
+
+	public virtual void SetPosition(float _xPos, float _yPos)
+	{
+		rb.position = new Vector2(_xPos, _yPos);
 	}
 
 
