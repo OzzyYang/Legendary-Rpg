@@ -21,10 +21,18 @@ public class PlayerGroundedState : PlayerState
 		base.Update();
 
 		if (!player.isGroundedDetected())
+		{
 			stateMachine.ChangeState(player.levitateState);
+			return;
+		}
+
 
 		if (Input.GetKeyDown(KeyCode.Space) && player.isGroundedDetected())
+		{
 			stateMachine.ChangeState(player.jumpState);
+			return;
+		}
+
 
 
 		if (Input.GetKey(KeyCode.Mouse0))

@@ -17,7 +17,12 @@ public class PlayerAttackState : PlayerState
 			attackCounter = 0;
 
 		player.animator.SetInteger("attackCounter", attackCounter);
+
+		player.FlipController(xInput);
+
+		//make player more alive when attacking
 		player.SetVelocity(player.attackMovement[attackCounter].x * player.facingDirection, player.attackMovement[attackCounter].y);
+
 		lastAttackTime = Time.time;
 	}
 

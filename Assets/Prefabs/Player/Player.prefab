@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2389319858172733241}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.162, z: 0}
+  m_LocalPosition: {x: 0, y: -0.14301, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -103,8 +103,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -675527933
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 369980609, guid: 5611cdd8c15331b428a249da6c7b617e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -214,7 +214,7 @@ MonoBehaviour:
   jumpForce: 19
   dashSpeed: 25
   dashDuration: 0.2
-  dashCoolDownTime: 1
+  dashCoolDownTime: 0.5
   dashCoolDownTimer: 0
 --- !u!50 &6529526857648604375
 Rigidbody2D:
