@@ -34,7 +34,7 @@ public class PlayerLevitationState : PlayerState
 		}
 		else
 		{
-			if (player.isWallDectected() && rb.velocity.y < 0 && yInput >= 0)
+			if (player.isWallDetected() && rb.velocity.y < 0 && yInput >= 0)
 			{
 				stateMachine.ChangeState(player.wallSlideState);
 			}

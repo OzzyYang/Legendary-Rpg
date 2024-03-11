@@ -15,7 +15,7 @@ public class ParallaxBGController : MonoBehaviour
 		xPosStart = transform.position.x;
 
 		length = GetComponent<SpriteRenderer>().bounds.size.x;
-		Debug.Log(xPosStart + " " + length);
+		//Debug.Log(xPosStart + " " + length);
 	}
 
 	// Update is called once per frame
