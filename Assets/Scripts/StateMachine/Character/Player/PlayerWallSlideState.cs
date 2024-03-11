@@ -40,7 +40,7 @@ public class PlayerWallSlideState : PlayerState
 		}
 		else
 		{
-			if (!player.isWallDectected())
+			if (!player.isWallDetected())
 			{
 				stateMachine.ChangeState(player.levitateState);
 			}

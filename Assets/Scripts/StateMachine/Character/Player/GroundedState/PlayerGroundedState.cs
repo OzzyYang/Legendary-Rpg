@@ -44,7 +44,7 @@ public class PlayerGroundedState : PlayerState
 		if (xInput != 0 && player.isGroundedDetected() && !player.isBusy)
 		{
 			//when a wall standing in front of the player, do not move;
-			if (xInput == player.facingDirection && player.isWallDectected())
+			if (xInput == player.facingDirection && player.isWallDetected())
 				return;
 			stateMachine.ChangeState(player.moveState);
 			player.FlipController(xInput);

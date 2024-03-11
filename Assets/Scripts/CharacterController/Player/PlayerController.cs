@@ -33,15 +33,16 @@ public class PlayerController : CharacterController
 	public float dashCoolDownTimer;
 	#endregion
 	// Start is called before the first frame update
-	void Start()
+	protected override void Start()
 	{
 		base.Start();
 		stateMachine.Initialize(idleState);
 		initialPos = transform.position;
 	}
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		stateMachine = new PlayerStateMachine();
 		groundedState = new PlayerGroundedState(this, stateMachine, "isGrounded");
 		idleState = new PlayerIdleState(this, stateMachine, "isIdling");
@@ -52,10 +53,11 @@ public class PlayerController : CharacterController
 		wallSlideState = new PlayerWallSlideState(this, stateMachine, "isWallSliding");
 		wallJumpState = new PlayerWallJumpState(this, stateMachine, "isLevitating");
 		attackState = new PlayerAttackState(this, stateMachine, "isAttacking");
+
 	}
 
 	// Update is called once per frame
-	void Update()
+	protected override void Update()
 	{
 		base.Update();
 		stateMachine.currentState.Update();
@@ -74,7 +76,7 @@ public class PlayerController : CharacterController
 		//check dash input
 		if (Input.GetKeyDown(KeyCode.LeftShift) && dashCoolDownTimer <= 0)
 		{
-			if (isWallDectected()) return;
+			if (isWallDetected()) return;
 			DashDirectionController(Input.GetAxisRaw("Horizontal"));
 			Debug.Log(Input.GetAxisRaw("Horizontal") + "     " + dashDirection);
 			dashCoolDownTimer = dashCoolDownTime;
@@ -107,28 +109,6 @@ public class PlayerController : CharacterController
 	}
 
 
-	protected override void Attack()
-	{
-
-	}
-
-	public void AttackOver()
-	{
-
-	}
-
-	private void CheckAnimation()
-	{
-
-	}
-	private void CheckInput()
-	{
-
-	}
-	private void CheckTimer()
-	{
-
-	}
 
 
 }
