@@ -27,7 +27,6 @@ public class SkeletonAttackState : EnemyState
 		base.Update();
 		if (isTriggerCalled)
 		{
-			Debug.Log(1);
 			stateMachine.ChangeState(enemy.idleState);
 			return;
 		}

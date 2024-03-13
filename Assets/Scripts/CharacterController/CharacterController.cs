@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
@@ -6,6 +7,16 @@ public class CharacterController : MonoBehaviour
 	public Animator animator { get; private set; }
 	public Rigidbody2D rb { get; private set; }
 
+	[Header("KnockBack Info")]
+	[SerializeField] protected Vector2 knockBackMovement;
+	[SerializeField] protected float knockBackDuration;
+	protected bool isKnockBacking = false;
+
+	[Header("Stunned Info")]
+	[SerializeField] public Vector2 stunnedMovement;
+	[SerializeField] public float stunnedDuration;
+	[SerializeField] protected GameObject counterImage;
+	protected bool canBeStunned;
 	protected virtual void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
@@ -25,6 +36,20 @@ public class CharacterController : MonoBehaviour
 	// Update is called once per frame
 	protected virtual void Update()
 	{
+	}
+	protected virtual IEnumerator HitKnockBack()
+	{
+		//TODO: kncokback direction should be opposite to hit direction 
+		SetVelocity(knockBackMovement.x * -facingDirection, knockBackMovement.y);
+		isKnockBacking = true;
+		yield return new WaitForSeconds(knockBackDuration);
+		isKnockBacking = false;
+	}
+
+	public virtual void Damage()
+	{
+		GetComponentInChildren<EntityFX>().StartCoroutine("FlashFX");
+		StartCoroutine("HitKnockBack");
 	}
 
 	#region Collision Check
@@ -79,6 +104,7 @@ public class CharacterController : MonoBehaviour
 	#region Physical Settings
 	public virtual void SetVelocity(float _xVelocity, float _yVelocity)
 	{
+		if (isKnockBacking) return;
 		rb.velocity = new Vector2(_xVelocity, _yVelocity);
 	}
 

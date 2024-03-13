@@ -6,16 +6,10 @@ public class SkeletonController : EnemyController
 	public SkeletonMoveState moveState { get; protected set; }
 	public SkeletonBattleState battleState { get; protected set; }
 	public SkeletonAttackState attackState { get; protected set; }
+	public SkeletonStunnedState stunnedState { get; protected set; }
 	#endregion
 
-	#region Enemy Info
-	[Header("Attack Info")]
-	public float attackDistance;
-	[SerializeField] private Transform attackCheck;
-	public float attackCooldownTime;
-	[HideInInspector] public float lastAttackTime;
 
-	#endregion
 	protected override void Awake()
 	{
 		base.Awake();
@@ -23,6 +17,7 @@ public class SkeletonController : EnemyController
 		moveState = new SkeletonMoveState(this, stateMachine, "isMoving");
 		battleState = new SkeletonBattleState(this, stateMachine, "isMoving");
 		attackState = new SkeletonAttackState(this, stateMachine, "isAttacking");
+		stunnedState = new SkeletonStunnedState(this, stateMachine, "isStunned");
 		stateMachine.Initialize(idleState);
 	}
 
@@ -35,9 +30,17 @@ public class SkeletonController : EnemyController
 	{
 		base.OnDrawGizmos();
 		Gizmos.color = Color.yellow;
-		Gizmos.DrawLine(attackCheck.position, new Vector3(attackCheck.position.x + attackDistance * facingDirection, attackCheck.position.y));
+		Gizmos.DrawLine(attackCheck.position, new Vector3(attackCheck.position.x + attackCheckDistance * facingDirection, attackCheck.position.y));
 	}
 
-	public bool CanAttack() => Time.time - lastAttackTime >= attackCooldownTime;
+	public override bool CanBeStunned()
+	{
+		if (base.CanBeStunned())
+		{
+			stateMachine.ChangeState(stunnedState);
+			return true;
+		}
+		return false;
+	}
 }
 

@@ -15,13 +15,18 @@ public class PlayerController : CharacterController
 	public PlayerWallSlideState wallSlideState { get; private set; }
 	public PlayerWallJumpState wallJumpState { get; private set; }
 	public PlayerAttackState attackState { get; private set; }
+	public PlayerCounterAttackState counterAttackState { get; set; }
 	#endregion
 
 	#region Player info
 	public bool isBusy { get; private set; }
 	public Vector2 initialPos { get; private set; }
 	[Header("Attack Info")]
+	//make character attacking more lively
 	public Vector2[] attackMovement;
+	[SerializeField] public float attackCheckRadius;
+	[SerializeField] public Transform attackCheck;
+	public float counterAttackDuration = 1f;
 	[Header("Movement info")]
 	public float playerSpeed = 8f;
 	public float jumpForce = 10f;
@@ -53,7 +58,7 @@ public class PlayerController : CharacterController
 		wallSlideState = new PlayerWallSlideState(this, stateMachine, "isWallSliding");
 		wallJumpState = new PlayerWallJumpState(this, stateMachine, "isLevitating");
 		attackState = new PlayerAttackState(this, stateMachine, "isAttacking");
-
+		counterAttackState = new PlayerCounterAttackState(this, stateMachine, "isCounterAttacking");
 	}
 
 	// Update is called once per frame
@@ -78,7 +83,7 @@ public class PlayerController : CharacterController
 		{
 			if (isWallDetected()) return;
 			DashDirectionController(Input.GetAxisRaw("Horizontal"));
-			Debug.Log(Input.GetAxisRaw("Horizontal") + "     " + dashDirection);
+			//Debug.Log(Input.GetAxisRaw("Horizontal") + "     " + dashDirection);
 			dashCoolDownTimer = dashCoolDownTime;
 			stateMachine.ChangeState(dashState);
 		}
@@ -97,6 +102,21 @@ public class PlayerController : CharacterController
 
 	public void AnimationTrrier() => stateMachine.currentState.AnimationFinishTrigger();
 
+	public virtual void AttackTriggerCalled()
+	{
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(attackCheck.position, attackCheckRadius);
+		foreach (var hit in colliders)
+		{
+			EnemyController enemy = hit.GetComponent<EnemyController>();
+			if (enemy != null)
+
+			{
+				enemy.Damage();
+			}
+
+		}
+	}
+
 	public void DashDirectionController(float _xInput)
 	{
 		if (_xInput == 0)
@@ -108,8 +128,10 @@ public class PlayerController : CharacterController
 
 	}
 
-
-
-
+	protected override void OnDrawGizmos()
+	{
+		base.OnDrawGizmos();
+		Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
+	}
 }
 

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class SkeletonIdleState : SkeletonGroundedState
 {
 
@@ -21,6 +23,11 @@ public class SkeletonIdleState : SkeletonGroundedState
 	public override void Update()
 	{
 		base.Update();
+		if (Input.GetKeyDown(KeyCode.U))
+		{
+			stateMachine.ChangeState((enemy as SkeletonController).stunnedState);
+			return;
+		}
 		if (stateTimer <= 0)
 			stateMachine.ChangeState(((SkeletonController)enemy).moveState);
 	}
