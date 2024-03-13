@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 6513061488046253187}
   - component: {fileID: 6950536225763940530}
   - component: {fileID: 952169694696158202}
+  - component: {fileID: 863839872084912140}
   m_Layer: 6
   m_Name: Animator
   m_TagString: Untagged
@@ -150,6 +151,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d224fef498e1d1b40b51cae31df57360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &863839872084912140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3206474695100040348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b44e18cd6cf55e419b625bf6e53f4c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitMaterial: {fileID: 2100000, guid: db1e8e09160f0a0479207f97d244d89c, type: 2}
+  hitFlashDuration: 0.15
+--- !u!1 &4450207762279692222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6392260731772026113}
+  m_Layer: 6
+  m_Name: AttackCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6392260731772026113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4450207762279692222}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.182, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6529526857648604369}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6529526857648604371
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +230,7 @@ Transform:
   - {fileID: 3757760828490350241}
   - {fileID: 8224558034669315083}
   - {fileID: 3306004707654917419}
+  - {fileID: 6392260731772026113}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -199,17 +246,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41f8ae16b8e70c4f9b09e8549d47cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackMovement: {x: 0, y: 0}
+  knockBackDuration: 0.15
   groundCheck: {fileID: 8224558034669315083}
-  groundCheckDistance: 0.1
+  groundCheckDistance: 0.109
   wallCheck: {fileID: 3306004707654917419}
   wallCheckDistance: 0.1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  playerCheckDistance: 0
+  playerCheck: {fileID: 6529526857648604369}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 0
   attackMovement:
   - {x: 0.2, y: 3.5}
   - {x: 0.1, y: 5}
   - {x: 0.3, y: 8}
+  attackCheckRadius: 0.8
+  attackCheck: {fileID: 6392260731772026113}
   playerSpeed: 8
   jumpForce: 19
   dashSpeed: 25

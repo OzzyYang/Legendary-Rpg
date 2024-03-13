@@ -13,6 +13,7 @@ public class SkeletonBattleState : EnemyState
 	{
 		base.Enter();
 		enemy.SetVelocity(0, rb.velocity.y);
+		stateTimer = (enemy as SkeletonController).battleTime;
 		player = GameObject.Find("Player");
 	}
 
@@ -25,22 +26,34 @@ public class SkeletonBattleState : EnemyState
 	public override void Update()
 	{
 		base.Update();
-		if (enemy.isPlayerDetected().distance <= ((SkeletonController)enemy).attackDistance)
+		if (enemy.isPlayerDetected().collider != null)
 		{
-			enemy.SetVelocity(0, rb.velocity.y);
-			if (((SkeletonController)enemy).CanAttack())
+			if (CanAttack() && (enemy.isPlayerDetected().distance <= ((SkeletonController)enemy).attackCheckDistance))
 			{
 				stateMachine.ChangeState(((SkeletonController)enemy).attackState);
+				return;
 			}
-			else
+		}
+		else
+		{
+			//if battle state lasting some time or player is far enough from skeleton when skeleton cannot attack player, exit battle state.
+			if (stateTimer < 0 || Vector2.Distance(player.transform.position, enemy.transform.position) > 12)
 			{
-				//stateMachine.ChangeState(((SkeletonController)enemy).idleState);
+				stateMachine.ChangeState(((SkeletonController)enemy).idleState);
+				return;
 			}
-			return;
 		}
 
 		moveDirection = player.transform.position.x > rb.position.x ? 1 : -1;
 		enemy.FlipController(moveDirection);
-		enemy.SetVelocity(enemy.moveSpeed * 1.5f * moveDirection, rb.velocity.y);
+		enemy.SetVelocity(enemy.moveSpeed * 1.2f * moveDirection, rb.velocity.y);
+	}
+
+	public bool CanAttack()
+	{
+		if ((enemy as SkeletonController).lastAttackTime == 0) return true;
+		if (Time.time - (enemy as SkeletonController).lastAttackTime >= (enemy as SkeletonController).attackCooldownTime)
+			return true;
+		return false;
 	}
 }

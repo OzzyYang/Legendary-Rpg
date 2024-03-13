@@ -26,7 +26,11 @@ public class PlayerGroundedState : PlayerState
 			return;
 		}
 
-
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			stateMachine.ChangeState(player.counterAttackState);
+			return;
+		}
 		if (Input.GetKeyDown(KeyCode.Space) && player.isGroundedDetected())
 		{
 			stateMachine.ChangeState(player.jumpState);

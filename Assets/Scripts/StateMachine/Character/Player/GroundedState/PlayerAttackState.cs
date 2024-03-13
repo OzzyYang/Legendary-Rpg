@@ -18,6 +18,9 @@ public class PlayerAttackState : PlayerState
 
 		player.animator.SetInteger("attackCounter", attackCounter);
 
+		//fix the bug: attack direction always be late for actual
+		xInput = Input.GetAxisRaw("Horizontal");
+
 		player.FlipController(xInput);
 
 		//make player more alive when attacking

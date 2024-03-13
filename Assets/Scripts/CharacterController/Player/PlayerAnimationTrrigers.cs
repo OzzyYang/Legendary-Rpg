@@ -8,4 +8,9 @@ public class PlayerAnimationTrrigers : MonoBehaviour
 	{
 		player.AnimationTrrier();
 	}
+
+	private void AttackTrigger()
+	{
+		player.AttackTriggerCalled();
+	}
 }
