@@ -20,6 +20,9 @@ public class PlayerGroundedState : PlayerState
 	{
 		base.Update();
 
+
+
+
 		if (!player.isGroundedDetected())
 		{
 			stateMachine.ChangeState(player.levitateState);
@@ -31,13 +34,12 @@ public class PlayerGroundedState : PlayerState
 			stateMachine.ChangeState(player.counterAttackState);
 			return;
 		}
+
 		if (Input.GetKeyDown(KeyCode.Space) && player.isGroundedDetected())
 		{
 			stateMachine.ChangeState(player.jumpState);
 			return;
 		}
-
-
 
 		if (Input.GetKey(KeyCode.Mouse0))
 		{
@@ -52,6 +54,12 @@ public class PlayerGroundedState : PlayerState
 				return;
 			stateMachine.ChangeState(player.moveState);
 			player.FlipController(xInput);
+		}
+
+		if (Input.GetKeyDown(KeyCode.Mouse1))
+		{
+			stateMachine.ChangeState(player.aimSwordState);
+			return;
 		}
 
 	}

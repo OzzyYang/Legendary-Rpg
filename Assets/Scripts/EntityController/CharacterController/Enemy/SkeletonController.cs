@@ -18,12 +18,12 @@ public class SkeletonController : EnemyController
 		battleState = new SkeletonBattleState(this, stateMachine, "isMoving");
 		attackState = new SkeletonAttackState(this, stateMachine, "isAttacking");
 		stunnedState = new SkeletonStunnedState(this, stateMachine, "isStunned");
-		stateMachine.Initialize(idleState);
 	}
 
 	protected override void Start()
 	{
 		base.Start();
+		stateMachine.Initialize(idleState);
 	}
 
 	protected override void OnDrawGizmos()
