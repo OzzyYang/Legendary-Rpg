@@ -10,6 +10,7 @@ public class PlayerDashState : PlayerState
 		stateDuration = player.dashDuration;
 		stateTimer = stateDuration;
 		player.FlipController(player.dashDirection);
+		player.skill.cloneSkill.CreateClone(player.transform);
 	}
 
 	public override void Exit()

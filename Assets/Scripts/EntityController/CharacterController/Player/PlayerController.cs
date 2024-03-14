@@ -15,7 +15,14 @@ public class PlayerController : CharacterController
 	public PlayerWallSlideState wallSlideState { get; private set; }
 	public PlayerWallJumpState wallJumpState { get; private set; }
 	public PlayerAttackState attackState { get; private set; }
-	public PlayerCounterAttackState counterAttackState { get; set; }
+	public PlayerCounterAttackState counterAttackState { get; private set; }
+
+	public PlayerAimSwordState aimSwordState { get; private set; }
+	public PlayerThrowSwordState throwSwordState { get; private set; }
+	#endregion
+
+	#region Skill Info
+	public SkillManager skill { get; private set; }
 	#endregion
 
 	#region Player info
@@ -33,17 +40,7 @@ public class PlayerController : CharacterController
 	public float dashSpeed = 25f;
 	public float dashDuration = 0.2f;
 	public float dashDirection { get; private set; } = 1;
-
-	public float dashCoolDownTime = 1.0f;
-	public float dashCoolDownTimer;
 	#endregion
-	// Start is called before the first frame update
-	protected override void Start()
-	{
-		base.Start();
-		stateMachine.Initialize(idleState);
-		initialPos = transform.position;
-	}
 
 	protected override void Awake()
 	{
@@ -59,6 +56,18 @@ public class PlayerController : CharacterController
 		wallJumpState = new PlayerWallJumpState(this, stateMachine, "isLevitating");
 		attackState = new PlayerAttackState(this, stateMachine, "isAttacking");
 		counterAttackState = new PlayerCounterAttackState(this, stateMachine, "isCounterAttacking");
+		aimSwordState = new PlayerAimSwordState(this, stateMachine, "isSwordAiming");
+		throwSwordState = new PlayerThrowSwordState(this, stateMachine, "isSwordThrowing");
+
+	}
+
+	// Start is called before the first frame update
+	protected override void Start()
+	{
+		base.Start();
+		skill = SkillManager.instance;
+		stateMachine.Initialize(idleState);
+		initialPos = transform.position;
 	}
 
 	// Update is called once per frame
@@ -66,25 +75,18 @@ public class PlayerController : CharacterController
 	{
 		base.Update();
 		stateMachine.currentState.Update();
-
 		CheckForInput();
-
-		if (dashCoolDownTimer > 0)
-		{
-			dashCoolDownTimer -= Time.deltaTime;
-		}
 
 	}
 
 	private void CheckForInput()
 	{
 		//check dash input
-		if (Input.GetKeyDown(KeyCode.LeftShift) && dashCoolDownTimer <= 0)
+		if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dashSkill.CanUseSkill())
 		{
 			if (isWallDetected()) return;
 			DashDirectionController(Input.GetAxisRaw("Horizontal"));
 			//Debug.Log(Input.GetAxisRaw("Horizontal") + "     " + dashDirection);
-			dashCoolDownTimer = dashCoolDownTime;
 			stateMachine.ChangeState(dashState);
 		}
 
@@ -125,7 +127,6 @@ public class PlayerController : CharacterController
 			return;
 		}
 		dashDirection = _xInput > 0 ? 1 : -1;
-
 	}
 
 	protected override void OnDrawGizmos()

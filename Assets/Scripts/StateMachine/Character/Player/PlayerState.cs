@@ -13,7 +13,6 @@ public class PlayerState
 	protected float stateDuration;
 
 	protected bool isTrrigerCalled;
-
 	private readonly bool needDebug = false;
 
 

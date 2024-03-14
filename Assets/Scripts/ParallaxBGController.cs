@@ -11,7 +11,7 @@ public class ParallaxBGController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		cam = GameObject.Find("Main Camera");
+		cam = CameraManager.instance.mainCamera.gameObject;
 		xPosStart = transform.position.x;
 
 		length = GetComponent<SpriteRenderer>().bounds.size.x;

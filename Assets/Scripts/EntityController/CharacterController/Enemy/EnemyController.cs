@@ -17,10 +17,7 @@ public class EnemyController : CharacterController
 	[SerializeField] protected float attackCheckRadius;
 	public float attackCooldownTime;
 	[HideInInspector] public float lastAttackTime;
-
 	#endregion
-
-
 
 	protected override void Awake()
 	{

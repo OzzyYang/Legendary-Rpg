@@ -13,4 +13,6 @@ public class PlayerAnimationTrrigers : MonoBehaviour
 	{
 		player.AttackTriggerCalled();
 	}
+
+
 }
