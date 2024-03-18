@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3bbe5825549aa44b96316018eecef21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockBackMovement: {x: 1, y: 5}
+  knockBackMovement: {x: 1, y: 1}
   knockBackDuration: 0.15
   stunnedMovement: {x: 3, y: 5}
   stunnedDuration: 1
