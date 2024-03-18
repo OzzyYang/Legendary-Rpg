@@ -19,10 +19,12 @@ public class PlayerController : CharacterController
 
 	public PlayerAimSwordState aimSwordState { get; private set; }
 	public PlayerThrowSwordState throwSwordState { get; private set; }
+	public PlayerCatchSwordState catchSwordState { get; private set; }
 	#endregion
 
 	#region Skill Info
 	public SkillManager skill { get; private set; }
+	public GameObject sword { get; set; }
 	#endregion
 
 	#region Player info
@@ -58,6 +60,7 @@ public class PlayerController : CharacterController
 		counterAttackState = new PlayerCounterAttackState(this, stateMachine, "isCounterAttacking");
 		aimSwordState = new PlayerAimSwordState(this, stateMachine, "isSwordAiming");
 		throwSwordState = new PlayerThrowSwordState(this, stateMachine, "isSwordThrowing");
+		catchSwordState = new PlayerCatchSwordState(this, stateMachine, "isSwordCatching");
 
 	}
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyController : CharacterController
@@ -9,7 +10,9 @@ public class EnemyController : CharacterController
 
 	#region Enemy Info
 	[Header("Movement Info")]
-	public float moveSpeed = 4.0f;
+	private float currentMoveSpeed;
+	[SerializeField] private float moveSpeed = 4.0f;
+
 	[Header("Battle Info")]
 	public float battleTime;
 	public float attackCheckDistance;
@@ -28,6 +31,7 @@ public class EnemyController : CharacterController
 	protected override void Start()
 	{
 		base.Start();
+
 	}
 
 	protected override void Update()
@@ -74,6 +78,25 @@ public class EnemyController : CharacterController
 		return false;
 	}
 
+	public virtual void FreezeMovement(bool _needFreeze)
+	{
+		if (_needFreeze)
+		{
+			rb.velocity = Vector3.zero;
+			currentMoveSpeed = 0;
+		}
+		else
+		{
+			currentMoveSpeed = moveSpeed;
+		}
+	}
+
+	public IEnumerator FreezeMovementFor(float _freezeTime)
+	{
+		FreezeMovement(true);
+		yield return new WaitForSeconds(_freezeTime);
+		FreezeMovement(false);
+	}
 	protected override void OnDrawGizmos()
 	{
 		base.OnDrawGizmos();

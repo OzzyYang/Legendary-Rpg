@@ -8,6 +8,7 @@ public class PlayerMoveState : PlayerGroundedState
 	{
 		base.Enter();
 		player.SetVelocity(xInput * player.playerSpeed, rb.velocity.y);
+
 	}
 
 	public override void Exit()

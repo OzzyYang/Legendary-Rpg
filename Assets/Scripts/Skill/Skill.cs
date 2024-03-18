@@ -19,7 +19,8 @@ public class Skill : MonoBehaviour
 	// Update is called once per frame
 	protected virtual void Update()
 	{
-		coolDownTimer -= Time.deltaTime;
+		if (coolDownTimer >= 0)
+			coolDownTimer -= Time.deltaTime;
 	}
 
 	public virtual bool CanUseSkill()

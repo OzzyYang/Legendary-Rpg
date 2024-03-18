@@ -25,7 +25,7 @@ public class SkeletonMoveState : SkeletonGroundedState
 			enemy.Flip();
 			return;
 		}
-		enemy.SetVelocity(enemy.moveSpeed * enemy.facingDirection, rb.velocity.y);
+		enemy.SetVelocity(enemy.currentMoveSpeed * enemy.facingDirection, rb.velocity.y);
 
 	}
 }

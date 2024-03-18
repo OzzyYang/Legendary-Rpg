@@ -58,8 +58,15 @@ public class PlayerGroundedState : PlayerState
 
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 		{
-			stateMachine.ChangeState(player.aimSwordState);
-			return;
+			if (player.skill.swordSkill.CanUseSkill())
+			{
+				stateMachine.ChangeState(player.aimSwordState);
+				return;
+			}
+			else
+			{
+				player.skill.swordSkill.ReturnToPlayer();
+			}
 		}
 
 	}
