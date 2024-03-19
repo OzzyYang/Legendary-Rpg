@@ -237,6 +237,7 @@ public class SwordController : MonoBehaviour
 		else
 		{
 			isBouncing = false;
+			isReturning = true;
 			targetEnemies.Clear();
 		}
 	}

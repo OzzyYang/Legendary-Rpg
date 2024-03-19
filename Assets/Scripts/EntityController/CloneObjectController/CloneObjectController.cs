@@ -33,9 +33,9 @@ public class CloneObjectController : MonoBehaviour
 			Destroy(this.gameObject);
 	}
 
-	public virtual void SetUpClone(Transform _newTransform, float _cloneObjectDuration)
+	public virtual void SetUpClone(Transform _newTransform, Vector3 _offSet, float _cloneObjectDuration)
 	{
-		transform.position = _newTransform.position;
+		transform.position = _newTransform.position + _offSet;
 		this.timer = _cloneObjectDuration;
 	}
 }

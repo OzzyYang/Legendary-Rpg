@@ -1,7 +1,6 @@
-using UnityEngine;
-
 public class SkeletonIdleState : SkeletonGroundedState
 {
+
 
 	public SkeletonIdleState(SkeletonController _enemy, EnemyStateMachine _stateMachine, string _animBoolName) : base(_enemy, _stateMachine, _animBoolName)
 	{
@@ -10,8 +9,8 @@ public class SkeletonIdleState : SkeletonGroundedState
 
 	public override void Enter()
 	{
+		StateTime = 1.5f;
 		base.Enter();
-		stateTimer = 1.5f;
 		enemy.SetVelocity(0, rb.velocity.y);
 	}
 
@@ -23,11 +22,6 @@ public class SkeletonIdleState : SkeletonGroundedState
 	public override void Update()
 	{
 		base.Update();
-		if (Input.GetKeyDown(KeyCode.U))
-		{
-			stateMachine.ChangeState((enemy as SkeletonController).stunnedState);
-			return;
-		}
 		if (stateTimer <= 0)
 			stateMachine.ChangeState(((SkeletonController)enemy).moveState);
 	}

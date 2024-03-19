@@ -14,10 +14,10 @@ public class CloneSkill : Skill
 		base.UseSkill();
 	}
 
-	public void CreateClone(Transform _newTransform)
+	public void CreateClone(Transform _newTransform, Vector3 _offSet)
 	{
 		GameObject newClone = GameObject.Instantiate(cloneObject);
-		newClone.GetComponent<CloneObjectController>().SetUpClone(_newTransform, cloneDuration);
+		newClone.GetComponent<CloneObjectController>().SetUpClone(_newTransform, _offSet, cloneDuration);
 	}
 
 	protected override void Awake()
