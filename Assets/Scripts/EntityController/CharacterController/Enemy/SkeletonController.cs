@@ -42,5 +42,12 @@ public class SkeletonController : EnemyController
 		}
 		return false;
 	}
+
+	public override void FreezeMovement(bool _needFreeze)
+	{
+		base.FreezeMovement(_needFreeze);
+		stateMachine.ChangeState(idleState); stateMachine.ChangeState(idleState);
+		stateMachine.currentState.FreezeState(_needFreeze);
+	}
 }
 

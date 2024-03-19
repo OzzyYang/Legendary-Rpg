@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerDashState : PlayerState
 {
 	public PlayerDashState(PlayerController _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
@@ -10,7 +12,7 @@ public class PlayerDashState : PlayerState
 		stateDuration = player.dashDuration;
 		stateTimer = stateDuration;
 		player.FlipController(player.dashDirection);
-		player.skill.cloneSkill.CreateClone(player.transform);
+		player.skill.cloneSkill.CreateClone(player.transform, Vector2.zero);
 	}
 
 	public override void Exit()

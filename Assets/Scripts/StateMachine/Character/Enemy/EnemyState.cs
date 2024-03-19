@@ -8,6 +8,9 @@ public class EnemyState
 	protected Animator animator;
 	protected string animBoolName;
 
+	//public virtual float test { get; private set; }
+
+	protected float StateTime;
 	protected float stateTimer;
 	protected bool isTriggerCalled;
 
@@ -27,6 +30,7 @@ public class EnemyState
 		rb = enemy.rb;
 		animator.SetBool(animBoolName, true);
 		isTriggerCalled = false;
+		stateTimer = StateTime;
 	}
 
 	public virtual void Exit()
@@ -44,6 +48,19 @@ public class EnemyState
 	public virtual void AnimationFnishedTrigger()
 	{
 		isTriggerCalled = true;
+	}
+
+	public virtual void FreezeState(bool _needFreeze)
+	{
+		if (_needFreeze)
+		{
+			stateTimer = Mathf.Infinity;
+
+		}
+		else
+		{
+			stateTimer = StateTime;
+		}
 	}
 
 }
