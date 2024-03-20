@@ -44,8 +44,18 @@ public class SkeletonBattleState : EnemyState
 			}
 		}
 
-		moveDirection = player.transform.position.x > rb.position.x ? 1 : -1;
-		enemy.FlipController(moveDirection);
+		//fix bug:skeleton will change face direction fast when player is too close to enemy.
+		if (Mathf.Abs(player.transform.position.x - enemy.transform.position.x) <= 1 && Mathf.Abs(player.transform.position.y - enemy.transform.position.y) >= 0)
+		{
+
+		}
+		else
+		{
+
+			moveDirection = player.transform.position.x > rb.position.x ? 1 : -1;
+			enemy.FlipController(moveDirection);
+		}
+
 		enemy.SetVelocity(enemy.currentMoveSpeed * 1.2f * moveDirection, rb.velocity.y);
 	}
 

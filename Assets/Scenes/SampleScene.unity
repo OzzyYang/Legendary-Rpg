@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 131366406}
   - component: {fileID: 131366407}
   - component: {fileID: 131366408}
+  - component: {fileID: 131366409}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -425,8 +426,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdde063e2c57fd04580ddf0f90b11a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillCoolDownTime: 0
+  skillCoolDownTime: 10
   blackHoleObject: {fileID: 5432016169373432841, guid: 5f58498216285994bbe03c9275ee1f4c, type: 3}
+  hotKeyTextObject: {fileID: 0}
+  blackHoleMaxSize: 15
+  blackHoleGrowDuration: 0.5
+  qteDuration: 1
+  blackHoleGrowCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hotKetsSetting: 6a0000006b0000006c000000620000006e0000006d000000
+--- !u!114 &131366409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131366402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce35ee804a640441a731817b02953be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCoolDownTime: 0
+  crystalPrefab: {fileID: 3820628240129050058, guid: 8b15a066f637fb346a622efe2b51dcef, type: 3}
+  crystalDuration: 2
 --- !u!1001 &154752677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1004,7 +1049,7 @@ Transform:
   - {fileID: 519420032}
   - {fileID: 179804878}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &760630118
 MonoBehaviour:
@@ -61297,7 +61342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3530560524342239139, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3530560524342239139, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
       propertyPath: m_LocalPosition.x

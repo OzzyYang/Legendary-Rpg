@@ -14,6 +14,8 @@ public class EnemyState
 	protected float stateTimer;
 	protected bool isTriggerCalled;
 
+	protected bool needFreeze;
+
 	private readonly bool needDebug = false;
 
 	public EnemyState(EnemyController _enemy, EnemyStateMachine _stateMachine, string _animBoolName)
@@ -41,6 +43,7 @@ public class EnemyState
 
 	public virtual void Update()
 	{
+		if (needFreeze) return;
 		if (stateTimer >= 0) stateTimer -= Time.deltaTime;
 	}
 
@@ -52,15 +55,7 @@ public class EnemyState
 
 	public virtual void FreezeState(bool _needFreeze)
 	{
-		if (_needFreeze)
-		{
-			stateTimer = Mathf.Infinity;
-
-		}
-		else
-		{
-			stateTimer = StateTime;
-		}
+		this.needFreeze = _needFreeze;
 	}
 
 }
