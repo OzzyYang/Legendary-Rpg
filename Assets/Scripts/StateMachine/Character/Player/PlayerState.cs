@@ -25,7 +25,9 @@ public class PlayerState
 
 	public virtual void Enter()
 	{
+#if DEBUG
 		if (needDebug) player.ShowInfo(animBoolName + " enter");
+#endif
 		player.animator.SetBool(animBoolName, true);
 		rb = player.rb;
 		isTrrigerCalled = false;
@@ -50,7 +52,9 @@ public class PlayerState
 
 	public virtual void Exit()
 	{
+#if DEBUG
 		if (needDebug) player.ShowInfo(animBoolName + " exit");
+#endif
 		player.animator.SetBool(animBoolName, false);
 
 	}

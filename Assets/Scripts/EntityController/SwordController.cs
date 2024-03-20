@@ -21,7 +21,7 @@ public class SwordController : MonoBehaviour
 	private int targetIndex = 0;
 	private List<Transform> targetEnemies = new List<Transform>();
 	private int bounceCounter = 0;
-	private int bounceTimers = 0;
+	private int bounceTimes = 0;
 	#endregion
 
 	#region Pierce Info
@@ -116,7 +116,7 @@ public class SwordController : MonoBehaviour
 
 	private void BounceToEnemies()
 	{
-		if (bounceCounter >= bounceTimers - 1)
+		if (bounceCounter >= bounceTimes - 1)
 		{
 			isBouncing = false;
 			bounceCounter = 0;
@@ -130,11 +130,10 @@ public class SwordController : MonoBehaviour
 			targetEnemies[targetIndex].gameObject.GetComponent<EnemyController>().Damage();
 			targetIndex++;
 			bounceCounter++;
-
-			if (targetIndex >= targetEnemies.Count)
-			{
-				targetIndex = 0;
-			}
+		}
+		if (targetIndex >= targetEnemies.Count)
+		{
+			targetIndex = 0;
 		}
 	}
 
@@ -156,7 +155,8 @@ public class SwordController : MonoBehaviour
 	public void SetupBounce(float _bounceSpeedPercentage, int _bounceTimes)
 	{
 		this.throwForce *= _bounceSpeedPercentage;
-		this.bounceTimers = _bounceTimes;
+		this.bounceTimes = _bounceTimes;
+
 	}
 	public void SetupPierce(float _pierceSpeedPercentage, int _pierceTimes)
 	{
@@ -233,6 +233,8 @@ public class SwordController : MonoBehaviour
 		if (targetEnemies.Count > 1)
 		{
 			isBouncing = true;
+			bounceCounter = 0;
+			targetIndex = 0;
 		}
 		else
 		{

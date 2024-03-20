@@ -25,26 +25,13 @@ public class PlayerCloneController : CloneObjectController
 
 	protected void FaceToEnemy()
 	{
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(attackCheck.position, 25);
-		Collider2D enemy = null;
-		foreach (var hit in colliders)
-		{
-			if (hit.GetComponent<EnemyController>() == null) { continue; }
-			if (enemy == null)
-			{
-				enemy = hit;
-			}
-			else
-			{
-				enemy = Vector2.Distance(transform.position, enemy.transform.position) <= Vector2.Distance(transform.position, hit.transform.position) ? enemy : hit;
-			}
-		}
+		Transform enemy = FindClosestEnemyIn(attackCheck.position, 25);
 
 		if (enemy == null)
 		{
 			transform.rotation = PlayerManager.instance.player.transform.rotation;
 		}
-		else if (enemy.transform.position.x < transform.position.x)
+		else if (enemy.position.x < transform.position.x)
 		{
 			transform.Rotate(0, 180, 0);
 		}
@@ -65,7 +52,7 @@ public class PlayerCloneController : CloneObjectController
 
 	private void AnimationTrigger()
 	{
-		timer = 0;
+		needToFadeAway = true;
 	}
 
 }

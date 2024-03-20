@@ -20,6 +20,7 @@ public class PlayerController : CharacterController
 	public PlayerAimSwordState aimSwordState { get; private set; }
 	public PlayerThrowSwordState throwSwordState { get; private set; }
 	public PlayerCatchSwordState catchSwordState { get; private set; }
+	public PlayerBlackHoleState blackHoleState { get; private set; }
 	#endregion
 
 	#region Skill Info
@@ -61,6 +62,7 @@ public class PlayerController : CharacterController
 		aimSwordState = new PlayerAimSwordState(this, stateMachine, "isSwordAiming");
 		throwSwordState = new PlayerThrowSwordState(this, stateMachine, "isSwordThrowing");
 		catchSwordState = new PlayerCatchSwordState(this, stateMachine, "isSwordCatching");
+		blackHoleState = new PlayerBlackHoleState(this, stateMachine, "isLevitating");
 
 	}
 
