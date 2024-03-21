@@ -13,9 +13,8 @@ public class BlackHoleSkill : Skill
 	[SerializeField] private List<KeyCode> hotKetsSetting;
 
 
-	private bool isReleasingSkill;
-
-	private GameObject blackHole;
+	public bool isReleasingSkill { get; private set; }
+	public GameObject blackHole { get; private set; }
 	public override bool CanUseSkill()
 	{
 		blackHole = blackHole == null ? Instantiate(blackHoleObject) : blackHole;
@@ -24,8 +23,6 @@ public class BlackHoleSkill : Skill
 		if (coolDownTimer <= 0)
 		{
 			coolDownTimer = skillCoolDownTime;
-
-
 			UseSkill();
 			return true;
 		}
@@ -70,5 +67,7 @@ public class BlackHoleSkill : Skill
 				isReleasingSkill = true;
 			}
 		}
+		if (blackHole == null) isReleasingSkill = false;
 	}
+
 }

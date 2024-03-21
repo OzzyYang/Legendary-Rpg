@@ -91,6 +91,7 @@ public class BlackHoleController : MonoBehaviour
 				Destroy(hotkey);
 			}
 		}
+
 		if (enemiesList.Count > 0)
 		{
 			StartCoroutine("ShrinkBlackHoleAfter", 0.8f);

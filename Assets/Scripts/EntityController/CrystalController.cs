@@ -10,16 +10,21 @@ public class CrystalController : CloneObjectController
 
 	private float crytalDuration;
 
+	#region Explode Info
 	public bool isExploding { get; private set; }
-
 	private bool canExplode;
 	private float explodeDuration = 1F;
 	private float explodeTimer;
 	private float explodePercentage;
+	#endregion
 
+	#region Move Info
 	private bool canMoveToEnemy;
 	private Transform enemyTarget;
 	private float moveSpeed = 4.0F;
+	#endregion
+
+
 
 	// Start is called before the first frame update
 	protected override void Start()
@@ -27,13 +32,15 @@ public class CrystalController : CloneObjectController
 		animator = GetComponent<Animator>();
 		originLocalScale = transform.localScale;
 		crystalCollider = GetComponent<CircleCollider2D>();
+
 	}
 
 	// Update is called once per frame
 	protected override void Update()
 	{
 		if (timer >= 0) timer -= Time.deltaTime;
-		if (timer < 0 && !isExploding && !canMoveToEnemy) Explode();
+		//Additionally the crystal  can move toward enemy, but if there are not any enemy nearby,  the crystal will explode automatically.
+		if (timer < 0 && !isExploding && (!canMoveToEnemy || enemyTarget == null)) Explode();
 
 		if (isExploding)
 		{
@@ -55,17 +62,37 @@ public class CrystalController : CloneObjectController
 
 	}
 
-	public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMoveToEnemy)
+	public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMoveToEnemy, int _searchStrategy, Transform target)
 	{
 		this.timer = this.crytalDuration = _crystalDuration;
 		this.canExplode = _canExplode;
 		this.canMoveToEnemy = _canMoveToEnemy;
 
-		if (canMoveToEnemy)
+
+		switch (_searchStrategy)
 		{
-			enemyTarget = FindClosestEnemyIn(transform.position, 20);
+
+			case 0:// search closest enemy 
+				{
+					enemyTarget = FindClosestEnemyIn(transform.position, 20);
+					break;
+				}
+
+			case 1:// search enemy randomly
+				{
+					GameObject blackHole = SkillManager.instance.blackHoleSkill.blackHole;
+					enemyTarget = FindEnemyRandomlyIn(transform.position, blackHole.GetComponent<CircleCollider2D>().bounds.size.x / 2);
+					break;
+				}
+			case 2:// choose given target
+				{
+
+					enemyTarget = target;
+					break;
+				}
 		}
 	}
+
 
 	public void Explode()
 	{

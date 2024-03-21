@@ -35,6 +35,8 @@ public class PlayerCloneController : CloneObjectController
 		{
 			transform.Rotate(0, 180, 0);
 		}
+
+		facingDirection = transform.rotation.eulerAngles.y == 0 ? 1 : -1;
 	}
 
 	protected void AttackTrigger()
@@ -46,6 +48,8 @@ public class PlayerCloneController : CloneObjectController
 			if (enemy != null)
 			{
 				enemy.Damage();
+				if (Random.Range(0, 1.0f) < duplicateProbability && canDuplicate)
+					SkillManager.instance.cloneSkill.CreateClone(enemy.transform, new Vector2(.5f * facingDirection, 0));
 			}
 		}
 	}

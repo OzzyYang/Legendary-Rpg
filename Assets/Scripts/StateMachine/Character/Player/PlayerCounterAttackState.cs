@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
+	private bool hasCreatedClone = false;
 	public PlayerCounterAttackState(PlayerController _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
 	{
 	}
@@ -31,10 +32,16 @@ public class PlayerCounterAttackState : PlayerState
 				{
 					stateTimer = 10;//any value bigger than 1
 					player.animator.SetBool("CASuccessful", true);
+					if (!hasCreatedClone)
+					{
+						player.skill.counterAttackSkill.CreateCloneOver(enemy.transform);
+						hasCreatedClone = true;
+					}
 				}
 			}
 
 		}
+		hasCreatedClone = false;
 		if (stateTimer < 0 || isTrrigerCalled)
 			stateMachine.ChangeState(player.idleState);
 	}
