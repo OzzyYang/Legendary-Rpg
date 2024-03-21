@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CloneObjectController : MonoBehaviour
@@ -8,6 +9,10 @@ public class CloneObjectController : MonoBehaviour
 
 	protected float timer;
 	protected bool needToFadeAway;
+	protected bool canDuplicate;
+	protected float duplicateProbability;
+
+	protected int facingDirection;
 
 	protected virtual void Awake()
 	{
@@ -55,10 +60,24 @@ public class CloneObjectController : MonoBehaviour
 		return enemy?.transform;
 	}
 
-	public virtual void SetUpClone(Transform _newTransform, Vector3 _offSet, float _cloneObjectDuration)
+	protected virtual Transform FindEnemyRandomlyIn(Vector3 _checkPosition, float _radius)
+	{
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(_checkPosition, _radius);
+		List<Transform> enemiesList = new List<Transform>();
+		foreach (var hit in colliders)
+		{
+			if (hit.GetComponent<EnemyController>() != null) enemiesList.Add(hit.transform);
+		}
+
+		return enemiesList.Count > 0 ? enemiesList[Random.Range(0, enemiesList.Count)].transform : null;
+	}
+
+	public virtual void SetUpClone(Transform _newTransform, Vector3 _offSet, float _cloneObjectDuration, bool _canDuplicate, float _duplicateProbability)
 	{
 		transform.position = _newTransform.position + _offSet;
 		this.timer = _cloneObjectDuration;
+		this.canDuplicate = _canDuplicate;
+		this.duplicateProbability = _duplicateProbability;
 	}
 
 	public void DestrotSelf() => Destroy(gameObject);

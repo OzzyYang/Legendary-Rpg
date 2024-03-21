@@ -91,7 +91,6 @@ public class PlayerController : CharacterController
 		{
 			if (isWallDetected()) return;
 			DashDirectionController(Input.GetAxisRaw("Horizontal"));
-			//Debug.Log(Input.GetAxisRaw("Horizontal") + "     " + dashDirection);
 			stateMachine.ChangeState(dashState);
 		}
 
