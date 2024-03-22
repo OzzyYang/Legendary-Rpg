@@ -17,10 +17,7 @@ public class BlackHoleSkill : Skill
 	public GameObject blackHole { get; private set; }
 	public override bool CanUseSkill()
 	{
-		blackHole = blackHole == null ? Instantiate(blackHoleObject) : blackHole;
-		blackHole.SetActive(false);
-
-		if (coolDownTimer <= 0)
+		if (coolDownTimer <= 0 && !isReleasingSkill)
 		{
 			coolDownTimer = skillCoolDownTime;
 			UseSkill();
@@ -33,6 +30,8 @@ public class BlackHoleSkill : Skill
 	public override void UseSkill()
 	{
 		base.UseSkill();
+		blackHole = blackHole == null ? Instantiate(blackHoleObject) : blackHole;
+		blackHole.SetActive(false);
 		StartCoroutine("FlyUpForAndReleaseBlackHole", 0.25f);
 	}
 

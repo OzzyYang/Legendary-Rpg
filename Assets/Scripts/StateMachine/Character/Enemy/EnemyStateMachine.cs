@@ -1,21 +1,16 @@
-public class EnemyStateMachine
+public class EnemyStateMachine : CharacterStateMachine
 {
-	public EnemyState currentState { get; private set; }
-	protected EnemyController enemy;
-	protected string aniBoolName;
 
-	public void Initialize(EnemyState _startState)
+	public string currentAnimBoolName { get; protected set; }
+	public override void ChangeState(CharacterState _newState)
 	{
-		currentState = _startState;
-		currentState.Enter();
+		base.ChangeState(_newState);
+		currentAnimBoolName = _newState.animBoolName;
 	}
 
-	public void ChangeState(EnemyState _newState)
+	public override void Initialize(CharacterState _startState)
 	{
-
-		currentState.Exit();
-		currentState = _newState;
-		currentState.Enter();
+		base.Initialize(_startState);
+		currentAnimBoolName = _startState.animBoolName;
 	}
-
 }

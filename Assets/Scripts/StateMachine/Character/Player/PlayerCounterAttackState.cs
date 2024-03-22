@@ -42,7 +42,7 @@ public class PlayerCounterAttackState : PlayerState
 
 		}
 		hasCreatedClone = false;
-		if (stateTimer < 0 || isTrrigerCalled)
+		if (stateTimer < 0 || isTriggerCalled)
 			stateMachine.ChangeState(player.idleState);
 	}
 }

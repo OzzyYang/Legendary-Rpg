@@ -17,7 +17,7 @@ public class PlayerCatchSwordState : PlayerState
 	public override void Update()
 	{
 		base.Update();
-		if (isTrrigerCalled)
+		if (isTriggerCalled)
 			player.stateMachine.ChangeState(player.idleState);
 	}
 

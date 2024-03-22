@@ -22,7 +22,7 @@ public class PlayerThrowSwordState : PlayerState
 	public override void Update()
 	{
 		base.Update();
-		if (isTrrigerCalled)
+		if (isTriggerCalled)
 		{
 			stateMachine.ChangeState(player.idleState);
 			player.skill.swordSkill.UseSkill();

@@ -7,23 +7,25 @@ public class SkeletonController : EnemyController
 	public SkeletonBattleState battleState { get; protected set; }
 	public SkeletonAttackState attackState { get; protected set; }
 	public SkeletonStunnedState stunnedState { get; protected set; }
+	//public SkeletonDyingState dyingState { get; protected set; }
 	#endregion
 
 
 	protected override void Awake()
 	{
 		base.Awake();
-		idleState = new SkeletonIdleState(this, stateMachine, "isIdling");
-		moveState = new SkeletonMoveState(this, stateMachine, "isMoving");
-		battleState = new SkeletonBattleState(this, stateMachine, "isMoving");
-		attackState = new SkeletonAttackState(this, stateMachine, "isAttacking");
-		stunnedState = new SkeletonStunnedState(this, stateMachine, "isStunned");
+		idleState = new SkeletonIdleState(this, stateMachine as EnemyStateMachine, "isIdling");
+		moveState = new SkeletonMoveState(this, stateMachine as EnemyStateMachine, "isMoving");
+		battleState = new SkeletonBattleState(this, stateMachine as EnemyStateMachine, "isMoving");
+		attackState = new SkeletonAttackState(this, stateMachine as EnemyStateMachine, "isAttacking");
+		stunnedState = new SkeletonStunnedState(this, stateMachine as EnemyStateMachine, "isStunned");
+		dyingState = new SkeletonDyingState(this, stateMachine as EnemyStateMachine, "isIdling");
 	}
 
 	protected override void Start()
 	{
-		base.Start();
 		stateMachine.Initialize(idleState);
+		base.Start();
 	}
 
 	protected override void OnDrawGizmos()
@@ -47,7 +49,8 @@ public class SkeletonController : EnemyController
 	{
 		base.FreezeMovement(_needFreeze);
 		stateMachine.ChangeState(idleState); stateMachine.ChangeState(idleState);
-		stateMachine.currentState.FreezeState(_needFreeze);
+		(stateMachine.currentState as EnemyState).FreezeState(_needFreeze);
 	}
+
 }
 

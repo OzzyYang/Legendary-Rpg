@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-
+	public CharacterStateMachine stateMachine { get; protected set; }
 	public Animator animator { get; private set; }
 	public Rigidbody2D rb { get; private set; }
+	public CharacterStats state { get; private set; }
+
+	public CharacterState dyingState { get; protected set; }
+
 
 	[Header("KnockBack Info")]
 	[SerializeField] protected Vector2 knockBackMovement;
@@ -21,7 +25,7 @@ public class CharacterController : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponentInChildren<Animator>();
-		//Debug.Log(animator.ToString());
+		state = GetComponent<CharacterStats>();
 		if (groundCheck == null) groundCheck = transform;
 		if (wallCheck == null) wallCheck = transform;
 		if (playerCheck == null) playerCheck = transform;
@@ -46,10 +50,15 @@ public class CharacterController : MonoBehaviour
 		isKnockBacking = false;
 	}
 
-	public virtual void Damage()
+	public virtual void playDamageEffect()
 	{
 		GetComponentInChildren<EntityFX>().StartCoroutine("FlashFX");
-		StartCoroutine("HitKnockBack");
+		//StartCoroutine("HitKnockBack");
+	}
+
+	public virtual void BeDead()
+	{
+		stateMachine.ChangeState(this.dyingState);
 	}
 
 	#region Collision Check

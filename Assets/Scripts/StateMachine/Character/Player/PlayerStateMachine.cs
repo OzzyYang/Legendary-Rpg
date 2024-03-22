@@ -1,18 +1,12 @@
-public class PlayerStateMachine
+public class PlayerStateMachine : CharacterStateMachine
 {
-	public PlayerState currentState { get; private set; }
-
-
-	public void Initialize(PlayerState _startState)
+	public override void ChangeState(CharacterState _newState)
 	{
-		currentState = _startState;
-		currentState.Enter();
+		base.ChangeState(_newState);
 	}
 
-	public void ChangeState(PlayerState _newState)
+	public override void Initialize(CharacterState _startState)
 	{
-		currentState.Exit();
-		currentState = _newState;
-		currentState.Enter();
+		base.Initialize(_startState);
 	}
 }

@@ -412,6 +412,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  currentMoveSpeed: 0
   moveSpeed: 4
   battleTime: 10
   attackCheckDistance: 0.8

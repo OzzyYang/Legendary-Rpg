@@ -114,7 +114,7 @@ public class CrystalController : CloneObjectController
 		{
 			if (hit.GetComponent<EnemyController>() != null)
 			{
-				hit.GetComponent<EnemyController>().Damage();
+				hit.GetComponent<EnemyController>().playDamageEffect();
 			}
 		}
 	}

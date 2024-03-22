@@ -5,7 +5,7 @@ public class EnemyController : CharacterController
 {
 	#region State Info
 	public EnemyState idleState { get; protected set; }
-	public EnemyStateMachine stateMachine { get; protected set; }
+	//public EnemyStateMachine stateMachine { get; protected set; }
 	#endregion
 
 	#region Enemy Info
@@ -34,6 +34,7 @@ public class EnemyController : CharacterController
 	{
 		base.Start();
 		currentMoveSpeed = moveSpeed;
+		stateMachine.Initialize(idleState);
 
 	}
 
@@ -46,7 +47,7 @@ public class EnemyController : CharacterController
 
 	public virtual void AnimationTriggerCalled()
 	{
-		stateMachine.currentState.AnimationFnishedTrigger();
+		stateMachine.currentState.AnimationFinishTrigger();
 	}
 
 	public virtual void AttackTriggerCalled()
@@ -57,7 +58,7 @@ public class EnemyController : CharacterController
 			PlayerController player = hit.GetComponent<PlayerController>();
 			if (player != null)
 			{
-				player.Damage();
+				this.state.DoDamage(player.state);
 			}
 		}
 	}
