@@ -6,9 +6,9 @@ public class SkeletonAttackState : EnemyState
 	{
 	}
 
-	public override void AnimationFnishedTrigger()
+	public override void AnimationFinishTrigger()
 	{
-		base.AnimationFnishedTrigger();
+		base.AnimationFinishTrigger();
 	}
 
 	public override void Enter()

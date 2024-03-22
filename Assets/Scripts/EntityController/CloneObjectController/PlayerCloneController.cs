@@ -47,7 +47,7 @@ public class PlayerCloneController : CloneObjectController
 			EnemyController enemy = hit.GetComponent<EnemyController>();
 			if (enemy != null)
 			{
-				enemy.Damage();
+				enemy.playDamageEffect();
 				if (Random.Range(0, 1.0f) < duplicateProbability && canDuplicate)
 					SkillManager.instance.cloneSkill.CreateClone(enemy.transform, new Vector2(.5f * facingDirection, 0));
 			}

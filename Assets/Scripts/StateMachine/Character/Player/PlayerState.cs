@@ -1,66 +1,39 @@
 using UnityEngine;
-public class PlayerState
+public class PlayerState : CharacterState
 {
-	protected PlayerStateMachine stateMachine;
 	protected PlayerController player;
-	protected Rigidbody2D rb;
-
-	protected string animBoolName;
 	protected float xInput;
 	protected float yInput;
 
-	protected float stateTimer;
-	protected float stateDuration;
-
-	protected bool isTrrigerCalled;
 	private readonly bool needDebug = false;
 
-
-	public PlayerState(PlayerController _player, PlayerStateMachine _stateMachine, string _animBoolName)
+	public PlayerState(PlayerController _character, PlayerStateMachine _stateMachine, string _animBoolName) : base(_character, _stateMachine, _animBoolName)
 	{
-		this.player = _player;
+		this.character = this.player = _character;
 		this.stateMachine = _stateMachine;
 		this.animBoolName = _animBoolName;
 	}
 
-	public virtual void Enter()
+	public override void Enter()
 	{
-#if DEBUG
-		if (needDebug) player.ShowInfo(animBoolName + " enter");
-#endif
-		player.animator.SetBool(animBoolName, true);
-		rb = player.rb;
-		isTrrigerCalled = false;
+		base.Enter();
 	}
 
-	public virtual void Update()
+	public override void Update()
 	{
+		base.Update();
 		xInput = Input.GetAxisRaw("Horizontal");
 		yInput = Input.GetAxisRaw("Vertical");
 
 		player.animator.SetBool("isLevitating", !player.isGroundedDetected());
 		player.animator.SetBool("isGrounded", player.isGroundedDetected());
 
-		StateTimerController();
 	}
 
-	private void StateTimerController()
+	public override void Exit()
 	{
-		if (stateTimer >= 0)
-			stateTimer -= Time.deltaTime;
-	}
-
-	public virtual void Exit()
-	{
-#if DEBUG
-		if (needDebug) player.ShowInfo(animBoolName + " exit");
-#endif
-		player.animator.SetBool(animBoolName, false);
+		base.Exit();
 
 	}
 
-	public virtual void AnimationFinishTrigger()
-	{
-		isTrrigerCalled = true;
-	}
 }

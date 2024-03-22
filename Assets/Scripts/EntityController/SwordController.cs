@@ -78,7 +78,7 @@ public class SwordController : MonoBehaviour
 					Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1);
 					foreach (var hit in colliders)
 					{
-						hit.GetComponent<EnemyController>()?.Damage();
+						hit.GetComponent<EnemyController>()?.playDamageEffect();
 					}
 				}
 
@@ -110,13 +110,12 @@ public class SwordController : MonoBehaviour
 
 			player.FlipController(this.transform.position.x >= player.transform.position.x ? 1 : -1);
 			player.stateMachine.ChangeState(player.catchSwordState);
-			//animator.SetBool("isIdling", false);
 		}
 	}
 
 	private void BounceToEnemies()
 	{
-		if (bounceCounter >= bounceTimes - 1)
+		if (bounceCounter > bounceTimes - 1)
 		{
 			isBouncing = false;
 			bounceCounter = 0;
@@ -127,7 +126,8 @@ public class SwordController : MonoBehaviour
 		FlyTo(targetEnemies[targetIndex].position);
 		if (Vector2.Distance(transform.position, targetEnemies[targetIndex].position) < 0.5f)
 		{
-			targetEnemies[targetIndex].gameObject.GetComponent<EnemyController>().Damage();
+			//Debug.Log(targetEnemies.Count + " " + bounceCounter + " " + targetIndex);
+			targetEnemies[targetIndex].gameObject.GetComponent<EnemyController>().playDamageEffect();
 			targetIndex++;
 			bounceCounter++;
 		}
@@ -198,7 +198,7 @@ public class SwordController : MonoBehaviour
 		{
 			//do single damage when isn't Spin Sword
 			// Spin Sword have  area damage and implemented in Updates()
-			if (!isSpinning) collision.gameObject.GetComponent<EnemyController>().Damage();
+			if (!isSpinning) collision.gameObject.GetComponent<EnemyController>().playDamageEffect();
 
 			if (isSpinning && !isStopped)
 			{

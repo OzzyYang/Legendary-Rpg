@@ -5,7 +5,6 @@ public class PlayerController : CharacterController
 {
 
 	#region State machine info
-	public PlayerStateMachine stateMachine { get; private set; }
 	public PlayerGroundedState groundedState { get; private set; }
 	public PlayerIdleState idleState { get; private set; }
 	public PlayerMoveState moveState { get; private set; }
@@ -21,6 +20,7 @@ public class PlayerController : CharacterController
 	public PlayerThrowSwordState throwSwordState { get; private set; }
 	public PlayerCatchSwordState catchSwordState { get; private set; }
 	public PlayerBlackHoleState blackHoleState { get; private set; }
+	//public PlayerDeadState dyingState { get; private set; }
 	#endregion
 
 	#region Skill Info
@@ -49,21 +49,21 @@ public class PlayerController : CharacterController
 	{
 		base.Awake();
 		stateMachine = new PlayerStateMachine();
-		groundedState = new PlayerGroundedState(this, stateMachine, "isGrounded");
-		idleState = new PlayerIdleState(this, stateMachine, "isIdling");
-		moveState = new PlayerMoveState(this, stateMachine, "isMoving");
-		dashState = new PlayerDashState(this, stateMachine, "isDashing");
-		jumpState = new PlayerJumpState(this, stateMachine, "isLevitating");
-		levitateState = new PlayerLevitationState(this, stateMachine, "isLevitating");
-		wallSlideState = new PlayerWallSlideState(this, stateMachine, "isWallSliding");
-		wallJumpState = new PlayerWallJumpState(this, stateMachine, "isLevitating");
-		attackState = new PlayerAttackState(this, stateMachine, "isAttacking");
-		counterAttackState = new PlayerCounterAttackState(this, stateMachine, "isCounterAttacking");
-		aimSwordState = new PlayerAimSwordState(this, stateMachine, "isSwordAiming");
-		throwSwordState = new PlayerThrowSwordState(this, stateMachine, "isSwordThrowing");
-		catchSwordState = new PlayerCatchSwordState(this, stateMachine, "isSwordCatching");
-		blackHoleState = new PlayerBlackHoleState(this, stateMachine, "isLevitating");
-
+		groundedState = new PlayerGroundedState(this, stateMachine as PlayerStateMachine, "isGrounded");
+		idleState = new PlayerIdleState(this, stateMachine as PlayerStateMachine, "isIdling");
+		moveState = new PlayerMoveState(this, stateMachine as PlayerStateMachine, "isMoving");
+		dashState = new PlayerDashState(this, stateMachine as PlayerStateMachine, "isDashing");
+		jumpState = new PlayerJumpState(this, stateMachine as PlayerStateMachine, "isLevitating");
+		levitateState = new PlayerLevitationState(this, stateMachine as PlayerStateMachine, "isLevitating");
+		wallSlideState = new PlayerWallSlideState(this, stateMachine as PlayerStateMachine, "isWallSliding");
+		wallJumpState = new PlayerWallJumpState(this, stateMachine as PlayerStateMachine, "isLevitating");
+		attackState = new PlayerAttackState(this, stateMachine as PlayerStateMachine, "isAttacking");
+		counterAttackState = new PlayerCounterAttackState(this, stateMachine as PlayerStateMachine, "isCounterAttacking");
+		aimSwordState = new PlayerAimSwordState(this, stateMachine as PlayerStateMachine, "isSwordAiming");
+		throwSwordState = new PlayerThrowSwordState(this, stateMachine as PlayerStateMachine, "isSwordThrowing");
+		catchSwordState = new PlayerCatchSwordState(this, stateMachine as PlayerStateMachine, "isSwordCatching");
+		blackHoleState = new PlayerBlackHoleState(this, stateMachine as PlayerStateMachine, "isLevitating");
+		dyingState = new PlayerDyingState(this, stateMachine as PlayerStateMachine, "isDying");
 	}
 
 	// Start is called before the first frame update
@@ -81,7 +81,6 @@ public class PlayerController : CharacterController
 		base.Update();
 		stateMachine.currentState.Update();
 		CheckForInput();
-
 	}
 
 	private void CheckForInput()
@@ -117,7 +116,7 @@ public class PlayerController : CharacterController
 			if (enemy != null)
 
 			{
-				enemy.Damage();
+				this.state.DoDamage(enemy.state);
 			}
 
 		}
