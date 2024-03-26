@@ -52,5 +52,6 @@ public class SkeletonController : EnemyController
 		(stateMachine.currentState as EnemyState).FreezeState(_needFreeze);
 	}
 
+
 }
 

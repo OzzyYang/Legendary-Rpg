@@ -38,10 +38,15 @@ public class PlayerController : CharacterController
 	[SerializeField] public Transform attackCheck;
 	public float counterAttackDuration = 1f;
 	[Header("Movement info")]
-	public float playerSpeed = 8f;
-	public float jumpForce = 10f;
-	public float dashSpeed = 25f;
-	public float dashDuration = 0.2f;
+	[SerializeField] private float defaultPlayerSpeed = 8f;
+	[SerializeField] private float defaultJumpForce = 19f;
+	[SerializeField] private float defaultDashSpeed = 25f;
+	[SerializeField] private float defaultDashDuration = 0.2f;
+	public float playerSpeed { get; private set; }
+	public float jumpForce { get; private set; }
+	public float dashSpeed { get; private set; }
+	public float dashDuration { get; private set; }
+
 	public float dashDirection { get; private set; } = 1;
 	#endregion
 
@@ -73,6 +78,7 @@ public class PlayerController : CharacterController
 		skill = SkillManager.instance;
 		stateMachine.Initialize(idleState);
 		initialPos = transform.position;
+		RevertSlow();
 	}
 
 	// Update is called once per frame
@@ -136,6 +142,24 @@ public class PlayerController : CharacterController
 	{
 		base.OnDrawGizmos();
 		Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
+	}
+
+	public override void SlowCharacter()
+	{
+		base.SlowCharacter();
+		playerSpeed = defaultPlayerSpeed * 0.7f;
+		dashDuration = defaultDashDuration * 0.7f;
+		dashSpeed = defaultDashSpeed * 0.7f;
+		jumpForce = defaultJumpForce * 0.7f;
+	}
+
+	public override void RevertSlow()
+	{
+		base.RevertSlow();
+		playerSpeed = defaultPlayerSpeed;
+		dashDuration = defaultDashDuration;
+		dashSpeed = defaultDashSpeed;
+		jumpForce = defaultJumpForce;
 	}
 }
 
