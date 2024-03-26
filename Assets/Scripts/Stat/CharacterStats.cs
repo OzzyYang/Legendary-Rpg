@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -25,19 +26,75 @@ public class CharacterStats : MonoBehaviour
 	public Stat frostDamage;
 	public Stat lightningDamge;
 
-	public bool isFireIgnited { get; protected set; }
-	public bool isIceFrozen { get; protected set; }
-	public bool isElectricShocked { get; protected set; }
+	public bool isFireIgnited { get; protected set; } // being damaged over time
+	public bool isIceFrozen { get; protected set; } //reduce armor by 50%
+	public bool isElectricShocked { get; protected set; } // reduce accuracy by 50%
 
-	[SerializeField] private float currentHealth;
+	private float ignitedTimer;
+	private float ignitedDuration;
+	private float ignitedDamge;
+
+	private float frozenTimer;
+	private float frozenDuration;
+
+	private float electricShockedTimer;
+	private float electricShockedDuration;
+	public float currentHealth { get; protected set; }
 
 	public CharacterController character { get; protected set; }
+	private EntityFX fX;
+	public System.Action onHealthChanged { get; set; }
 
 	protected virtual void Start()
 	{
 		this.currentHealth = this.maxHealth.GetValue();
 		this.criticalMultiplier.SetDefaultValue(150);
+
+		ignitedDuration = 4;
+		frozenDuration = 4;
+		electricShockedDuration = 4;
+
 		character = GetComponent<CharacterController>();
+		fX = GetComponentInChildren<EntityFX>();
+	}
+
+	protected virtual void Update()
+	{
+		if (isFireIgnited)
+		{
+			if (ignitedTimer >= 0) ignitedTimer -= Time.deltaTime;
+			else
+			{
+				fX.CancelColorBlink(fX.IgnitedColorBlink);
+				isFireIgnited = false;
+			}
+		}
+		if (isIceFrozen)
+		{
+			if (frozenTimer >= 0) frozenTimer -= Time.deltaTime;
+			else
+			{
+				fX.CancelColorBlink(fX.FrozenColorBlink);
+				character.RevertSlow();
+				isIceFrozen = false;
+			}
+		}
+		if (isElectricShocked)
+		{
+			if (electricShockedTimer >= 0) electricShockedTimer -= Time.deltaTime;
+			else
+			{
+				fX.CancelColorBlink(fX.ShockedColorBlink);
+				isElectricShocked = false;
+			}
+		}
+	}
+
+	private void DoDamageOnce()
+	{
+		TakeDamage(ignitedDamge);
+		//Debug.Log("Burned");
+		if (this.currentHealth <= 0) Die();
 	}
 
 	public virtual void DoDamage(CharacterStats _target)
@@ -51,19 +108,21 @@ public class CharacterStats : MonoBehaviour
 		totalDamge = CheckArmorThenDamage(totalDamge, _target);
 
 		float totalMagicalDamge = CaculateMagicalDamge(_target);
-		_target.TakeDamage(totalMagicalDamge);
+		_target.TakeDamage(totalMagicalDamge + totalDamge);
 		_target.GetComponent<CharacterController>().playDamageEffect();
 	}
 
 	private float CheckArmorThenDamage(float _baseDamage, CharacterStats _target)
 	{
+
 		//ensure that the damage is greater than zero
-		return Mathf.Clamp(_baseDamage - _target.armor.GetValue(), 0, float.MaxValue);
+		return Mathf.RoundToInt(Mathf.Clamp(_baseDamage - (_target.armor.GetValue() * (_target.isIceFrozen ? 0.5f : 1)), 0, float.MaxValue));
 	}
 
 	private bool CanAvoidAttack(CharacterStats _target)
 	{
 		float totalEvasion = _target.evasionRate.GetValue() + _target.agility.GetValue();
+		totalEvasion = this.isElectricShocked ? totalEvasion + 50 : totalEvasion;
 
 		//ensure that the evasion rate is between 0% and 80%
 		totalEvasion = Mathf.Clamp(totalEvasion, 0, 80);
@@ -92,75 +151,129 @@ public class CharacterStats : MonoBehaviour
 		totalMagicalDamage -= _target.magicResistance.GetValue() + _target.intelligence.GetValue() * 3;
 		totalMagicalDamage = Mathf.Clamp(totalMagicalDamage, 0, float.MaxValue);
 
-		//bool _isFireIgnited = (fireDamage.GetValue() > frostDamage.GetValue()) && (fireDamage.GetValue() > lightningDamge.GetValue());
-		//bool _isIceFrozen = (frostDamage.GetValue() > fireDamage.GetValue()) && (frostDamage.GetValue() > lightningDamge.GetValue());
-		//bool _isElectricShocked = (lightningDamge.GetValue() > fireDamage.GetValue()) && (lightningDamge.GetValue() > frostDamage.GetValue());
-
-		//if (!_isElectricShocked && !_isFireIgnited && !_isIceFrozen)
-		//{
-		//	switch (Random.Range(0, 3))
-		//	{
-		//		case 0:
-		//			{
-		//				_isElectricShocked = true;
-		//				break;
-		//			}
-		//		case 1:
-		//			{
-		//				_isIceFrozen = true;
-		//				break;
-		//			}
-		//		case 2:
-		//			{
-		//				_isFireIgnited = true;
-		//				break;
-		//			}
-		//		default:
-		//			{
-		//				break;
-		//			}
-		//	}
-		//}
-
-		SortedDictionary<string, float> magicalDamageList = new SortedDictionary<string, float>();
-
-		magicalDamageList.Add("isFireIgnited", fireDamage.GetValue());
-		magicalDamageList.Add("isIceFrozen", frostDamage.GetValue());
-		magicalDamageList.Add("isElectricShocked", lightningDamge.GetValue());
-
-		foreach (var item in magicalDamageList)
-		{
-			Debug.Log(item);
-		}
-
-		//this.ApplyAilments(_isFireIgnited, _isIceFrozen, _isElectricShocked);
+		CaculateAilementByDamage(_target);
 
 		return totalMagicalDamage;
 	}
 
-	private void ApplyAilments(bool _isFireIgnited, bool _isIceFrozen, bool _isElectricShocked)
+	private void CaculateAilementByDamage(CharacterStats _target)
 	{
-		//if (!_isFireIgnited || !_isIceFrozen || !_isElectricShocked) return;
+		if (fireDamage.GetValue() <= 0 && lightningDamge.GetValue() <= 0 && frostDamage.GetValue() <= 0)
+		{
+			_target.ApplyAilments(false, false, false, this);
+			return;
+		}
 
-		isFireIgnited = _isFireIgnited;
-		isIceFrozen = _isIceFrozen;
-		isElectricShocked = _isElectricShocked;
-		Debug.Log(isFireIgnited + " " + isIceFrozen + " " + isElectricShocked);
+		var sortedmagicalDamageList = new Dictionary<string, float>
+		{
+			{ "isFireIgnited", fireDamage.GetValue() },
+			{ "isIceFrozen", frostDamage.GetValue() },
+			{ "isElectricShocked", lightningDamge.GetValue() }
+		}.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair
+			=> pair.Value);
+
+
+		var currentPair = new KeyValuePair<string, float>();
+		var maxValueList = new List<KeyValuePair<string, float>>();
+		foreach (var item in sortedmagicalDamageList)
+		{
+			if (currentPair.Key == null)
+			{
+				currentPair = item;
+				maxValueList.Add(item);
+				continue;
+			}
+			if (currentPair.Value == item.Value)
+			{
+				maxValueList.Add(item);
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		if (maxValueList.Count > 1)
+		{
+			currentPair = maxValueList[Random.Range(0, maxValueList.Count)];
+		}
+
+
+		bool _isFireIgnited = false, _isIceFrozen = false, _isElectricShocked = false;
+
+		switch (currentPair.Key)
+		{
+			case "isFireIgnited":
+				{
+					_isFireIgnited = true;
+
+					break;
+				}
+			case "isIceFrozen":
+				{
+					_isIceFrozen = true;
+					break;
+				}
+			case "isElectricShocked":
+				{
+					_isElectricShocked = true;
+					break;
+				}
+
+		}
+		_target.ApplyAilments(_isFireIgnited, _isIceFrozen, _isElectricShocked, this);
+	}
+
+	private void ApplyAilments(bool _isFireIgnited, bool _isIceFrozen, bool _isElectricShocked, CharacterStats _attacker)
+	{
+
+		if (_isFireIgnited)
+		{
+			ignitedDamge = Mathf.RoundToInt(_attacker.fireDamage.GetValue() * 0.8f);
+			ignitedTimer = ignitedDuration;
+			if (!isFireIgnited)
+			{
+				InvokeRepeating(nameof(this.DoDamageOnce), 1, 1);
+				fX.InvokeRepeating(nameof(fX.IgnitedColorBlink), 0, 0.2f);
+			}
+			isFireIgnited = _isFireIgnited;
+
+		}
+
+		if (_isIceFrozen)
+		{
+			frozenTimer = frozenDuration;
+			if (!isIceFrozen)
+			{
+				fX.InvokeRepeating(nameof(fX.FrozenColorBlink), 0, 0.2f);
+				character.SlowCharacter();
+			}
+			isIceFrozen = _isIceFrozen;
+		}
+
+		if (_isElectricShocked)
+		{
+			electricShockedTimer = electricShockedDuration;
+			if (!isElectricShocked)
+			{
+				fX.InvokeRepeating(nameof(fX.ShockedColorBlink), 0, 0.2f);
+			}
+			isElectricShocked = _isElectricShocked;
+		}
+
+
 	}
 
 	public virtual float TakeDamage(float _damage)
 	{
 		Debug.Log(_damage);
 		this.currentHealth -= _damage;
+		if (this.onHealthChanged != null) onHealthChanged();
 		if (currentHealth <= 0) Die();
 		return this.currentHealth;
 	}
 
 	protected virtual void Die() => character.BeDead();
 
-	protected virtual void Update()
-	{
-
-	}
 
 }

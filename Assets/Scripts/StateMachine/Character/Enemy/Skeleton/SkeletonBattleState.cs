@@ -56,7 +56,7 @@ public class SkeletonBattleState : EnemyState
 			enemy.FlipController(moveDirection);
 		}
 
-		enemy.SetVelocity(enemy.currentMoveSpeed * 1.2f * moveDirection, rb.velocity.y);
+		enemy.SetVelocity(enemy.moveSpeed * 1.2f * moveDirection, rb.velocity.y);
 	}
 
 	public bool CanAttack()

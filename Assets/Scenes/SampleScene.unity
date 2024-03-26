@@ -393,7 +393,7 @@ MonoBehaviour:
   playerCloneObject: {fileID: 2370648923460415811, guid: 436bb5c393ee3734598942eb759ae655, type: 3}
   crystalObject: {fileID: 3820628240129050058, guid: 8b15a066f637fb346a622efe2b51dcef, type: 3}
   cloneDuration: 3
-  canDuplicate: 1
+  canDuplicate: 0
   duplicateProbability: 0.5
   createCrystalInsteadClone: 0
   ultimateSkillCreateNum: 6
@@ -499,7 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillCoolDownTime: 0
-  createCloneWhenSuccessful: 1
+  createCloneWhenSuccessful: 0
 --- !u!1 &179804876
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,54 +589,6 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 1319519681}
   m_ConfineScreenEdges: 1
   m_Damping: 0
---- !u!1 &325464920 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3530560524342239165, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
-  m_PrefabInstance: {fileID: 1616151961}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &325464925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 325464920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee021c31e823c243bfac500007e85f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strength:
-    baseValue: 0
-    modifiers: []
-  agility:
-    baseValue: 0
-    modifiers: []
-  intelligence:
-    baseValue: 0
-    modifiers: []
-  vitality:
-    baseValue: 0
-    modifiers: []
-  damage:
-    baseValue: 5
-    modifiers: []
-  critRate:
-    baseValue: 0
-    modifiers: []
-  critPower:
-    baseValue: 0
-    modifiers: []
-  maxHealth:
-    baseValue: 600
-    modifiers: []
-  evasionRate:
-    baseValue: 0
-    modifiers: []
-  armor:
-    baseValue: 0
-    modifiers: []
-  currentHealth: 0
 --- !u!1 &382052726
 GameObject:
   m_ObjectHideFlags: 3
@@ -1332,6 +1284,74 @@ PolygonCollider2D:
       - {x: -26, y: 11}
       - {x: -26, y: -8}
       - {x: 4, y: -8}
+--- !u!1 &1489617401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1489617404}
+  - component: {fileID: 1489617403}
+  - component: {fileID: 1489617402}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1489617402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489617401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1489617403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489617401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1489617404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489617401}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1616151961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1339,6 +1359,78 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 325464925, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: fireDamage.baseValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 325464925, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: frostDamage.baseValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 325464925, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: lightningDamge.baseValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: frozenColor.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: ignitedColor.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: shockedColor.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: frozenColor.Array.data[0].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: frozenColor.Array.data[0].g
+      value: 0.74289316
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: frozenColor.Array.data[0].r
+      value: 0.5509434
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: ignitedColor.Array.data[0].b
+      value: 0.45660377
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: ignitedColor.Array.data[0].g
+      value: 0.6739623
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: ignitedColor.Array.data[0].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: shockedColor.Array.data[0].b
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: shockedColor.Array.data[0].g
+      value: 0.52235293
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570262700711125619, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: shockedColor.Array.data[0].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3530560524342239136, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: knockBackDuration
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3530560524342239136, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: knockBackMovement.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3530560524342239136, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: knockBackMovement.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3530560524342239139, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1386,6 +1478,18 @@ PrefabInstance:
     - target: {fileID: 3530560524342239165, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
       propertyPath: m_Name
       value: Enemy_Skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568490847192510673, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568490847192510673, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568490847634117582, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
+      propertyPath: m_Value
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bb7a17ad377a8c4eb8c243632002cdb, type: 3}
@@ -61368,12 +61472,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: armor.baseValue
+      propertyPath: damage.baseValue
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: fireDamage.baseValue
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: evasion.baseValue
-      value: 50
+      propertyPath: frostDamage.baseValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: lightningDamge.baseValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803362438907177515, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803362438907177515, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6529526857648604369, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_RootOrder

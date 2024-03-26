@@ -7,7 +7,9 @@ public class EnemyState : CharacterState
 
 	protected bool needFreeze;
 
+#if DEBUG
 	private readonly bool needDebug = false;
+#endif
 
 
 
@@ -22,11 +24,19 @@ public class EnemyState : CharacterState
 	{
 		base.Enter();
 		animator = enemy.animator;
+#if DEBUG
+		if (needDebug)
+			Debug.Log(animBoolName + " entered");
+#endif
 	}
 
 	public override void Exit()
 	{
 		base.Exit();
+#if DEBUG
+		if (needDebug)
+			Debug.Log(animBoolName + " exited");
+#endif
 	}
 
 	public override void Update()

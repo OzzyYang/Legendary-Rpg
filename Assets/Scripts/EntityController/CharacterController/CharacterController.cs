@@ -21,6 +21,8 @@ public class CharacterController : MonoBehaviour
 	[SerializeField] public float stunnedDuration;
 	[SerializeField] protected GameObject counterImage;
 	protected bool canBeStunned;
+
+	public System.Action onFlipped;
 	protected virtual void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
@@ -48,17 +50,38 @@ public class CharacterController : MonoBehaviour
 		isKnockBacking = true;
 		yield return new WaitForSeconds(knockBackDuration);
 		isKnockBacking = false;
+		SetVelocity(0, rb.velocity.y);
 	}
 
 	public virtual void playDamageEffect()
 	{
-		GetComponentInChildren<EntityFX>().StartCoroutine("FlashFX");
-		//StartCoroutine("HitKnockBack");
+		EntityFX fX = GetComponentInChildren<EntityFX>();
+		fX.StartCoroutine(nameof(fX.FlashFX));
+		//fX.StartCoroutine(nameof)
+		StartCoroutine(nameof(HitKnockBack));
 	}
 
 	public virtual void BeDead()
 	{
 		stateMachine.ChangeState(this.dyingState);
+	}
+
+	public virtual IEnumerator SlowCharacterFor(float _seconds)
+	{
+		SlowCharacter();
+		yield return new WaitForSeconds(_seconds);
+		RevertSlow();
+	}
+
+
+	public virtual void SlowCharacter()
+	{
+		animator.speed = 0.7f;
+	}
+
+	public virtual void RevertSlow()
+	{
+		animator.speed = 1;
 	}
 
 	#region Collision Check
@@ -101,6 +124,7 @@ public class CharacterController : MonoBehaviour
 		facingDirection *= -1;
 		isFacingRight = !isFacingRight;
 		transform.Rotate(0, 180, 0);
+		if (onFlipped != null) onFlipped();
 	}
 
 	public void FlipController(float _xVelocity)
@@ -115,6 +139,7 @@ public class CharacterController : MonoBehaviour
 	{
 		if (isKnockBacking) return;
 		rb.velocity = new Vector2(_xVelocity, _yVelocity);
+		//Debug.Log(_xVelocity + " " + _yVelocity);
 	}
 
 	public virtual void SetPosition(float _xPos, float _yPos)

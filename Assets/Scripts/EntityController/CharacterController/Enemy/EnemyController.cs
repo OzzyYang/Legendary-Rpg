@@ -10,8 +10,8 @@ public class EnemyController : CharacterController
 
 	#region Enemy Info
 	[Header("Movement Info")]
-	public float currentMoveSpeed;
-	[SerializeField] private float moveSpeed = 4.0f;
+	public float moveSpeed;
+	[SerializeField] private float defaultMoveSpeed = 4.0f;
 
 	[Header("Battle Info")]
 	public float battleTime;
@@ -33,7 +33,7 @@ public class EnemyController : CharacterController
 	protected override void Start()
 	{
 		base.Start();
-		currentMoveSpeed = moveSpeed;
+		moveSpeed = defaultMoveSpeed;
 		stateMachine.Initialize(idleState);
 
 	}
@@ -90,13 +90,13 @@ public class EnemyController : CharacterController
 		{
 			rb.velocity = Vector3.zero;
 			animator.speed = 0;
-			currentMoveSpeed = 0;
+			moveSpeed = 0;
 
 		}
 		else
 		{
 			animator.speed = 1;
-			currentMoveSpeed = moveSpeed;
+			moveSpeed = defaultMoveSpeed;
 		}
 	}
 
@@ -112,4 +112,15 @@ public class EnemyController : CharacterController
 		Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
 	}
 
+	public override void SlowCharacter()
+	{
+		base.SlowCharacter();
+		moveSpeed = defaultMoveSpeed * 0.7f;
+	}
+
+	public override void RevertSlow()
+	{
+		base.RevertSlow();
+		moveSpeed = defaultMoveSpeed;
+	}
 }

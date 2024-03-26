@@ -27,8 +27,16 @@ public class SkeletonAttackState : EnemyState
 		base.Update();
 		if (isTriggerCalled)
 		{
+			//if ((enemy.isPlayerDetected().distance <= ((SkeletonController)enemy).attackCheckDistance))
+			//{
+			//	stateMachine.ChangeState((enemy as SkeletonController).attackState);
+			//}
+			//else
+			//{
 			stateMachine.ChangeState(enemy.idleState);
-			return;
+
+			//}
+
 		}
 	}
 }

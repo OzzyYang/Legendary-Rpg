@@ -11,7 +11,7 @@ public class SkeletonStunnedState : EnemyState
 		fX = enemy.GetComponentInChildren<EntityFX>();
 		stateTimer = enemy.stunnedDuration;
 		enemy.SetVelocity(enemy.stunnedMovement.x * -enemy.facingDirection, enemy.stunnedMovement.y);
-		fX.InvokeRepeating("RedColorBlink", 0, 0.1f);
+		fX.InvokeRepeating(nameof(fX.RedColorBlink), 0, 0.1f);
 	}
 
 	public override void Exit()
@@ -25,7 +25,7 @@ public class SkeletonStunnedState : EnemyState
 		if (stateTimer < 0)
 		{
 			stateMachine.ChangeState(enemy.idleState);
-			fX.Invoke("CancelRedColorBlink", 0);
+			fX.CancelColorBlink(fX.RedColorBlink);
 		}
 	}
 }

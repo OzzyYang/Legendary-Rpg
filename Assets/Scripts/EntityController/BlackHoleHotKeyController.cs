@@ -10,7 +10,8 @@ public class BlackHoleHotKeyController : MonoBehaviour
 
 	private void Awake()
 	{
-		hotKeyText = transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+		//hotKeyText = transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+		hotKeyText = GetComponentInChildren<TextMeshProUGUI>();
 	}
 
 	// Start is called before the first frame update
@@ -40,8 +41,7 @@ public class BlackHoleHotKeyController : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		//Unfreeze enemy who haven't been choosen
-		//enemy?.GetComponent<EnemyController>().FreezeMovement(false);
+
 	}
 
 
