@@ -116,8 +116,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3499680971787087159}
   - component: {fileID: 3499680971787087156}
-  - component: {fileID: 3499680971787087162}
   - component: {fileID: 1144437890213450754}
+  - component: {fileID: 5090387745814428125}
   m_Layer: 8
   m_Name: Sword
   m_TagString: Untagged
@@ -162,19 +162,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &3499680971787087162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3499680971787087158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd02ce48dd321b8469463cdc1505483e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 3499680971280224880}
 --- !u!68 &1144437890213450754
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -197,3 +184,16 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &5090387745814428125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3499680971787087158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff988652daa21404fa6d5a05c8c1e4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3499680971280224880}

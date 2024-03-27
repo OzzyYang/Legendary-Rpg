@@ -42,8 +42,11 @@ public class CharacterStats : MonoBehaviour
 	public float currentHealth { get; protected set; }
 
 	public CharacterController character { get; protected set; }
-	private EntityFX fX;
+	private EntityVFX fX;
 	public System.Action onHealthChanged { get; set; }
+
+	[SerializeField] private GameObject lightningPrefab;
+	[SerializeField] private LayerMask whatIsGround;
 
 	protected virtual void Start()
 	{
@@ -55,7 +58,7 @@ public class CharacterStats : MonoBehaviour
 		electricShockedDuration = 4;
 
 		character = GetComponent<CharacterController>();
-		fX = GetComponentInChildren<EntityFX>();
+		fX = GetComponentInChildren<EntityVFX>();
 	}
 
 	protected virtual void Update()
@@ -65,6 +68,7 @@ public class CharacterStats : MonoBehaviour
 			if (ignitedTimer >= 0) ignitedTimer -= Time.deltaTime;
 			else
 			{
+				CancelInvoke(nameof(DoDamageOnce));
 				fX.CancelColorBlink(fX.IgnitedColorBlink);
 				isFireIgnited = false;
 			}
@@ -92,7 +96,7 @@ public class CharacterStats : MonoBehaviour
 
 	private void DoDamageOnce()
 	{
-		TakeDamage(ignitedDamge);
+		TakeDamage(ignitedDamge, "fire");
 		//Debug.Log("Burned");
 		if (this.currentHealth <= 0) Die();
 	}
@@ -107,9 +111,15 @@ public class CharacterStats : MonoBehaviour
 
 		totalDamge = CheckArmorThenDamage(totalDamge, _target);
 
-		float totalMagicalDamge = CaculateMagicalDamge(_target);
-		_target.TakeDamage(totalMagicalDamge + totalDamge);
+
+		_target.TakeDamage(totalDamge, this.name);
 		_target.GetComponent<CharacterController>().playDamageEffect();
+	}
+
+	public virtual void DoMagicalDamage(CharacterStats _target)
+	{
+		float totalMagicalDamge = CaculateMagicalDamge(_target);
+		_target.TakeDamage(totalMagicalDamge, this.name);
 	}
 
 	private float CheckArmorThenDamage(float _baseDamage, CharacterStats _target)
@@ -144,7 +154,10 @@ public class CharacterStats : MonoBehaviour
 		return Mathf.RoundToInt(_baseDamage * totalCriticalMultiplier);
 	}
 
+
+
 	private float CaculateMagicalDamge(CharacterStats _target)
+
 	{
 		float totalMagicalDamage = this.fireDamage.GetValue() + this.frostDamage.GetValue() + this.lightningDamge.GetValue() + this.intelligence.GetValue();
 
@@ -254,6 +267,8 @@ public class CharacterStats : MonoBehaviour
 		if (_isElectricShocked)
 		{
 			electricShockedTimer = electricShockedDuration;
+			float yOffset = lightningPrefab.GetComponentInChildren<BoxCollider2D>().size.y - character.GetComponent<CapsuleCollider2D>().size.y;
+			Instantiate(lightningPrefab, character.transform.position + new Vector3(0, yOffset, 0), Quaternion.identity).GetComponent<LightningController>().SetupDamage(_attacker.lightningDamge.GetValue());
 			if (!isElectricShocked)
 			{
 				fX.InvokeRepeating(nameof(fX.ShockedColorBlink), 0, 0.2f);
@@ -264,9 +279,9 @@ public class CharacterStats : MonoBehaviour
 
 	}
 
-	public virtual float TakeDamage(float _damage)
+	public virtual float TakeDamage(float _damage, string attackerName)
 	{
-		Debug.Log(_damage);
+		Debug.Log(this.character.name + " has been damaged " + _damage + " points by " + attackerName);
 		this.currentHealth -= _damage;
 		if (this.onHealthChanged != null) onHealthChanged();
 		if (currentHealth <= 0) Die();

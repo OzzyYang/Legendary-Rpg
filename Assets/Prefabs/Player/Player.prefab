@@ -105,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -675527933
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 369980609, guid: 5611cdd8c15331b428a249da6c7b617e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -160,11 +160,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3206474695100040348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b44e18cd6cf55e419b625bf6e53f4c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 61a8c8077282d9a4bb5c5ee93ed3d5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitMaterial: {fileID: 2100000, guid: db1e8e09160f0a0479207f97d244d89c, type: 2}
-  hitFlashDuration: 0.15
+  hitMaterial: {fileID: 0}
+  hitFlashDuration: 0
   ignitedColor: []
   frozenColor: []
   shockedColor: []
@@ -276,10 +276,10 @@ MonoBehaviour:
   attackCheckRadius: 0.8
   attackCheck: {fileID: 6392260731772026113}
   counterAttackDuration: 1
-  playerSpeed: 8
-  jumpForce: 19
-  dashSpeed: 25
-  dashDuration: 0.2
+  defaultPlayerSpeed: 8
+  defaultJumpForce: 19
+  defaultDashSpeed: 25
+  defaultDashDuration: 0.2
 --- !u!114 &1446018180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +334,10 @@ MonoBehaviour:
   lightningDamge:
     baseValue: 0
     modifiers: []
+  lightningPrefab: {fileID: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &6529526857648604375
 Rigidbody2D:
   serializedVersion: 4

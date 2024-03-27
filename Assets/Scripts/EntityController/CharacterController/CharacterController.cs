@@ -55,9 +55,8 @@ public class CharacterController : MonoBehaviour
 
 	public virtual void playDamageEffect()
 	{
-		EntityFX fX = GetComponentInChildren<EntityFX>();
+		EntityVFX fX = GetComponentInChildren<EntityVFX>();
 		fX.StartCoroutine(nameof(fX.FlashFX));
-		//fX.StartCoroutine(nameof)
 		StartCoroutine(nameof(HitKnockBack));
 	}
 

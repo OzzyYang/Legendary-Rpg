@@ -1,6 +1,6 @@
 public class SkeletonStunnedState : EnemyState
 {
-	protected EntityFX fX;
+	protected EntityVFX fX;
 	public SkeletonStunnedState(EnemyController _enemy, EnemyStateMachine _stateMachine, string _animBoolName) : base(_enemy, _stateMachine, _animBoolName)
 	{
 	}
@@ -8,7 +8,7 @@ public class SkeletonStunnedState : EnemyState
 	public override void Enter()
 	{
 		base.Enter();
-		fX = enemy.GetComponentInChildren<EntityFX>();
+		fX = enemy.GetComponentInChildren<EntityVFX>();
 		stateTimer = enemy.stunnedDuration;
 		enemy.SetVelocity(enemy.stunnedMovement.x * -enemy.facingDirection, enemy.stunnedMovement.y);
 		fX.InvokeRepeating(nameof(fX.RedColorBlink), 0, 0.1f);

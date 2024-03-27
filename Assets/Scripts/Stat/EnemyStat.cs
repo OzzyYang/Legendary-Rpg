@@ -5,10 +5,6 @@ public class EnemyStat : CharacterStats
 		base.DoDamage(_target);
 	}
 
-	public override float TakeDamage(float _damage)
-	{
-		return base.TakeDamage(_damage);
-	}
 
 	protected override void Start()
 	{
