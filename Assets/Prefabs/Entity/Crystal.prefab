@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -675527933
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 1328961470, guid: 0f2d35081db8b2746aed901899e27f62, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -117,31 +117,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3820628240129050058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 283d3955c8922b44fb385acc65d2589f, type: 3}
+  m_Script: {fileID: 11500000, guid: d2637de05a02237448c979638197ac96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeMaxScale: 3
+  loosingSpeed: 0
+  animator: {fileID: 0}
+  explodeMaxScale: 0
   easeCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

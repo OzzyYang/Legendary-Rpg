@@ -32,6 +32,7 @@ public class PlayerCounterAttackState : PlayerState
 				{
 					stateTimer = 10;//any value bigger than 1
 					player.animator.SetBool("CASuccessful", true);
+					player.GetComponent<CharacterStats>().DoDamage(enemy.GetComponent<CharacterStats>());
 					if (!hasCreatedClone)
 					{
 						player.skill.counterAttackSkill.CreateCloneOver(enemy.transform);

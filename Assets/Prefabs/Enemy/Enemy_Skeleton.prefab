@@ -136,7 +136,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1105586723
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -85727878, guid: 687df074731fbf744b668d2275dbb675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -192,11 +192,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1528250905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b44e18cd6cf55e419b625bf6e53f4c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 61a8c8077282d9a4bb5c5ee93ed3d5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitMaterial: {fileID: 2100000, guid: db1e8e09160f0a0479207f97d244d89c, type: 2}
-  hitFlashDuration: 0.15
+  hitMaterial: {fileID: 0}
+  hitFlashDuration: 0
+  ignitedColor: []
+  frozenColor: []
+  shockedColor: []
+  hittedColor: []
 --- !u!1 &2583271701949898046
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +272,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1105586723
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: -10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7169812, g: 0, b: 0, a: 1}
@@ -355,7 +359,7 @@ GameObject:
   - component: {fileID: 325464925}
   - component: {fileID: 3530560524342239136}
   - component: {fileID: 2415689615132441411}
-  - component: {fileID: -5095086490202566351}
+  - component: {fileID: 3971348135452882141}
   m_Layer: 7
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -439,7 +443,10 @@ MonoBehaviour:
   lightningDamge:
     baseValue: 1
     modifiers: []
-  currentHealth: 0
+  lightningPrefab: {fileID: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &3530560524342239136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,8 +476,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
-  currentMoveSpeed: 0
   moveSpeed: 4
+  defaultMoveSpeed: 4
   battleTime: 10
   attackCheckDistance: 0.8
   attackCheck: {fileID: 463837184}
@@ -498,8 +505,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &-5095086490202566351
-BoxCollider2D:
+--- !u!70 &3971348135452882141
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -511,19 +518,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.10136783, y: -0.25035757}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.2979791, y: 1.5007151}
-  m_EdgeRadius: 0
+  m_Offset: {x: -0.072972655, y: -0.2230609}
+  m_Size: {x: 1.2411888, y: 1.581844}
+  m_Direction: 0
 --- !u!1001 &8277971469417784534
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -131,6 +131,7 @@ public class SwordSkill : Skill
 				}
 			default:
 				{
+					player.sword?.GetComponent<SwordController>().SetupRegular();
 					currentThrowForce = throwForce;
 					break;
 				}
