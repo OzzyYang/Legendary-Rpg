@@ -1,28 +1,31 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIItemSlotController : MonoBehaviour
+public class UIItemSlotController : MonoBehaviour, IPointerDownHandler
 {
-	[SerializeField] private Image itemIconSlot;
-	[SerializeField] private TextMeshProUGUI itemAmountSlot;
+	[SerializeField] protected Image itemIconSlot;
+	[SerializeField] protected TextMeshProUGUI itemAmountSlot;
+	[SerializeField] protected ItemType itemType;
 
-	private InventoryItem inventoryItem;
+	protected InventoryItem inventoryItem;
 
-	private void Awake()
+	protected virtual void OnValidate()
 	{
-		//UpdateData(this.inventoryItem);
-
+		this.UpdateData(inventoryItem);
+		this.name = "Item Slot - " + itemType;
 	}
 
-	public void UpdateData(InventoryItem inventoryItem)
+	public virtual void UpdateData(InventoryItem inventoryItem)
 	{
 		this.inventoryItem = inventoryItem;
 		if (this.inventoryItem != null && this.inventoryItem.stackSize >= 1)
 		{
-			itemIconSlot.color = Color.white;
-			this.itemIconSlot.sprite = inventoryItem.itemData.Icon;
-			this.itemAmountSlot.text = this.inventoryItem.stackSize.ToString();
+			this.itemIconSlot.color = Color.white;
+			this.itemIconSlot.sprite = this.inventoryItem.itemData.Icon;
+			this.itemAmountSlot.text = this.inventoryItem.stackSize == 1 ? "" : this.inventoryItem.stackSize.ToString();
+			this.itemType = this.inventoryItem.itemData.itemType;
 		}
 		else
 		{
@@ -32,14 +35,9 @@ public class UIItemSlotController : MonoBehaviour
 		}
 	}
 
-	// Start is called before the first frame update
-	void Start()
+	public virtual void OnPointerDown(PointerEventData eventData)
 	{
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-
+		if (this.inventoryItem == null) return;
+		InventoryManager.instance.EquipItem(this.inventoryItem.itemData);
 	}
 }
