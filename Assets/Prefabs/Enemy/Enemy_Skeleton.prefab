@@ -195,11 +195,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a8c8077282d9a4bb5c5ee93ed3d5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitMaterial: {fileID: 0}
-  hitFlashDuration: 0
+  hitMaterial: {fileID: 2100000, guid: db1e8e09160f0a0479207f97d244d89c, type: 2}
+  hitFlashDuration: 0.2
   ignitedColor: []
   frozenColor: []
-  shockedColor: []
+  shockedColor:
+  - {r: 1, g: 0.52235293, b: 0.39999998, a: 0}
   hittedColor: []
 --- !u!1 &2583271701949898046
 GameObject:
@@ -358,6 +359,7 @@ GameObject:
   - component: {fileID: 3530560524342239139}
   - component: {fileID: 325464925}
   - component: {fileID: 3530560524342239136}
+  - component: {fileID: 2441797138287815337}
   - component: {fileID: 2415689615132441411}
   - component: {fileID: 3971348135452882141}
   m_Layer: 7
@@ -414,7 +416,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   damage:
-    baseValue: 5
+    baseValue: 500
     modifiers: []
   criticalRate:
     baseValue: 0
@@ -423,7 +425,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   maxHealth:
-    baseValue: 600
+    baseValue: 500
     modifiers: []
   evasionRate:
     baseValue: 0
@@ -435,18 +437,21 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   fireDamage:
-    baseValue: 0
+    baseValue: 1
     modifiers: []
   frostDamage:
     baseValue: 0
     modifiers: []
   lightningDamge:
-    baseValue: 1
+    baseValue: 0
     modifiers: []
-  lightningPrefab: {fileID: 0}
+  lightningPrefab: {fileID: 115817180692989687, guid: c2fec86e5985c9140a3ab3357d4fae2c, type: 3}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
+  enemyLevel: 1
+  modifierPercentage: 1
+  basePoint: 4
 --- !u!114 &3530560524342239136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3bbe5825549aa44b96316018eecef21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockBackMovement: {x: 1, y: 1}
+  knockBackMovement: {x: 2.5, y: 3}
   knockBackDuration: 0.15
   stunnedMovement: {x: 3, y: 5}
   stunnedDuration: 1
@@ -484,6 +489,28 @@ MonoBehaviour:
   attackCheckRadius: 0.8
   attackCooldownTime: 0.5
   lastAttackTime: 0
+--- !u!114 &2441797138287815337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3530560524342239165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded6eddd1b2140e47befde1aef14a6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 4735807283887222885, guid: 92d7619c28c0ac84192be20b16e1e8a2, type: 3}
+  canDropItem: 1
+  items:
+  - {fileID: 11400000, guid: d4db8a0d14d58eb44bd346242e4d74b0, type: 2}
+  - {fileID: 11400000, guid: a330a3390d7aeaa47bc39d12fe8ee364, type: 2}
+  - {fileID: 11400000, guid: 00a6a014dd6c3ec47bb84d33d6b9dd3b, type: 2}
+  - {fileID: 11400000, guid: 50fb3e8ce9493e44689d68fa2e020cfa, type: 2}
+  - {fileID: 11400000, guid: 0a81a2e363febf6408e4104ec0b928fd, type: 2}
+  - {fileID: 11400000, guid: 82f8a94e8c9fcfd4bb5f5ca346c84b37, type: 2}
+  movement: {x: 3, y: 3}
 --- !u!50 &2415689615132441411
 Rigidbody2D:
   serializedVersion: 4
@@ -583,6 +610,10 @@ PrefabInstance:
     - target: {fileID: 290524190533964807, guid: 9cafdbc5bd170b74aba6c352df28220d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 290524191166166808, guid: 9cafdbc5bd170b74aba6c352df28220d, type: 3}
+      propertyPath: m_Value
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cafdbc5bd170b74aba6c352df28220d, type: 3}

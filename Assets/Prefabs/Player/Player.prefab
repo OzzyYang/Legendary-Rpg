@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 6529526857648604369}
   - component: {fileID: 7361302310939129549}
   - component: {fileID: 1446018180}
+  - component: {fileID: 6047914743271244761}
   - component: {fileID: 6529526857648604375}
   - component: {fileID: 8962225258272315429}
   m_Layer: 6
@@ -338,6 +339,22 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &6047914743271244761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6529526857648604371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc80dbe7cc6b80743a1e6521b25033ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 4735807283887222885, guid: 92d7619c28c0ac84192be20b16e1e8a2, type: 3}
+  canDropItem: 1
+  items: []
+  movement: {x: 5, y: 5}
 --- !u!50 &6529526857648604375
 Rigidbody2D:
   serializedVersion: 4

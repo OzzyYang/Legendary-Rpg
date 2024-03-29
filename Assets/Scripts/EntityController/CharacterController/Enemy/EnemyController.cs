@@ -58,7 +58,7 @@ public class EnemyController : CharacterController
 			PlayerController player = hit.GetComponent<PlayerController>();
 			if (player != null)
 			{
-				this.state.DoDamage(player.state);
+				this.stats.DoDamage(player.stats);
 			}
 		}
 	}
