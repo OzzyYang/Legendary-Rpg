@@ -96,7 +96,7 @@ public class CharacterStats : MonoBehaviour
 
 	private void DoDamageOnce()
 	{
-		TakeDamage(ignitedDamge, "fire");
+		ReduceDamage(ignitedDamge, "fire");
 		//Debug.Log("Burned");
 		if (this.currentHealth <= 0) Die();
 	}
@@ -111,15 +111,16 @@ public class CharacterStats : MonoBehaviour
 
 		totalDamge = CheckArmorThenDamage(totalDamge, _target);
 
+		//this.DoMagicalDamage(_target);
 
-		_target.TakeDamage(totalDamge, this.name);
+		_target.ReduceDamage(totalDamge, this.name);
 		_target.GetComponent<CharacterController>().playDamageEffect();
 	}
 
 	public virtual void DoMagicalDamage(CharacterStats _target)
 	{
 		float totalMagicalDamge = CaculateMagicalDamge(_target);
-		_target.TakeDamage(totalMagicalDamge, this.name);
+		_target.ReduceDamage(totalMagicalDamge, this.name);
 	}
 
 	private float CheckArmorThenDamage(float _baseDamage, CharacterStats _target)
@@ -153,6 +154,8 @@ public class CharacterStats : MonoBehaviour
 		float totalCriticalMultiplier = (this.criticalMultiplier.GetValue() + this.strength.GetValue()) * 0.01f;
 		return Mathf.RoundToInt(_baseDamage * totalCriticalMultiplier);
 	}
+
+
 
 
 
@@ -279,7 +282,17 @@ public class CharacterStats : MonoBehaviour
 
 	}
 
-	public virtual float TakeDamage(float _damage, string attackerName)
+	public virtual void TakeDamage(CharacterStats attacker)
+	{
+		attacker.DoDamage(this);
+	}
+
+	public virtual void TakeMagicalDamage(CharacterStats attack)
+	{
+		attack.DoMagicalDamage(this);
+	}
+
+	public virtual float ReduceDamage(float _damage, string attackerName)
 	{
 		Debug.Log(this.character.name + " has been damaged " + _damage + " points by " + attackerName);
 		this.currentHealth -= _damage;
@@ -288,7 +301,11 @@ public class CharacterStats : MonoBehaviour
 		return this.currentHealth;
 	}
 
-	protected virtual void Die() => character.BeDead();
+	protected virtual void Die()
+	{
+		character.BeDead();
+		character.GetComponent<ItemDropController>().DropItem();
+	}
 
 
 }

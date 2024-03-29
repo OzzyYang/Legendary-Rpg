@@ -122,9 +122,12 @@ public class PlayerController : CharacterController
 			if (enemy != null)
 
 			{
-				this.state.DoDamage(enemy.state);
+				this.stats.DoDamage(enemy.stats);
+				foreach (var item in InventoryManager.instance.GetEquipmentItemsList())
+				{
+					if (item.itemData.haveEffect) item.itemData.ExecuteEffect(hit.transform);
+				}
 			}
-
 		}
 	}
 
@@ -160,6 +163,14 @@ public class PlayerController : CharacterController
 		dashDuration = defaultDashDuration;
 		dashSpeed = defaultDashSpeed;
 		jumpForce = defaultJumpForce;
+	}
+
+	public override void PickupItem(Object item)
+	{
+		base.PickupItem(item);
+
+		ItemData itemData = item as ItemData;
+		InventoryManager.instance.AddItem(itemData);
 	}
 }
 

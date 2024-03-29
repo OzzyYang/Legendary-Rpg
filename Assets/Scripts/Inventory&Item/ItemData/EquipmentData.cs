@@ -10,6 +10,7 @@ public enum EquipmentType
 [CreateAssetMenu(fileName = "New Equipment Data", menuName = "Data/Equipment")]
 public class EquipmentData : ItemData
 {
+	[Header("Equipment Info")]
 	public EquipmentType equipmentType;
 
 	[Header("Major Stats")]
@@ -87,3 +88,5 @@ public class EquipmentData : ItemData
 		target.lightningDamge.RemoveModifier(this.lightningDamge.GetValue());
 	}
 }
+
+

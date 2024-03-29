@@ -38,6 +38,8 @@ public class InventoryManager : MonoBehaviour
 		equipmentItemsDict = new Dictionary<EquipmentType, InventoryItem>();
 	}
 
+	public List<InventoryItem> GetEquipmentItemsList() => new(this.equipmentItems);
+
 	private void UpdateInventorySlots()
 	{
 		inventorySlots = inventorySlotsParent.GetComponentsInChildren<UIItemSlotController>();
@@ -103,17 +105,23 @@ public class InventoryManager : MonoBehaviour
 	public bool CanCraftItem(ItemData objectItem)
 	{
 		if (!objectItem.canBeCrafted || objectItem == null) return false;
+
 		foreach (var ingredient in objectItem.ingredients)
 		{
 			if (ingredient.itemData.itemType == ItemType.Material)
 			{
-				if (!(inventoryItemsDict.TryGetValue(ingredient.itemData, out InventoryItem availableInventoryItem) && availableInventoryItem.stackSize >= ingredient.stackSize)) return false;
+				if (!(inventoryItemsDict.TryGetValue(ingredient.itemData, out var availableInventoryItem) && availableInventoryItem.stackSize >= ingredient.stackSize)) return false;
 			}
 			else if (ingredient.itemData.itemType == ItemType.Equipment)
 			{
-				if (!(stashItemsDict.TryGetValue(ingredient.itemData, out InventoryItem availableStashItem) && availableStashItem.stackSize >= ingredient.stackSize)) return false;
+				if (!(stashItemsDict.TryGetValue(ingredient.itemData, out var availableStashItem) && availableStashItem.stackSize >= ingredient.stackSize)) return false;
 			}
 		}
+		foreach (var ingredient in objectItem.ingredients)
+		{
+			this.RemoveItem(ingredient.itemData, ingredient.stackSize);
+		}
+		this.AddItem(objectItem);
 		return true;
 	}
 

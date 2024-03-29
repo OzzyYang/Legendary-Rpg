@@ -6,7 +6,7 @@ public class CharacterController : MonoBehaviour
 	public CharacterStateMachine stateMachine { get; protected set; }
 	public Animator animator { get; private set; }
 	public Rigidbody2D rb { get; private set; }
-	public CharacterStats state { get; private set; }
+	public CharacterStats stats { get; private set; }
 
 	public CharacterState dyingState { get; protected set; }
 
@@ -22,12 +22,14 @@ public class CharacterController : MonoBehaviour
 	[SerializeField] protected GameObject counterImage;
 	protected bool canBeStunned;
 
+
+	public bool isDead { get; protected set; }
 	public System.Action onFlipped;
 	protected virtual void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
 		animator = GetComponentInChildren<Animator>();
-		state = GetComponent<CharacterStats>();
+		stats = GetComponent<CharacterStats>();
 		if (groundCheck == null) groundCheck = transform;
 		if (wallCheck == null) wallCheck = transform;
 		if (playerCheck == null) playerCheck = transform;
@@ -63,6 +65,7 @@ public class CharacterController : MonoBehaviour
 	public virtual void BeDead()
 	{
 		stateMachine.ChangeState(this.dyingState);
+		this.isDead = true;
 	}
 
 	public virtual IEnumerator SlowCharacterFor(float _seconds)
@@ -81,6 +84,11 @@ public class CharacterController : MonoBehaviour
 	public virtual void RevertSlow()
 	{
 		animator.speed = 1;
+	}
+
+	public virtual void PickupItem(Object item)
+	{
+		if (item == null) return;
 	}
 
 	#region Collision Check

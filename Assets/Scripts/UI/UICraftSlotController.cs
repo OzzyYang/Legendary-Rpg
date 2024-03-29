@@ -24,6 +24,7 @@ public class UICraftSlotController : UIItemSlotController
 
 	protected override void OnValidate()
 	{
+		if (this.itemData == null) return;
 		this.inventoryItem = new InventoryItem(this.itemData);
 		this.UpdateData(inventoryItem);
 		this.name = "Craft Slot - " + this.itemType;
