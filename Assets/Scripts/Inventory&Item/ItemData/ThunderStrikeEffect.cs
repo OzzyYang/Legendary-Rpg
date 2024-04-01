@@ -1,11 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Thunder Effect Data", menuName = "Data/Equipment Effect/Thunder Effect")]
+[CreateAssetMenu(fileName = "Thunder Strike Effect", menuName = "Data/Item Effect/Thunder Strike Effect")]
 public class ThunderStrikeEffect : ItemEffectData
 {
 	public GameObject thunderStrikePrefab;
 	public float damage;
-	public override void Effect(Transform target)
+	public override void NegativeEffect(Transform target)
 	{
 		GameObject newThunderStrike = Instantiate(thunderStrikePrefab, target.position, Quaternion.identity);
 		newThunderStrike.GetComponent<LightningController>().SetupDamage(damage);

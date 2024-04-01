@@ -18,14 +18,14 @@ MonoBehaviour:
   canBeCrafted: 0
   ingredients: []
   dropChance: 100
-  haveEffect: 1
-  effectData: {fileID: 11400000, guid: 55d15eece13b4a44c80d554ec448e3e2, type: 2}
+  haveEffect: 0
+  effectData: {fileID: 0}
   equipmentType: 1
   strength:
     baseValue: 0
     modifiers: []
   agility:
-    baseValue: 0
+    baseValue: 100
     modifiers: []
   intelligence:
     baseValue: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   armor:
-    baseValue: 5
+    baseValue: 300
     modifiers: []
   magicResistance:
     baseValue: 0

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -96,14 +98,14 @@ public class CharacterStats : MonoBehaviour
 
 	private void DoDamageOnce()
 	{
-		ReduceDamage(ignitedDamge, "fire");
+		ReduceHealth(ignitedDamge, "fire");
 		//Debug.Log("Burned");
 		if (this.currentHealth <= 0) Die();
 	}
 
 	public virtual void DoDamage(CharacterStats _target)
 	{
-		if (CanAvoidAttack(_target)) return;
+		if (_target == null || CanAvoidAttack(_target)) return;
 
 		float totalDamge = this.damage.GetValue() + this.strength.GetValue();
 
@@ -113,14 +115,14 @@ public class CharacterStats : MonoBehaviour
 
 		//this.DoMagicalDamage(_target);
 
-		_target.ReduceDamage(totalDamge, this.name);
+		_target.ReduceHealth(totalDamge, this.name);
 		_target.GetComponent<CharacterController>().playDamageEffect();
 	}
 
 	public virtual void DoMagicalDamage(CharacterStats _target)
 	{
 		float totalMagicalDamge = CaculateMagicalDamge(_target);
-		_target.ReduceDamage(totalMagicalDamge, this.name);
+		_target.ReduceHealth(totalMagicalDamge, this.name);
 	}
 
 	private float CheckArmorThenDamage(float _baseDamage, CharacterStats _target)
@@ -154,10 +156,6 @@ public class CharacterStats : MonoBehaviour
 		float totalCriticalMultiplier = (this.criticalMultiplier.GetValue() + this.strength.GetValue()) * 0.01f;
 		return Mathf.RoundToInt(_baseDamage * totalCriticalMultiplier);
 	}
-
-
-
-
 
 	private float CaculateMagicalDamge(CharacterStats _target)
 
@@ -292,8 +290,21 @@ public class CharacterStats : MonoBehaviour
 		attack.DoMagicalDamage(this);
 	}
 
-	public virtual float ReduceDamage(float _damage, string attackerName)
+
+	public virtual float IncreseHealth(float healthToIncrese, string increaseReason)
 	{
+		if (healthToIncrese < 0) throw new ArgumentOutOfRangeException("damage must be Non-negative!");
+		if (this.currentHealth == this.maxHealth.GetValue()) return this.currentHealth;
+		Debug.Log(this.character.name + "'s current health been increased " + healthToIncrese + " points because of " + increaseReason);
+		healthToIncrese = Mathf.RoundToInt(healthToIncrese);
+		healthToIncrese = Mathf.Clamp(healthToIncrese, 0, this.maxHealth.GetValue() - this.currentHealth);
+		this.currentHealth += healthToIncrese;
+		if (this.onHealthChanged != null) onHealthChanged();
+		return this.currentHealth;
+	}
+	public virtual float ReduceHealth(float _damage, string attackerName)
+	{
+		if (_damage < 0) throw new ArgumentOutOfRangeException("damage must be Non-negative!");
 		Debug.Log(this.character.name + " has been damaged " + _damage + " points by " + attackerName);
 		this.currentHealth -= _damage;
 		if (this.onHealthChanged != null) onHealthChanged();
