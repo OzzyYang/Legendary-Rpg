@@ -18,3 +18,6 @@ MonoBehaviour:
   canBeCrafted: 0
   ingredients: []
   dropChance: 100
+  haveEffect: 1
+  effectDatas:
+  - {fileID: 11400000, guid: 1dd3c283eebaa044595ad878d8101bbb, type: 2}

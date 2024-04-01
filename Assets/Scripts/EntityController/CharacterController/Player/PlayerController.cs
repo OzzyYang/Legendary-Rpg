@@ -69,6 +69,7 @@ public class PlayerController : CharacterController
 		catchSwordState = new PlayerCatchSwordState(this, stateMachine as PlayerStateMachine, "isSwordCatching");
 		blackHoleState = new PlayerBlackHoleState(this, stateMachine as PlayerStateMachine, "isLevitating");
 		dyingState = new PlayerDyingState(this, stateMachine as PlayerStateMachine, "isDying");
+
 	}
 
 	// Start is called before the first frame update
@@ -125,7 +126,11 @@ public class PlayerController : CharacterController
 				this.stats.DoDamage(enemy.stats);
 				foreach (var item in InventoryManager.instance.GetEquipmentItemsList())
 				{
-					if (item.itemData.haveEffect) item.itemData.ExecuteEffect(hit.transform);
+					if (item.itemData.haveEffect)
+					{
+						item.itemData.ExecuteNegativeEffect(hit.transform);
+						this.stats.DoMagicalDamage(enemy.stats);
+					}
 				}
 			}
 		}

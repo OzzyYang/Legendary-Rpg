@@ -23,7 +23,7 @@ public class ItemData : ScriptableObject
 
 	[Header("Effect Info")]
 	public bool haveEffect;
-	public ItemEffectData effectData;
+	public List<ItemEffectData> effectDatas;
 
 	public ItemData(ItemType itemType, string itemName, Sprite icon)
 	{
@@ -35,15 +35,34 @@ public class ItemData : ScriptableObject
 	private void OnValidate()
 	{
 		canBeCrafted = ingredients?.Count != 0;
-		//haveEffect = effectData?.GetType() == typeof(ItemEffectData);
-		//Debug.Log(effectData==null);
-		haveEffect= effectData != null;
+		haveEffect = effectDatas != null && effectDatas.Count > 0;
 	}
 
-	public void ExecuteEffect(Transform target)
+	public bool ExecuteNegativeEffect(Transform target)
 	{
-		if (!haveEffect || target == null) return;
-		this.effectData.Effect(target);
+		if (!haveEffect || target == null) return false;
+		foreach (var effectData in effectDatas)
+		{
+			if (!effectData.canExecuteNegativeEffect(target)) return false;
+		}
+		foreach (var effectData in effectDatas)
+		{
+			effectData.NegativeEffect(target);
+		}
+		return true;
 	}
 
+	public bool ExecutePositiveEffect(Transform target)
+	{
+		if (!haveEffect || target == null) return false;
+		foreach (var effectData in effectDatas)
+		{
+			if (!effectData.canExecutePositiveEffect(target)) return false;
+		}
+		foreach (var effectData in effectDatas)
+		{
+			effectData.PositiveEffect(target);
+		}
+		return true;
+	}
 }

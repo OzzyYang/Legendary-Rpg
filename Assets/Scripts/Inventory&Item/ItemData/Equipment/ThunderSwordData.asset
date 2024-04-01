@@ -18,8 +18,10 @@ MonoBehaviour:
   canBeCrafted: 0
   ingredients: []
   dropChance: 0
-  haveEffect: 0
-  effectData: {fileID: 11400000, guid: 55aad48b427e9004aa217b92bb7237fa, type: 2}
+  haveEffect: 1
+  effectDatas:
+  - {fileID: 11400000, guid: 55aad48b427e9004aa217b92bb7237fa, type: 2}
+  - {fileID: 11400000, guid: d51e3f1e9e6d0844f81e444b3cc7c47c, type: 2}
   equipmentType: 0
   strength:
     baseValue: 0
@@ -61,5 +63,5 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   lightningDamge:
-    baseValue: 0
+    baseValue: 30
     modifiers: []

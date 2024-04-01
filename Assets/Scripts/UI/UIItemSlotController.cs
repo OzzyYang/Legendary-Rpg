@@ -38,6 +38,22 @@ public class UIItemSlotController : MonoBehaviour, IPointerDownHandler
 	public virtual void OnPointerDown(PointerEventData eventData)
 	{
 		if (this.inventoryItem == null) return;
-		InventoryManager.instance.EquipItem(this.inventoryItem.itemData);
+		switch (inventoryItem.itemData.itemType)
+		{
+			case ItemType.Material:
+				{
+					if (inventoryItem.itemData.haveEffect && inventoryItem.itemData.ExecutePositiveEffect(PlayerManager.instance.player.transform))
+					{
+
+						InventoryManager.instance.RemoveItem(inventoryItem.itemData);
+					}
+					break;
+				}
+			case ItemType.Equipment:
+				{
+					InventoryManager.instance.EquipItem(this.inventoryItem.itemData);
+					break;
+				}
+		}
 	}
 }
