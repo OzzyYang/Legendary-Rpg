@@ -36,6 +36,9 @@ public class InventoryManager : MonoBehaviour
 		stashItemsDict = new Dictionary<ItemData, InventoryItem>();
 		equipmentItems = new List<InventoryItem>();
 		equipmentItemsDict = new Dictionary<EquipmentType, InventoryItem>();
+		this.UpdateEquipmentSlots();
+		this.UpdateInventorySlots();
+		this.UpdateStashSlots();
 	}
 
 	public List<InventoryItem> GetEquipmentItemsList() => new(this.equipmentItems);
@@ -122,6 +125,25 @@ public class InventoryManager : MonoBehaviour
 			this.RemoveItem(ingredient.itemData, ingredient.stackSize);
 		}
 		this.AddItem(objectItem);
+		return true;
+	}
+
+	public bool CanAddItem(ItemData itemData) => this.CanAddItem(itemData, 1);
+
+	public bool CanAddItem(ItemData itemData, int size)
+	{
+		if (itemData == null || size <= 0) return false;
+		switch (itemData.itemType)
+		{
+			case ItemType.Material:
+				{
+					return this.CanAddToInventory(itemData, size);
+				}
+			case ItemType.Equipment:
+				{
+					return this.CanAddToStash(itemData, size);
+				}
+		}
 		return true;
 	}
 
@@ -215,6 +237,19 @@ public class InventoryManager : MonoBehaviour
 			stashItemsDict.Add(itemData, newItem);
 		}
 	}
+
+	private bool CanAddToStash(ItemData itemData, int size)
+	{
+		if (itemData == null || size <= 0 || stashItems.Count >= stashSlots.Length) return false;
+		return true;
+	}
+
+	private bool CanAddToInventory(ItemData itemData, int size)
+	{
+		if (itemData == null || size <= 0) return false;
+		return true;
+	}
+
 	public InventoryItem RemoveItem(ItemData itemData) => RemoveItem(itemData, 1);
 
 	public InventoryItem RemoveItem(ItemData itemData, int size)

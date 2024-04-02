@@ -86,9 +86,10 @@ public class CharacterController : MonoBehaviour
 		animator.speed = 1;
 	}
 
-	public virtual void PickupItem(Object item)
+	public virtual bool PickupItem(ItemData item)
 	{
-		if (item == null) return;
+		if (item == null) return false;
+		return true;
 	}
 
 	#region Collision Check

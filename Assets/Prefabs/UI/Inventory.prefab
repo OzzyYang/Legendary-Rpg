@@ -162,6 +162,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item Slot - Material
       objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
 --- !u!224 &6052936103318303753 stripped
@@ -263,6 +279,22 @@ PrefabInstance:
     - target: {fileID: 5164990600903639221, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
       propertyPath: m_Name
       value: Item Slot - Material
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
@@ -366,6 +398,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item Slot - Material
       objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
 --- !u!224 &8318225218191460435 stripped
@@ -467,6 +515,22 @@ PrefabInstance:
     - target: {fileID: 5164990600903639221, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
       propertyPath: m_Name
       value: Item Slot - Material
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
@@ -570,6 +634,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item Slot - Material
       objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
 --- !u!224 &2630978135889357318 stripped
@@ -671,6 +751,22 @@ PrefabInstance:
     - target: {fileID: 5164990600903639221, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
       propertyPath: m_Name
       value: Item Slot - Material
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
