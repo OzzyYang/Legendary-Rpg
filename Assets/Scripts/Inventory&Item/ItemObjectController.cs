@@ -43,6 +43,7 @@ public class ItemObjectController : MonoBehaviour
 
 		{
 			rb.velocity = Vector2.zero;
+
 		}
 	}
 
@@ -52,8 +53,21 @@ public class ItemObjectController : MonoBehaviour
 		if (collision.GetComponent<PlayerController>() != null)
 		{
 			if (collision.GetComponent<PlayerController>().isDead) return;
-			collision.GetComponent<PlayerController>().PickupItem(this.itemData);
-			Destroy(this.gameObject);
+			if (collision.GetComponent<PlayerController>().PickupItem(this.itemData))
+			{
+				Destroy(this.gameObject);
+			}
+			else
+			{
+				//ensure item obeject will jump only once
+				isGroundDetected = false;
+
+				if (rb.velocity.y <= 7 && rb.velocity.y >= 0)
+				{
+					rb.velocity = new Vector2(0, 7);
+				}
+			}
+
 		}
 		if (collision.CompareTag("Ground"))
 		{

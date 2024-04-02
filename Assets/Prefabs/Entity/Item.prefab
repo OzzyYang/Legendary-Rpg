@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5247037422390598041}
   - component: {fileID: 5651269885954080667}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PickUpTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,5 +204,5 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0

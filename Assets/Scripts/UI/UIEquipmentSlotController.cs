@@ -17,7 +17,8 @@ public class UIEquipmentSlotController : UIItemSlotController
 	public override void OnPointerDown(PointerEventData eventData)
 	{
 		//base.OnPointerDown(eventData);
-		InventoryManager.instance.RemoveEquipment(this.inventoryItem.itemData);
+		//if(this.inventoryItem)
+		InventoryManager.instance.RemoveEquipment(this.inventoryItem?.itemData);
 	}
 
 	public override void UpdateData(InventoryItem inventoryItem)

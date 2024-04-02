@@ -170,12 +170,20 @@ public class PlayerController : CharacterController
 		jumpForce = defaultJumpForce;
 	}
 
-	public override void PickupItem(Object item)
+	public override bool PickupItem(ItemData item)
 	{
-		base.PickupItem(item);
 
-		ItemData itemData = item as ItemData;
-		InventoryManager.instance.AddItem(itemData);
+		if (item == null) return false;
+		if (InventoryManager.instance.CanAddItem(item))
+		{
+			InventoryManager.instance.AddItem(item);
+			return true;
+		}
+		else
+		{
+
+			return false;
+		}
 	}
 }
 

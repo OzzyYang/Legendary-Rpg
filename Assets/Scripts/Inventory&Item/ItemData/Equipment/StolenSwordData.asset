@@ -22,6 +22,8 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: 50fb3e8ce9493e44689d68fa2e020cfa, type: 2}
     stackSize: 3
   dropChance: 100
+  haveEffect: 0
+  effectDatas: []
   equipmentType: 0
   strength:
     baseValue: 10
@@ -39,7 +41,7 @@ MonoBehaviour:
     baseValue: 20
     modifiers: []
   criticalRate:
-    baseValue: 0.2
+    baseValue: 30
     modifiers: []
   criticalMultiplier:
     baseValue: 0

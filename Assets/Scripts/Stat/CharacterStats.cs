@@ -4,6 +4,24 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+public enum StatType
+{
+	Strength,
+	Agility,
+	Intelligence,
+	Vitality,
+	Damage,
+	CriticalRate,
+	CriticalMultiplier,
+	MaxHealth,
+	EvasionRate,
+	Armor,
+	MagicResistance,
+	FireDamage,
+	FrostDamage,
+	LightningDamge
+}
+
 public class CharacterStats : MonoBehaviour
 {
 	[Header("Major Stats")]
@@ -318,5 +336,25 @@ public class CharacterStats : MonoBehaviour
 		character.GetComponent<ItemDropController>().DropItem();
 	}
 
-
+	public Stat GetStatByType(StatType statType)
+	{
+		switch (statType)
+		{
+			case StatType.Strength: return this.strength;
+			case StatType.Agility: return this.agility;
+			case StatType.Intelligence: return this.intelligence;
+			case StatType.Vitality: return this.vitality;
+			case StatType.Damage: return this.damage;
+			case StatType.CriticalRate: return this.criticalRate;
+			case StatType.CriticalMultiplier: return this.criticalMultiplier;
+			case StatType.MaxHealth: return this.maxHealth;
+			case StatType.EvasionRate: return this.evasionRate;
+			case StatType.Armor: return this.armor;
+			case StatType.MagicResistance: return this.magicResistance;
+			case StatType.FireDamage: return this.fireDamage;
+			case StatType.FrostDamage: return this.frostDamage;
+			case StatType.LightningDamge: return this.lightningDamge;
+			default: return null;
+		}
+	}
 }
