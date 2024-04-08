@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIItemSlotController : MonoBehaviour, IPointerDownHandler
+public class UIItemSlotController : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[SerializeField] protected Image itemIconSlot;
 	[SerializeField] protected TextMeshProUGUI itemAmountSlot;
@@ -55,5 +55,16 @@ public class UIItemSlotController : MonoBehaviour, IPointerDownHandler
 					break;
 				}
 		}
+	}
+
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		UIManager.instance.GetMenuPageController().HideItemToolTip();
+
+	}
+
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		UIManager.instance.GetMenuPageController().ShowItemToolTip(inventoryItem?.itemData);
 	}
 }
