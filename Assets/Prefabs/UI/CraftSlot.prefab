@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5164990600903639220, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.03105796
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5164990600903639220, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -91,9 +91,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639220, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5164990600903639221, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
       propertyPath: m_Name
-      value: Craft Slot - Material
+      value: Craft Slot - Equipment
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5164990600903639217, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}
@@ -117,8 +141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIconSlot: {fileID: 4777160728774454607}
   itemAmountSlot: {fileID: 4777160729236871333}
-  itemType: 0
-  itemData: {fileID: 0}
+  itemType: 1
+  itemData: {fileID: 11400000, guid: 0a81a2e363febf6408e4104ec0b928fd, type: 2}
 --- !u!114 &4777160728774454607 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5164990600903639223, guid: c809bc1110825ef47bebf8c98653c4c7, type: 3}

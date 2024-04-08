@@ -1,41 +1,39 @@
 using UnityEngine;
 
-public class UIMenuController : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
 	[SerializeField] private GameObject menuPages;
 	[SerializeField] private GameObject uiParent;
-	public static GameObject instance;
-
-	private void Awake()
+	public static UIManager instance;
+	private void Start()
 	{
 		if (instance == null)
 		{
-			instance = this.gameObject;
+			instance = this.GetComponent<UIManager>();
 		}
 		else
 		{
 			Destroy(this.gameObject);
 		}
+		this.menuPages.SetActive(false);
 	}
 
 	public void SwitchToPage(GameObject pageToSwitch)
 	{
-		//foreach (var page in menuPages.GetComponentsInChildren<UIMenuPageController>())
-		//{
-		//	page.gameObject.SetActive(false);
-		//}
 		for (int i = 0; i < menuPages.transform.childCount; i++)
 		{
 			menuPages.transform.GetChild(i).gameObject.SetActive(false);
 		}
+
 		pageToSwitch?.SetActive(true);
 	}
+	public UIMenuPageController GetMenuPageController() => this.menuPages.GetComponent<UIMenuPageController>();
 
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Tab))
 		{
-			uiParent.gameObject.SetActive(!uiParent.activeSelf);
+			menuPages.SetActive(!menuPages.activeSelf);
 		}
 	}
 
