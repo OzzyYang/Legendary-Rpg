@@ -18,6 +18,5 @@ MonoBehaviour:
   canBeCrafted: 0
   ingredients: []
   dropChance: 100
-  haveEffect: 1
-  effectDatas:
-  - {fileID: 11400000, guid: d51e3f1e9e6d0844f81e444b3cc7c47c, type: 2}
+  haveEffect: 0
+  effectDatas: []
