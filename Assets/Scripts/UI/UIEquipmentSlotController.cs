@@ -25,5 +25,4 @@ public class UIEquipmentSlotController : UIItemSlotController
 	{
 		base.UpdateData(inventoryItem);
 	}
-
 }

@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9f39f1da2558904eb1130e7d840a4d6, type: 3}
+  m_Name: StolenSwordData
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: StolenSword
+  Icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  canBeCrafted: 1
+  ingredients:
+  - itemData: {fileID: 11400000, guid: 82f8a94e8c9fcfd4bb5f5ca346c84b37, type: 2}
+    stackSize: 1
+  - itemData: {fileID: 11400000, guid: 50fb3e8ce9493e44689d68fa2e020cfa, type: 2}
+    stackSize: 3
+  dropChance: 100
+  haveEffect: 0
+  effectDatas: []
+  equipmentType: 0
+  strength:
+    baseValue: 10
+    modifiers: []
+  agility:
+    baseValue: 0
+    modifiers: []
+  intelligence:
+    baseValue: 0
+    modifiers: []
+  vitality:
+    baseValue: 0
+    modifiers: []
+  damage:
+    baseValue: 20
+    modifiers: []
+  criticalRate:
+    baseValue: 30
+    modifiers: []
+  criticalMultiplier:
+    baseValue: 0
+    modifiers: []
+  maxHealth:
+    baseValue: 0
+    modifiers: []
+  evasionRate:
+    baseValue: 0
+    modifiers: []
+  armor:
+    baseValue: 0
+    modifiers: []
+  magicResistance:
+    baseValue: 0
+    modifiers: []
+  fireDamage:
+    baseValue: 0
+    modifiers: []
+  frostDamage:
+    baseValue: 0
+    modifiers: []
+  lightningDamge:
+    baseValue: 0
+    modifiers: []
