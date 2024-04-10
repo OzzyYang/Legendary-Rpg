@@ -44,7 +44,6 @@ public class UIItemSlotController : MonoBehaviour, IPointerDownHandler, IPointer
 				{
 					if (inventoryItem.itemData.haveEffect && inventoryItem.itemData.ExecutePositiveEffect(PlayerManager.instance.player.transform))
 					{
-
 						InventoryManager.instance.RemoveItem(inventoryItem.itemData);
 					}
 					break;
@@ -57,13 +56,12 @@ public class UIItemSlotController : MonoBehaviour, IPointerDownHandler, IPointer
 		}
 	}
 
-	public void OnPointerExit(PointerEventData eventData)
+	public virtual void OnPointerExit(PointerEventData eventData)
 	{
 		UIManager.instance.GetMenuPageController().HideItemToolTip();
-
 	}
 
-	public void OnPointerEnter(PointerEventData eventData)
+	public virtual void OnPointerEnter(PointerEventData eventData)
 	{
 		UIManager.instance.GetMenuPageController().ShowItemToolTip(inventoryItem?.itemData);
 	}

@@ -105,11 +105,11 @@ public class InventoryManager : MonoBehaviour
 	}
 
 
-	public bool CanCraftItem(ItemData objectItem)
+	public bool CanCraftItem(ItemData itemInfo)
 	{
-		if (!objectItem.canBeCrafted || objectItem == null) return false;
+		if (!itemInfo.canBeCrafted || itemInfo == null) return false;
 
-		foreach (var ingredient in objectItem.ingredients)
+		foreach (var ingredient in itemInfo.ingredients)
 		{
 			if (ingredient.itemData.itemType == ItemType.Material)
 			{
@@ -120,12 +120,25 @@ public class InventoryManager : MonoBehaviour
 				if (!(stashItemsDict.TryGetValue(ingredient.itemData, out var availableStashItem) && availableStashItem.stackSize >= ingredient.stackSize)) return false;
 			}
 		}
-		foreach (var ingredient in objectItem.ingredients)
-		{
-			this.RemoveItem(ingredient.itemData, ingredient.stackSize);
-		}
-		this.AddItem(objectItem);
 		return true;
+	}
+
+	//Before craft item, better to estimate if there is enough ingredients by using CanCraftItem();
+	public bool CraftItem(ItemData itemInfo)
+	{
+		if (this.CanCraftItem(itemInfo))
+		{
+			foreach (var ingredient in itemInfo.ingredients)
+			{
+				this.RemoveItem(ingredient.itemData, ingredient.stackSize);
+			}
+			this.AddItem(itemInfo);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public bool CanAddItem(ItemData itemData) => this.CanAddItem(itemData, 1);
