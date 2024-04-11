@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-	//public static InventoryController instance;
 	public static InventoryManager instance { get; private set; }
 
 	[SerializeField] private List<InventoryItem> inventoryItems;
@@ -14,12 +13,11 @@ public class InventoryManager : MonoBehaviour
 	[SerializeField] private List<InventoryItem> equipmentItems;
 	private Dictionary<EquipmentType, InventoryItem> equipmentItemsDict;
 
-	[SerializeField] private Transform inventorySlotsParent;
-	private UIItemSlotController[] inventorySlots;
-	[SerializeField] private Transform stashSlotsParent;
-	private UIItemSlotController[] stashSlots;
-	[SerializeField] private Transform equipmentSlotsParent;
-	private UIItemSlotController[] equipmentSlots;
+	[SerializeField] private int stashSize = 16;
+
+	public Action OnInventoryListChanged { get; set; }
+	public Action OnStashListChanged { get; set; }
+	public Action OnEquipmentListChanged { get; set; }
 	private void Awake()
 	{
 		if (instance == null)
@@ -36,73 +34,16 @@ public class InventoryManager : MonoBehaviour
 		stashItemsDict = new Dictionary<ItemData, InventoryItem>();
 		equipmentItems = new List<InventoryItem>();
 		equipmentItemsDict = new Dictionary<EquipmentType, InventoryItem>();
-		this.UpdateEquipmentSlots();
-		this.UpdateInventorySlots();
-		this.UpdateStashSlots();
+
 	}
 
 	public List<InventoryItem> GetEquipmentItemsList() => new(this.equipmentItems);
 
-	private void UpdateInventorySlots()
-	{
-		inventorySlots = inventorySlotsParent.GetComponentsInChildren<UIItemSlotController>();
-		for (int i = 0; i < inventorySlots.Length; i++)
-		{
-			inventorySlots[i].UpdateData((i < inventoryItems.Count) ? inventoryItems[i] : null);
-		}
-	}
+	public List<InventoryItem> GetInventoryItemsList() => new(this.inventoryItems);
+	public List<InventoryItem> GetStashItemsList() => new(this.stashItems);
 
-	private void UpdateStashSlots()
-	{
-		stashSlots = stashSlotsParent.GetComponentsInChildren<UIItemSlotController>();
-		for (int i = 0; i < stashSlots.Length; i++)
-		{
-			stashSlots[i].UpdateData((i < stashItems.Count) ? stashItems[i] : null);
-		}
-	}
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.B))
-		{
-			RemoveItem(stashItems[0].itemData);
-			UpdateStashSlots();
-		}
-	}
 
-	private void UpdateEquipmentSlots()
-	{
-		equipmentSlots = equipmentSlotsParent.GetComponentsInChildren<UIItemSlotController>();
-		for (int i = 0; i < equipmentSlots.Length; i++)
-		{
-			equipmentSlots[i].UpdateData(null);
-		}
-		foreach (var item in equipmentItems)
-		{
-			switch ((item.itemData as EquipmentData).equipmentType)
-			{
-				case EquipmentType.Weapon:
-					{
-						equipmentSlots[0].UpdateData(item);
-						break;
-					}
-				case EquipmentType.Armor:
-					{
-						equipmentSlots[1].UpdateData(item);
-						break;
-					}
-				case EquipmentType.Amulet:
-					{
-						equipmentSlots[2].UpdateData(item);
-						break;
-					}
-				case EquipmentType.Flask:
-					{
-						equipmentSlots[3].UpdateData(item);
-						break;
-					}
-			}
-		}
-	}
+
 
 
 	public bool CanCraftItem(ItemData itemInfo)
@@ -169,13 +110,13 @@ public class InventoryManager : MonoBehaviour
 		if (itemData.itemType == ItemType.Material)
 		{
 			AddToInventory(itemData, size);
-			UpdateInventorySlots();
+			//UpdateInventorySlots();
 			return inventoryItemsDict[itemData];
 		}
 		else if (itemData.itemType == ItemType.Equipment)
 		{
 			AddToStash(itemData, size);
-			UpdateStashSlots();
+			//UpdateStashSlots();
 			return stashItemsDict[itemData];
 		}
 		return null;
@@ -203,7 +144,7 @@ public class InventoryManager : MonoBehaviour
 			RemoveItem(itemData);
 		}
 		(newItem.itemData as EquipmentData).AddModifiersToPlayer();
-		UpdateEquipmentSlots();
+		OnEquipmentListChanged?.Invoke();
 		return equipmentItemsDict[(itemData as EquipmentData).equipmentType];
 	}
 
@@ -219,7 +160,7 @@ public class InventoryManager : MonoBehaviour
 			result = true;
 		}
 		(itemData as EquipmentData).RemoveModifiersFromPlayer();
-		UpdateEquipmentSlots();
+		OnEquipmentListChanged?.Invoke();
 		return result;
 	}
 
@@ -235,6 +176,7 @@ public class InventoryManager : MonoBehaviour
 			inventoryItems.Add(newItem);
 			inventoryItemsDict.Add(itemData, newItem);
 		}
+		if (OnInventoryListChanged != null) OnInventoryListChanged();
 	}
 
 	private void AddToStash(ItemData itemData, int size)
@@ -249,11 +191,12 @@ public class InventoryManager : MonoBehaviour
 			stashItems.Add(newItem);
 			stashItemsDict.Add(itemData, newItem);
 		}
+		OnStashListChanged?.Invoke();
 	}
 
 	private bool CanAddToStash(ItemData itemData, int size)
 	{
-		if (itemData == null || size <= 0 || stashItems.Count >= stashSlots.Length) return false;
+		if (itemData == null || size <= 0 || stashItems.Count >= stashSize) return false;
 		return true;
 	}
 
@@ -271,12 +214,12 @@ public class InventoryManager : MonoBehaviour
 		if (itemData.itemType == ItemType.Material)
 		{
 			result = RemoveItemFromInventory(itemData, size);
-			UpdateInventorySlots();
+			//UpdateInventorySlots();
 		}
 		else if (itemData.itemType == ItemType.Equipment)
 		{
 			result = RemoveItemFromStash(itemData, size);
-			UpdateStashSlots();
+			//UpdateStashSlots();
 		}
 		return result;
 	}
@@ -292,6 +235,7 @@ public class InventoryManager : MonoBehaviour
 			}
 			else result = item;
 		}
+		OnInventoryListChanged?.Invoke();
 		return result;
 	}
 
@@ -307,6 +251,7 @@ public class InventoryManager : MonoBehaviour
 			}
 			else result = item;
 		}
+		OnStashListChanged?.Invoke();
 		return result;
 	}
 

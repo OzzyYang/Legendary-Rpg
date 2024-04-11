@@ -11,15 +11,21 @@ public class UIItemSlotController : MonoBehaviour, IPointerDownHandler, IPointer
 
 	protected InventoryItem inventoryItem;
 
+	private void Start()
+	{
+		//this.UpdateData(this.inventoryItem);
+	}
+
 	protected virtual void OnValidate()
 	{
 		this.UpdateData(inventoryItem);
 		this.name = "Item Slot - " + itemType;
 	}
+	public virtual void SetupData(InventoryItem inventoryItem) => this.inventoryItem = inventoryItem;
 
 	public virtual void UpdateData(InventoryItem inventoryItem)
 	{
-		this.inventoryItem = inventoryItem;
+		this.SetupData(inventoryItem);
 		if (this.inventoryItem != null && this.inventoryItem.stackSize >= 1)
 		{
 			this.itemIconSlot.color = Color.white;
@@ -30,9 +36,19 @@ public class UIItemSlotController : MonoBehaviour, IPointerDownHandler, IPointer
 		else
 		{
 			this.itemAmountSlot.text = "";
-			itemIconSlot.sprite = null;
-			itemIconSlot.color = new Color(0, 0, 0, 0);
+			this.itemIconSlot.sprite = null;
+			this.itemIconSlot.color = new Color(0, 0, 0, 0);
 		}
+	}
+
+	private void OnMouseEnter()
+	{
+		Debug.Log(1);
+	}
+
+	private void OnMouseExit()
+	{
+
 	}
 
 	public virtual void OnPointerDown(PointerEventData eventData)
