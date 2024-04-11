@@ -6,14 +6,19 @@ using UnityEngine.UI;
 
 public class UIMenuPageController : MonoBehaviour
 {
+	[SerializeField] private List<GameObject> stashSlotsParents;
+	[SerializeField] private List<GameObject> inventorySlotsParents;
+	[SerializeField] private List<GameObject> equipmentSlotsParents;
+	[SerializeField] GameObject itemSlotPrefab;
+	[SerializeField] GameObject equipmentSlotPrefab;
+
 	[Header("Character page")]
 	[SerializeField] List<GameObject> statsSlotParentList;
 	[SerializeField] GameObject itemToolTip;
 	[SerializeField] GameObject character;
 
 	[Header("Craft Page")]
-	[SerializeField] GameObject craftItemInfoToolTip;
-	[SerializeField] GameObject itemSlotPrefab;
+	[SerializeField] GameObject craftItemInfoPanel;
 	[SerializeField] GameObject craftSlotPrefab;
 	[SerializeField] Transform CraftSlotsParent;
 	[SerializeField] List<EquipmentData> craftWeaponList;
@@ -21,20 +26,112 @@ public class UIMenuPageController : MonoBehaviour
 	[SerializeField] List<EquipmentData> craftAmuletList;
 	[SerializeField] List<EquipmentData> craftFlaskList;
 	private ItemData selectedItemInfo;
-	// Start is called before the first frame update
+
+	private void Awake()
+	{
+		InventoryManager.instance.OnInventoryListChanged += this.UpdateInventorySlots;
+		InventoryManager.instance.OnEquipmentListChanged += this.UpdateEquipmentSlots;
+		InventoryManager.instance.OnStashListChanged += this.UpdateStashSlots;
+		InventoryManager.instance.OnInventoryListChanged += this.UpdateCraftButtonStatus;
+		InventoryManager.instance.OnStashListChanged += this.UpdateCraftButtonStatus;
+
+	}
 	void Start()
 	{
 		this.character = PlayerManager.instance.player.gameObject;
-		UpdateStatsFrom(character.GetComponent<CharacterStats>());
+		this.UpdateStatsFrom(character.GetComponent<CharacterStats>());
 		this.itemToolTip.SetActive(false);
 		this.ShowCraftItemInfo(null);
 		this.ShowCraftSlotsListByType(EquipmentType.Weapon);
 	}
 
-	// Update is called once per frame
 	void Update()
 	{
 		UpdateStatsFrom(character.GetComponent<CharacterStats>());
+	}
+
+	private void UpdateInventorySlots()
+	{
+		var inventoryItemsList = InventoryManager.instance.GetInventoryItemsList();
+		foreach (var inventorySlotsParent in inventorySlotsParents)
+		{
+			//clear all the slots
+			for (int i = 0; i < inventorySlotsParent.transform.childCount; i++)
+			{
+				Destroy(inventorySlotsParent.transform.GetChild(i).gameObject);
+			}
+			//respawn all the slots
+			foreach (var inventory in inventoryItemsList)
+			{
+				Instantiate(itemSlotPrefab, inventorySlotsParent.transform).GetComponent<UIItemSlotController>().UpdateData(inventory);
+			}
+		}
+	}
+
+	private void UpdateStashSlots()
+	{
+		var stashItemsList = InventoryManager.instance.GetStashItemsList();
+		foreach (var stashSlotsParent in stashSlotsParents)
+		{
+			//clear all the slots
+			for (int i = 0; i < stashSlotsParent.transform.childCount; i++)
+			{
+				Destroy(stashSlotsParent.transform.GetChild(i).gameObject);
+			}
+			//respawn all the slots
+			foreach (var stashItem in stashItemsList)
+			{
+				Instantiate(itemSlotPrefab, stashSlotsParent.transform).GetComponent<UIItemSlotController>().UpdateData(stashItem);
+			}
+		}
+	}
+
+	private void UpdateEquipmentSlots()
+	{
+		var equipmentItemsList = InventoryManager.instance.GetEquipmentItemsList();
+		foreach (var equipmentSlotsParent in equipmentSlotsParents)
+		{
+			for (int i = 0; i < equipmentSlotsParent.transform.childCount; i++)
+			{
+				//There are only four types of equipment available, so only updating slots rather than destroying them;
+				equipmentSlotsParent.transform.GetChild(i).GetComponent<UIEquipmentSlotController>().UpdateData(null);
+			}
+
+			var equipmentSlots = equipmentSlotsParent.GetComponentsInChildren<UIEquipmentSlotController>();
+			foreach (var equipment in equipmentItemsList)
+			{
+
+				switch ((equipment.itemData as EquipmentData).equipmentType)
+				{
+					case EquipmentType.Weapon:
+						{
+							equipmentSlots[0].UpdateData(equipment);
+							break;
+						}
+					case EquipmentType.Armor:
+						{
+							equipmentSlots[1].UpdateData(equipment);
+							break;
+						}
+					case EquipmentType.Amulet:
+						{
+							equipmentSlots[2].UpdateData(equipment);
+							break;
+						}
+					case EquipmentType.Flask:
+						{
+							equipmentSlots[3].UpdateData(equipment);
+							break;
+						}
+				}
+
+			}
+		}
+	}
+	private void UpdateCraftButtonStatus()
+	{
+		if (this.selectedItemInfo != null)
+			this.EnableCraftButton(InventoryManager.instance.CanCraftItem(selectedItemInfo));
 	}
 
 
@@ -63,9 +160,9 @@ public class UIMenuPageController : MonoBehaviour
 	#region Craft Page
 	public void ShowCraftItemInfo(ItemData itemInfo)
 	{
-		var itemName = craftItemInfoToolTip.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-		var itemDescription = craftItemInfoToolTip.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-		var itemMaterialsParent = craftItemInfoToolTip.transform.GetChild(2);
+		var itemName = craftItemInfoPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+		var itemDescription = craftItemInfoPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+		var itemMaterialsParent = craftItemInfoPanel.transform.GetChild(2);
 		for (int i = 0; i < itemMaterialsParent.childCount; i++)
 		{
 			Destroy(itemMaterialsParent.GetChild(i).gameObject);
@@ -96,7 +193,7 @@ public class UIMenuPageController : MonoBehaviour
 
 	private void EnableCraftButton(bool enable)
 	{
-		var craftButton = craftItemInfoToolTip.transform.GetChild(3);
+		var craftButton = craftItemInfoPanel.transform.GetChild(3);
 		if (enable)
 		{
 			craftButton.GetComponent<Button>().interactable = true;
@@ -160,9 +257,12 @@ public class UIMenuPageController : MonoBehaviour
 		this.EnableCraftButton(selectedItemInfo.canBeCrafted && InventoryManager.instance.CanCraftItem(selectedItemInfo));
 	}
 	#endregion
+
+	#region Item Tool Tip
 	public void ShowItemToolTip(ItemData itemInfo)
 	{
 		if (itemInfo == null) return;
+		//this.itemToolTip.transform.position = Input.mousePosition;
 		this.itemToolTip.SetActive(true);
 		TextMeshProUGUI itemName, itemType, itemDescription;
 		itemName = itemToolTip.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -213,4 +313,5 @@ public class UIMenuPageController : MonoBehaviour
 		if (stat == null || stat.GetValue() <= 0) return "";
 		return statType.ToString() + ": " + stat.GetValue().ToString() + "\n";
 	}
+	#endregion
 }
