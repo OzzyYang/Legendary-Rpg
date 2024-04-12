@@ -11,11 +11,6 @@ public class UIItemSlotController : MonoBehaviour, IPointerDownHandler, IPointer
 
 	protected InventoryItem inventoryItem;
 
-	private void Start()
-	{
-		//this.UpdateData(this.inventoryItem);
-	}
-
 	protected virtual void OnValidate()
 	{
 		this.UpdateData(inventoryItem);

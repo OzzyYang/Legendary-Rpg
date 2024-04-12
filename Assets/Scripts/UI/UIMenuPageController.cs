@@ -17,6 +17,9 @@ public class UIMenuPageController : MonoBehaviour
 	[SerializeField] GameObject itemToolTip;
 	[SerializeField] GameObject character;
 
+	[Header("Skill Tree page")]
+	[SerializeField] private GameObject skillTreeToolTip;
+
 	[Header("Craft Page")]
 	[SerializeField] GameObject craftItemInfoPanel;
 	[SerializeField] GameObject craftSlotPrefab;
@@ -157,6 +160,19 @@ public class UIMenuPageController : MonoBehaviour
 	}
 	#endregion
 
+	#region Skill Tree Page
+	public void ShowSkillToolTip(string newSkillName, string newSkillDescription)
+	{
+		TextMeshProUGUI skillName = skillTreeToolTip.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+		TextMeshProUGUI skillDescription = skillTreeToolTip.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
+		skillName.text = newSkillName;
+		skillDescription.text = newSkillDescription;
+		//skillTreeToolTip.transform.position = Input.mousePosition + new Vector3(10, -10);
+		skillTreeToolTip.GetComponent<UIToolTipController>().Show();
+	}
+	public void HideSkillTreeToolTip() => skillTreeToolTip.GetComponent<UIToolTipController>().Hide();
+	#endregion
+
 	#region Craft Page
 	public void ShowCraftItemInfo(ItemData itemInfo)
 	{
@@ -263,7 +279,6 @@ public class UIMenuPageController : MonoBehaviour
 	{
 		if (itemInfo == null) return;
 		//this.itemToolTip.transform.position = Input.mousePosition;
-		this.itemToolTip.SetActive(true);
 		TextMeshProUGUI itemName, itemType, itemDescription;
 		itemName = itemToolTip.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 		itemType = itemToolTip.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
@@ -273,6 +288,8 @@ public class UIMenuPageController : MonoBehaviour
 
 		StringBuilder sb = FormatContentByType(itemInfo);
 		itemDescription.text = sb.ToString();
+
+		this.itemToolTip.GetComponent<UIToolTipController>().Show();
 	}
 
 	private StringBuilder FormatContentByType(ItemData itemInfo)
@@ -302,11 +319,11 @@ public class UIMenuPageController : MonoBehaviour
 					break;
 				}
 		}
-
+		if (itemInfo.effectDescription.Length > 0) sb.Append("\nSpecial Effect: " + itemInfo.effectDescription);
 		return sb;
 	}
 
-	public void HideItemToolTip() => this.itemToolTip.SetActive(false);
+	public void HideItemToolTip() => this.itemToolTip.GetComponent<UIToolTipController>().Hide();
 
 	private string FormateContentFromStat(StatType statType, Stat stat)
 	{

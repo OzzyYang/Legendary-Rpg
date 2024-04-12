@@ -10,14 +10,14 @@ public class PlayerDashState : PlayerState
 		stateDuration = player.dashDuration;
 		stateTimer = stateDuration;
 		player.FlipController(player.dashDirection);
-		player.skill.dashSkill.CreateCloneStart();
+		player.skill.dashSkill.CreateCloneOnStart();
 	}
 
 	public override void Exit()
 	{
 		base.Exit();
 		player.SetVelocity(0, rb.velocity.y);
-		player.skill.dashSkill.CreateCloneOver();
+		player.skill.dashSkill.CreateCloneOnEnd();
 	}
 
 	public override void Update()

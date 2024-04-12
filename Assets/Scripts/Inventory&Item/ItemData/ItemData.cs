@@ -20,10 +20,11 @@ public class ItemData : ScriptableObject
 	[Header("Drop Info")]
 	[Range(0, 100)]
 	public int dropChance;
-
 	[Header("Effect Info")]
 	public bool haveEffect;
 	public List<ItemEffectData> effectDatas;
+	[TextArea]
+	public string effectDescription;
 
 	public ItemData(ItemType itemType, string itemName, Sprite icon)
 	{
