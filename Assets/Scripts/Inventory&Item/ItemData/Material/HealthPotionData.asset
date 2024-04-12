@@ -21,3 +21,4 @@ MonoBehaviour:
   haveEffect: 1
   effectDatas:
   - {fileID: 11400000, guid: 1dd3c283eebaa044595ad878d8101bbb, type: 2}
+  effectDescription: Increase 50% of character's max health.

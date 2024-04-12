@@ -1,22 +1,36 @@
 using UnityEngine;
+using UnityEngine.UI;
+
 public class DashSkill : Skill
 {
+	[SerializeField] bool canDash;
+	[SerializeField] GameObject unlockDashButton;
 
-	[SerializeField] bool createCloneStart;
-	[SerializeField] bool createCloneOver;
-	public override bool CanUseSkill()
-	{
-		return base.CanUseSkill();
-	}
+	[SerializeField] bool createCloneOnStart;
+	[SerializeField] GameObject unlockCreateCloneOnStartButton;
+	[SerializeField] bool createCloneOnEnd;
+	[SerializeField] GameObject unlockCreateCloneOnEndButton;
 
-	public override void UseSkill()
-	{
-
-	}
+	public override bool CanUseSkill() => base.CanUseSkill() && this.canDash;
 
 	protected override void Awake()
 	{
 		base.Awake();
+		if (unlockDashButton != null)
+			unlockDashButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canDash = unlockDashButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
+			});
+		if (unlockCreateCloneOnStartButton != null)
+			unlockCreateCloneOnStartButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.createCloneOnStart = unlockCreateCloneOnStartButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
+			});
+		if (unlockCreateCloneOnEndButton != null)
+			unlockCreateCloneOnEndButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.createCloneOnEnd = unlockCreateCloneOnEndButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
+			});
 	}
 
 	protected override void Start()
@@ -29,17 +43,17 @@ public class DashSkill : Skill
 		base.Update();
 	}
 
-	public void CreateCloneStart()
+	public void CreateCloneOnStart()
 	{
-		if (createCloneStart)
+		if (createCloneOnStart)
 		{
 			player.skill.cloneSkill.CreateClone(player.transform, Vector2.zero);
 		}
 	}
 
-	public void CreateCloneOver()
+	public void CreateCloneOnEnd()
 	{
-		if (createCloneOver)
+		if (createCloneOnEnd)
 		{
 			player.skill.cloneSkill.CreateClone(player.transform, Vector2.zero);
 		}

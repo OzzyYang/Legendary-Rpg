@@ -5,9 +5,6 @@ public class ItemEffectData : ScriptableObject
 	[SerializeField] protected string effectName;
 	[SerializeField] protected ItemType effectType;
 
-
-
-
 	// Stats down effect, including take damage.
 	public virtual void NegativeEffect(Transform target)
 	{
