@@ -1,5 +1,6 @@
 public class PlayerStats : CharacterStats
 {
+
 	public override void DoDamage(CharacterStats _target)
 	{
 		base.DoDamage(_target);
@@ -19,5 +20,11 @@ public class PlayerStats : CharacterStats
 	protected override void Update()
 	{
 		base.Update();
+	}
+
+	public void IncreaseBaseEvasionRate(float increaseAmount)
+	{
+		this.evasionRate.SetDefaultValue(increaseAmount + this.evasionRate.GetValue());
+		this.OnBaseEvasionRateChanged?.Invoke();
 	}
 }

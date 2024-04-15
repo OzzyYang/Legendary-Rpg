@@ -1130,6 +1130,7 @@ GameObject:
   - component: {fileID: 131366408}
   - component: {fileID: 131366409}
   - component: {fileID: 131366410}
+  - component: {fileID: 131366411}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -1294,12 +1295,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillCoolDownTime: 3
+  canCreateCrystal: 0
+  unlockCreateCrystalButton: {fileID: 976825741}
+  canMirageBlink: 0
+  unlockMirageBlinkButton: {fileID: 1713814142}
+  canExplode: 0
+  unlockExplosiveCrystalButton: {fileID: 658635660}
+  canMoveToEnemy: 0
+  unlockHomingCrystalButton: {fileID: 332227445}
+  CanUseMultiStack: 0
+  unlockMultipleCrystalsButton: {fileID: 1412317547}
   crystalPrefab: {fileID: 3820628240129050058, guid: 8b15a066f637fb346a622efe2b51dcef, type: 3}
   crystalDuration: 2
-  createCloneInsteadCrystal: 1
-  canExplode: 1
-  canMoveToEnemy: 1
-  CanUseMultiStack: 0
   crystalStack: []
   stackSize: 3
 --- !u!114 &131366410
@@ -1311,11 +1318,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 131366402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51593cd59e91fd140aaee6694053c7af, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f926eca50b0a6445a5e579331f0990d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skillCoolDownTime: 0
-  createCloneWhenSuccessful: 1
+  canParry: 0
+  unlockParryButton: {fileID: 1794416580}
+  canRestoreOnParry: 0
+  restoreAmount: 30
+  unlockRestoreOnParryButton: {fileID: 1446679085}
+  canCreateCloneOnParry: 0
+  unlockCreateCloneOnParryButton: {fileID: 387775923}
+--- !u!114 &131366411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131366402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c28dd2d7288323a4cb03c3e439a843dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillCoolDownTime: 0
+  canDodge: 0
+  increaseByPercentage: 0.8
+  unlockDodgeButton: {fileID: 313536782}
+  canCreateCloneOnDodge: 0
+  unlockCreateCloneOnDodgeButton: {fileID: 1052862938}
 --- !u!1001 &166163534
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2843,7 +2874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 84724980, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Dodge
-  skillDescription: You will get 10% of evasion rate.
+  skillDescription: You will get more 10% of base evasion rate.
   prerequisiteSkills: []
   exclusiveSkills: []
   unlocked: 0
@@ -13620,7 +13651,7 @@ GameObject:
   - component: {fileID: 1412317549}
   - component: {fileID: 1412317548}
   m_Layer: 5
-  m_Name: Skill Tree Slot - Multiple Crystal
+  m_Name: Skill Tree Slot - Multiple Crystals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13659,7 +13690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 1392627519, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  skillName: Multiple Crystal
+  skillName: Multiple Crystals
   skillDescription: You can create more crystals at time.
   prerequisiteSkills:
   - {fileID: 332227445}
@@ -79296,6 +79327,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: evasionRate.baseValue
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: frostDamage.baseValue
       value: 0
       objectReference: {fileID: 0}
@@ -79374,6 +79409,10 @@ PrefabInstance:
     - target: {fileID: 6529526857648604371, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8962225258272315429, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}

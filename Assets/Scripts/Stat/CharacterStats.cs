@@ -63,7 +63,9 @@ public class CharacterStats : MonoBehaviour
 
 	public CharacterController character { get; protected set; }
 	private EntityVFX fX;
-	public System.Action onHealthChanged { get; set; }
+	public Action OnCurrentHealthChanged { get; set; }
+	public Action OnBaseEvasionRateChanged { get; set; }
+	public Action OnAvoidAttack { get; set; }
 
 	[SerializeField] private GameObject lightningPrefab;
 	[SerializeField] private LayerMask whatIsGround;
@@ -123,7 +125,11 @@ public class CharacterStats : MonoBehaviour
 
 	public virtual void DoDamage(CharacterStats _target)
 	{
-		if (_target == null || CanAvoidAttack(_target)) return;
+		if (_target == null || CanAvoidAttack(_target))
+		{
+
+			return;
+		}
 
 		float totalDamge = this.damage.GetValue() + this.strength.GetValue();
 
@@ -157,7 +163,16 @@ public class CharacterStats : MonoBehaviour
 
 		//ensure that the evasion rate is between 0% and 80%
 		totalEvasion = Mathf.Clamp(totalEvasion, 0, 80);
-		return Random.Range(0, 99) < totalEvasion;
+		if (Random.Range(0, 99) < totalEvasion)
+		{
+			//this.OnAvoidAttack?.Invoke();
+			//fix bug:the target is the one who will take damage, so the subject of avoidance attack is target !!!!! 
+			//took me 30 minutes to fix it,  can't beleive it >o< !!!!!!
+			_target.OnAvoidAttack?.Invoke();
+			return true;
+		}
+		else
+			return false;
 	}
 
 	private bool CanCriticalStrike()
@@ -317,7 +332,7 @@ public class CharacterStats : MonoBehaviour
 		healthToIncrese = Mathf.RoundToInt(healthToIncrese);
 		healthToIncrese = Mathf.Clamp(healthToIncrese, 0, this.maxHealth.GetValue() - this.currentHealth);
 		this.currentHealth += healthToIncrese;
-		if (this.onHealthChanged != null) onHealthChanged();
+		if (this.OnCurrentHealthChanged != null) OnCurrentHealthChanged();
 		return this.currentHealth;
 	}
 	public virtual float ReduceHealth(float _damage, string attackerName)
@@ -325,7 +340,7 @@ public class CharacterStats : MonoBehaviour
 		if (_damage < 0) throw new ArgumentOutOfRangeException("damage must be Non-negative!");
 		Debug.Log(this.character.name + " has been damaged " + _damage + " points by " + attackerName);
 		this.currentHealth -= _damage;
-		if (this.onHealthChanged != null) onHealthChanged();
+		if (this.OnCurrentHealthChanged != null) OnCurrentHealthChanged();
 		if (currentHealth <= 0) Die();
 		return this.currentHealth;
 	}

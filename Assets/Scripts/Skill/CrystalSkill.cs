@@ -1,26 +1,91 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CrystalSkill : Skill
 {
+	[Header("Unlock Info")]
+	public bool canCreateCrystal;
+	[SerializeField] private UISkillTreeSlotController unlockCreateCrystalButton;
+	//Create Clone Instead of Crystal
+	public bool canMirageBlink;
+	[SerializeField] private UISkillTreeSlotController unlockMirageBlinkButton;
+	public bool canExplode;
+	[SerializeField] private UISkillTreeSlotController unlockExplosiveCrystalButton;
+	public bool canMoveToEnemy;
+	[SerializeField] private UISkillTreeSlotController unlockHomingCrystalButton;
+	public bool CanUseMultiStack;
+	[SerializeField] private UISkillTreeSlotController unlockMultipleCrystalsButton;
+
+	[Space]
+	[Space]
 	[SerializeField] private GameObject crystalPrefab;
 	[SerializeField] private float crystalDuration;
-
-	[SerializeField] private bool createCloneInsteadCrystal;
-
-	[SerializeField] private bool canExplode;
-	[SerializeField] private bool canMoveToEnemy;
-
 	private GameObject crystal;
-
-	[SerializeField] private bool CanUseMultiStack;
 	[SerializeField] private List<GameObject> crystalStack;
 	[SerializeField] private int stackSize = 1;
+
+
+	protected override void Awake()
+	{
+		base.Awake();
+
+	}
+	protected override void Start()
+	{
+		base.Start();
+		coolDownTimer = skillCoolDownTime;
+		if (this.unlockCreateCrystalButton != null)
+		{
+			this.unlockCreateCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canCreateCrystal = this.unlockCreateCrystalButton.IsUnlocked();
+				Debug.Log(1);
+			});
+		}
+		if (this.unlockMirageBlinkButton != null)
+		{
+			this.unlockMirageBlinkButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canMirageBlink = this.unlockMirageBlinkButton.IsUnlocked();
+				Debug.Log(2);
+			});
+		}
+		if (this.unlockExplosiveCrystalButton != null)
+		{
+			this.unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canExplode = this.unlockExplosiveCrystalButton.IsUnlocked();
+			});
+		}
+		if (this.unlockExplosiveCrystalButton != null)
+		{
+			this.unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canExplode = this.unlockExplosiveCrystalButton.IsUnlocked();
+			});
+		}
+		if (this.unlockHomingCrystalButton != null)
+		{
+			this.unlockHomingCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canMoveToEnemy = this.unlockHomingCrystalButton.IsUnlocked();
+			});
+		}
+		if (this.unlockMultipleCrystalsButton != null)
+		{
+			this.unlockMultipleCrystalsButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.CanUseMultiStack = this.unlockMultipleCrystalsButton.IsUnlocked();
+				this.stackSize = 3;
+			});
+		}
+	}
 	public override bool CanUseSkill()
 	{
+		if (!canCreateCrystal) return false;
 		if (crystalStack.Count > 0 || crystal != null)
 		{
-			UseSkill();
 			return true;
 		}
 		return false;
@@ -49,9 +114,9 @@ public class CrystalSkill : Skill
 		{
 			if (crystal.GetComponent<CrystalController>().isExploding || canMoveToEnemy) return;
 
-			if (createCloneInsteadCrystal)
+			if (canMirageBlink)
 			{
-				//create a clone at the player's position,then player will move to crystal's location, and then detroy the crystal.
+				//create a clone at the player's position,and the player will move to crystal's location, and then detroy the crystal.
 				player.skill.cloneSkill.CreateClone(player.transform, Vector2.zero);
 				player.transform.position = crystal.transform.position;
 				crystal.GetComponent<CrystalController>().DestrotSelf();
@@ -65,22 +130,11 @@ public class CrystalSkill : Skill
 				crystal.GetComponent<CrystalController>().Explode();
 			}
 		}
-		//crystal.GetComponent<CrystalController>().SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, 0);
 
 	}
 
-	protected override void Awake()
-	{
-		base.Awake();
-	}
 
-	protected override void Start()
-	{
-		base.Start();
-		//crystalStack = new List<GameObject>();
-		coolDownTimer = skillCoolDownTime;
 
-	}
 
 	protected override void Update()
 	{
@@ -96,9 +150,9 @@ public class CrystalSkill : Skill
 			if (crystalStack.Count < stackSize)
 				crystalStack.Add(crystalPrefab);
 		}
-		if (Input.GetKeyDown(KeyCode.F))
+		if (Input.GetKeyDown(KeyCode.F) && CanUseSkill())
 		{
-			CanUseSkill();
+			this.UseSkill();
 		}
 	}
 
