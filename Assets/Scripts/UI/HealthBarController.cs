@@ -15,7 +15,7 @@ public class HealthBarController : MonoBehaviour
 		slider = GetComponentInChildren<Canvas>().GetComponentInChildren<Slider>();
 		UpdateHealthValue();
 		character.onFlipped += FlipUi;
-		characterStats.onHealthChanged += UpdateHealthValue;
+		characterStats.OnCurrentHealthChanged += UpdateHealthValue;
 	}
 
 	// Update is called once per frame

@@ -319,7 +319,7 @@ public class UIMenuPageController : MonoBehaviour
 					break;
 				}
 		}
-		if (itemInfo.effectDescription.Length > 0) sb.Append("\nSpecial Effect: " + itemInfo.effectDescription);
+		if (itemInfo.effectDescription != null && itemInfo.effectDescription.Length > 0) sb.Append("\nSpecial Effect: " + itemInfo.effectDescription);
 		return sb;
 	}
 

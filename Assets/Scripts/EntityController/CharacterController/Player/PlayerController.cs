@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -49,6 +50,7 @@ public class PlayerController : CharacterController
 
 	public float dashDirection { get; private set; } = 1;
 	#endregion
+	public Action<Transform> OnCounterAttackSuccessful { get; set; }
 
 	protected override void Awake()
 	{
@@ -97,7 +99,8 @@ public class PlayerController : CharacterController
 		{
 			if (isWallDetected()) return;
 			DashDirectionController(Input.GetAxisRaw("Horizontal"));
-			stateMachine.ChangeState(dashState);
+			//stateMachine.ChangeState(dashState);
+			SkillManager.instance.dashSkill.UseSkill();
 		}
 
 		if (Input.GetKeyDown(KeyCode.R))

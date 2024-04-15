@@ -5,7 +5,7 @@ public class PlayerState : CharacterState
 	protected float xInput;
 	protected float yInput;
 
-	private readonly bool needDebug = false;
+	//private readonly bool needDebug = false;
 
 	public PlayerState(PlayerController _character, PlayerStateMachine _stateMachine, string _animBoolName) : base(_character, _stateMachine, _animBoolName)
 	{

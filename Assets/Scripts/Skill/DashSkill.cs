@@ -58,4 +58,10 @@ public class DashSkill : Skill
 			player.skill.cloneSkill.CreateClone(player.transform, Vector2.zero);
 		}
 	}
+
+	public override void UseSkill()
+	{
+		base.UseSkill();
+		player.stateMachine.ChangeState(player.dashState);
+	}
 }
