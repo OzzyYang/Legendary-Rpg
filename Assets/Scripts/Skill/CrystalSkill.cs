@@ -117,7 +117,7 @@ public class CrystalSkill : Skill
 			if (canMirageBlink)
 			{
 				//create a clone at the player's position,and the player will move to crystal's location, and then detroy the crystal.
-				player.skill.cloneSkill.CreateClone(player.transform, Vector2.zero);
+				player.skill.cloneSkill.UseSkill(player.transform, Vector2.zero);
 				player.transform.position = crystal.transform.position;
 				crystal.GetComponent<CrystalController>().DestrotSelf();
 			}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,6 +25,7 @@ public enum StatType
 
 public class CharacterStats : MonoBehaviour
 {
+	#region Stats Info
 	[Header("Major Stats")]
 	public Stat strength;// 1 point increase damage by 1 and critical multiplier by 1%
 	public Stat agility;// 1 point increase evasion by 1% and critical rate by 1%
@@ -60,6 +62,13 @@ public class CharacterStats : MonoBehaviour
 	private float electricShockedTimer;
 	private float electricShockedDuration;
 	public float currentHealth { get; protected set; }
+	#endregion
+
+	#region Buff Info
+	public bool isVulnerable { get; private set; }
+	private float vulnerableMultiplier = 0;
+	private float damagaMultiplier = 0;
+	#endregion
 
 	public CharacterController character { get; protected set; }
 	private EntityVFX fX;
@@ -123,17 +132,21 @@ public class CharacterStats : MonoBehaviour
 		if (this.currentHealth <= 0) Die();
 	}
 
+	public virtual void DoDamageWithMultiplier(CharacterStats _target, float multiplier)
+	{
+		this.damagaMultiplier = multiplier;
+		this.DoDamage(_target);
+		this.damagaMultiplier = 0;
+	}
 	public virtual void DoDamage(CharacterStats _target)
 	{
-		if (_target == null || CanAvoidAttack(_target))
-		{
-
-			return;
-		}
+		if (_target == null || CanAvoidAttack(_target)) return;
 
 		float totalDamge = this.damage.GetValue() + this.strength.GetValue();
 
 		if (CanCriticalStrike()) totalDamge = CaculateCriticalDamge(totalDamge);
+
+		totalDamge += (totalDamge * damagaMultiplier + totalDamge * _target.vulnerableMultiplier);
 
 		totalDamge = CheckArmorThenDamage(totalDamge, _target);
 
@@ -351,6 +364,37 @@ public class CharacterStats : MonoBehaviour
 		character.GetComponent<ItemDropController>().DropItem();
 	}
 
+
+	private struct CoroutineParams
+	{
+		public float seconds;
+		public float multiplier;
+	}
+
+	public void SetVulnerableFor(float seconds, float multiplier)
+	{
+		StopCoroutine(nameof(IESetVulnerableFor));
+		this.StartCoroutine(nameof(IESetVulnerableFor), new CoroutineParams
+		{
+			seconds = seconds,
+			multiplier = multiplier
+		});
+	}
+
+	private IEnumerator IESetVulnerableFor(CoroutineParams parameters)
+	{
+		SetVulnerable(true, parameters.multiplier);
+		Debug.Log(1);
+		yield return new WaitForSeconds(parameters.seconds);
+		Debug.Log(2);
+		SetVulnerable(false, parameters.multiplier);
+	}
+
+	public void SetVulnerable(bool setBool, float multiplier)
+	{
+		this.isVulnerable = setBool;
+		this.vulnerableMultiplier = this.isVulnerable ? multiplier : 0;
+	}
 	public Stat GetStatByType(StatType statType)
 	{
 		switch (statType)

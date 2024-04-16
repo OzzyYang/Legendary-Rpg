@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlackHoleSkill : Skill
 {
@@ -11,16 +12,16 @@ public class BlackHoleSkill : Skill
 	[SerializeField] private float qteDuration;
 	[SerializeField] private AnimationCurve blackHoleGrowCurve;
 	[SerializeField] private List<KeyCode> hotKetsSetting;
-
-
+	private bool canCreateBlackHole;
+	[SerializeField] private UISkillTreeSlotController unlockBlackHoleButton;
 	public bool isReleasingSkill { get; private set; }
 	public GameObject blackHole { get; private set; }
 	public override bool CanUseSkill()
 	{
+		if (!canCreateBlackHole) return false;
 		if (coolDownTimer <= 0 && !isReleasingSkill)
 		{
 			coolDownTimer = skillCoolDownTime;
-			UseSkill();
 			return true;
 		}
 
@@ -29,10 +30,14 @@ public class BlackHoleSkill : Skill
 
 	public override void UseSkill()
 	{
-		base.UseSkill();
-		blackHole = blackHole == null ? Instantiate(blackHoleObject) : blackHole;
-		blackHole.SetActive(false);
-		StartCoroutine("FlyUpForAndReleaseBlackHole", 0.25f);
+		if (CanUseSkill())
+		{
+			base.UseSkill();
+			isReleasingSkill = true;
+			blackHole = blackHole == null ? Instantiate(blackHoleObject) : blackHole;
+			blackHole.SetActive(false);
+			StartCoroutine("FlyUpForAndReleaseBlackHole", 0.25f);
+		}
 	}
 
 	protected IEnumerator FlyUpForAndReleaseBlackHole(float _seconds)
@@ -53,7 +58,13 @@ public class BlackHoleSkill : Skill
 	protected override void Start()
 	{
 		base.Start();
-
+		if (this.unlockBlackHoleButton != null)
+		{
+			this.unlockBlackHoleButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canCreateBlackHole = this.unlockBlackHoleButton.IsUnlocked();
+			});
+		}
 	}
 
 	protected override void Update()
@@ -61,10 +72,7 @@ public class BlackHoleSkill : Skill
 		base.Update();
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
-			if (CanUseSkill())
-			{
-				isReleasingSkill = true;
-			}
+			UseSkill();
 		}
 		if (blackHole == null) isReleasingSkill = false;
 	}

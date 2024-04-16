@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a8c8077282d9a4bb5c5ee93ed3d5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitMaterial: {fileID: 0}
-  hitFlashDuration: 0
+  hitMaterial: {fileID: 2100000, guid: db1e8e09160f0a0479207f97d244d89c, type: 2}
+  hitFlashDuration: 0.2
   ignitedColor: []
   frozenColor: []
   shockedColor: []
@@ -306,7 +306,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   damage:
-    baseValue: 500
+    baseValue: 100
     modifiers: []
   criticalRate:
     baseValue: 0
@@ -318,7 +318,7 @@ MonoBehaviour:
     baseValue: 500
     modifiers: []
   evasionRate:
-    baseValue: 0
+    baseValue: 80
     modifiers: []
   armor:
     baseValue: 0
@@ -333,12 +333,12 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   lightningDamge:
-    baseValue: 0
+    baseValue: 1
     modifiers: []
-  lightningPrefab: {fileID: 0}
+  lightningPrefab: {fileID: 115817180692989687, guid: c2fec86e5985c9140a3ab3357d4fae2c, type: 3}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!114 &6047914743271244761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +354,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 4735807283887222885, guid: 92d7619c28c0ac84192be20b16e1e8a2, type: 3}
   canDropItem: 1
   items: []
-  movement: {x: 5, y: 5}
+  movement: {x: 3, y: 3}
 --- !u!50 &6529526857648604375
 Rigidbody2D:
   serializedVersion: 4

@@ -82,6 +82,6 @@ public class ParrySkill : Skill
 	private IEnumerator CreateCloneDelayFor(Transform _target)
 	{
 		yield return new WaitForSeconds(0.5f);
-		player.skill.cloneSkill.CreateClone(_target, new Vector2(1.5f * player.facingDirection, 0));
+		player.skill.cloneSkill.UseSkill(_target, new Vector2(1.5f * player.facingDirection, 0));
 	}
 }

@@ -18,11 +18,10 @@ public class DodgeSkill : Skill
 
 	public override void UseSkill()
 	{
-		base.UseSkill();
 		if (this.CanUseSkill())
 		{
-			player.skill.cloneSkill.CreateClone(player.transform, Vector3.zero);
-
+			player.skill.cloneSkill.UseSkill(player.transform, Vector3.zero);
+			base.UseSkill();
 		}
 	}
 
