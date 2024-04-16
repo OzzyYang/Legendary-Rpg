@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CloneSkill : Skill
 {
@@ -7,15 +8,27 @@ public class CloneSkill : Skill
 	[SerializeField] private float cloneDuration;
 
 	[SerializeField] private bool canDuplicate;
+	[Range(0f, 1f)]
 	[SerializeField] private float duplicateProbability;
 
 	[SerializeField] private bool createCrystalInsteadClone;
 	[SerializeField] private int ultimateSkillCreateNum;
 	private int currentUltimateSkillCreateNum;
 	private int createTimes = 1;
+
+	[Header("Unlock Info")]
+	public bool canCreateClone;
+	public float damageMultiplier;
+	[SerializeField] private UISkillTreeSlotController unlockCreateCloneButton;
+	public bool isCloneAggresive;
+	public bool applyWeaponEffect;
+	[SerializeField] private UISkillTreeSlotController unlockAggresiveCloneButton;
+	[SerializeField] private UISkillTreeSlotController unlockCrystakMirageButton;
+	[SerializeField] private UISkillTreeSlotController unlockMutilpleMirageButton;
+
 	public override bool CanUseSkill()
 	{
-		return base.CanUseSkill();
+		return base.CanUseSkill() && canCreateClone;
 	}
 
 	public override void UseSkill()
@@ -23,21 +36,26 @@ public class CloneSkill : Skill
 		base.UseSkill();
 	}
 
-	public void CreateClone(Transform _newTransform, Vector3 _offSet)
+	public void UseSkill(Transform _newTransform, Vector3 _offSet)
+	{
+		if (this.CanUseSkill())
+		{
+			this.UseSkill();
+			this.CreateClone(_newTransform, _offSet);
+		}
+	}
+
+	private void CreateClone(Transform _newTransform, Vector3 _offSet)
 	{
 		if (createCrystalInsteadClone)
 		{
 			this.currentUltimateSkillCreateNum += ultimateSkillCreateNum;
 			InvokeRepeating(nameof(CreateCrystal), 0, 0.1f);
-			//int times = player.skill.blackHoleSkill.isReleasingSkill ? ultimateSkillCreateNum : 1;
-
-			//GameObject newClone = Instantiate(crystalObject, player.transform.position, Quaternion.identity);
-			//newClone.GetComponent<CrystalController>().SetupCrystal(player.skill.crystalSkill.getCrystalDuration(), true, true, 0, _newTransform);
 		}
 		else
 		{
 			GameObject newClone = Instantiate(playerCloneObject);
-			newClone.GetComponent<PlayerCloneController>().SetUpClone(_newTransform, _offSet, cloneDuration, canDuplicate, duplicateProbability);
+			newClone.GetComponent<PlayerCloneController>().SetUpClone(_newTransform, _offSet, cloneDuration, canDuplicate, duplicateProbability, damageMultiplier, applyWeaponEffect);
 		}
 
 	}
@@ -64,6 +82,37 @@ public class CloneSkill : Skill
 	protected override void Start()
 	{
 		base.Start();
+		if (this.unlockCreateCloneButton != null)
+		{
+			this.unlockCreateCloneButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canCreateClone = this.unlockCreateCloneButton.IsUnlocked();
+				this.damageMultiplier = 0.3f;
+			});
+		}
+		if (this.unlockAggresiveCloneButton != null)
+		{
+			this.unlockAggresiveCloneButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.isCloneAggresive = this.unlockAggresiveCloneButton.IsUnlocked();
+				this.damageMultiplier = 0.8f;
+				this.applyWeaponEffect = true;
+			});
+		}
+		if (this.unlockCrystakMirageButton != null)
+		{
+			this.unlockCrystakMirageButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.createCrystalInsteadClone = this.unlockCrystakMirageButton.IsUnlocked();
+			});
+		}
+		if (this.unlockMutilpleMirageButton != null)
+		{
+			this.unlockMutilpleMirageButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canDuplicate = this.unlockMutilpleMirageButton.IsUnlocked();
+			});
+		}
 	}
 
 	protected override void Update()

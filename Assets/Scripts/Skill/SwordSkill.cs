@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum SwordType
 {
@@ -17,14 +18,20 @@ public class SwordSkill : Skill
 	private float currentThrowForce;
 
 	[Header("Bounce Info")]
+	[SerializeField] private UISkillTreeSlotController unlockBouncySwordButton;
+	[Range(0f, 5f)]
 	[SerializeField] private float bounceForcePercentage = 1.2f;
 	[SerializeField] private int bounceTimes = 3;
 
 	[Header("Pierce Info")]
+	[SerializeField] private UISkillTreeSlotController unlockPierceSwordButton;
+	[Range(0f, 5f)]
 	[SerializeField] private float pierceForcePercentage = 3.5f;
 	[SerializeField] private int pireceTimes = 2;
 
 	[Header("Spin Info")]
+	[SerializeField] private UISkillTreeSlotController unlockSpinSwordButton;
+	[Range(0f, 5f)]
 	[SerializeField] private float spinForcePercentage = 2f;
 	[SerializeField] private float maxMoveDistance = 8;
 	[SerializeField] private float spinningDamageTime = 0.2f;
@@ -34,9 +41,18 @@ public class SwordSkill : Skill
 	[SerializeField] private int dotsNum = 20;
 	private List<GameObject> dots;
 
+	[Header("Passive Skill Info")]
+	public bool canThrowSword;
+	[SerializeField] private UISkillTreeSlotController unlockSwordButton;
+	public bool canTimeStop;
+	[SerializeField] private UISkillTreeSlotController unlockTimeStopButton;
+	public bool canVulnerability;
+	[SerializeField] private UISkillTreeSlotController unlockVulnerabilityButton;
+
 
 	public override bool CanUseSkill()
 	{
+		if (!canThrowSword) return false;
 		return player.sword == null || !player.sword.gameObject.activeSelf;
 	}
 
@@ -45,10 +61,10 @@ public class SwordSkill : Skill
 		base.UseSkill();
 		player.sword = player.sword == null ? GameObject.Instantiate(swordObject) : player.sword;
 		ChangeSwordProperties(swordType);
-		player.sword.GetComponent<SwordController>().SetupSword(CaculateAmiDirection(), player.transform.position, currentThrowForce, swordType);
+		player.sword.GetComponent<SwordController>().SetupSword(CaculateAimDirection(), player.transform.position, currentThrowForce, swordType, canTimeStop, canVulnerability);
 	}
 
-	private Vector2 CaculateAmiDirection()
+	private Vector2 CaculateAimDirection()
 	{
 		Vector2 launchPosition = player.transform.position;
 		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -67,6 +83,49 @@ public class SwordSkill : Skill
 		GenerateDot();
 		currentThrowForce = throwForce;
 
+		if (this.unlockSwordButton != null)
+		{
+			this.unlockSwordButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canThrowSword = this.unlockSwordButton.IsUnlocked();
+				if (canThrowSword) this.swordType = SwordType.Regular;
+			});
+		}
+		if (this.unlockTimeStopButton != null)
+		{
+			this.unlockTimeStopButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canTimeStop = this.unlockTimeStopButton.IsUnlocked();
+			});
+		}
+		if (this.unlockVulnerabilityButton != null)
+		{
+			this.unlockVulnerabilityButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.canVulnerability = this.unlockVulnerabilityButton.IsUnlocked();
+			});
+		}
+		if (this.unlockBouncySwordButton != null)
+		{
+			this.unlockBouncySwordButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.swordType = SwordType.Bounce;
+			});
+		}
+		if (this.unlockPierceSwordButton != null)
+		{
+			this.unlockPierceSwordButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.swordType = SwordType.Pierce;
+			});
+		}
+		if (this.unlockSpinSwordButton != null)
+		{
+			this.unlockSpinSwordButton.GetComponent<Button>().onClick.AddListener(() =>
+			{
+				this.swordType = SwordType.Spin;
+			});
+		}
 	}
 
 	protected override void Update()
@@ -93,7 +152,7 @@ public class SwordSkill : Skill
 	public void NeedAimLine(bool _needFlag)
 	{
 		ChangeSwordProperties(swordType);
-		Vector2 throwVelocity = CaculateAmiDirection().normalized * currentThrowForce;
+		Vector2 throwVelocity = CaculateAimDirection().normalized * currentThrowForce;
 		float projectileMostionVerticalVecolity = -Mathf.Sqrt((throwVelocity).y * (throwVelocity).y + 2 * Physics2D.gravity.y * -CameraManager.instance.mainCamera.orthographicSize);
 		float projectileMotionTime = (0 - throwVelocity.y) / Physics2D.gravity.y + (projectileMostionVerticalVecolity - 0) / Physics2D.gravity.y;
 		float timeBetween = projectileMotionTime / dotsNum;
@@ -109,6 +168,7 @@ public class SwordSkill : Skill
 
 	public void ChangeSwordProperties(SwordType _swordType)
 	{
+
 		switch (_swordType)
 		{
 			case SwordType.Bounce:
@@ -141,7 +201,7 @@ public class SwordSkill : Skill
 
 	public void ReturnToPlayer()
 	{
-		player.sword.GetComponent<SwordController>().NeedReturn(currentThrowForce);
+		player.sword?.GetComponent<SwordController>().NeedReturn(currentThrowForce);
 	}
 
 }

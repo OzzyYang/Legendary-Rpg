@@ -15,6 +15,10 @@ public class SwordController : MonoBehaviour
 	private bool isFlying = true;
 	private bool isReturning = false;
 
+	#region Passive Info
+	private bool canTimeStop;
+	private bool canVulnerability;
+	#endregion
 
 	#region Bounce Info
 	private bool isBouncing = false;
@@ -81,7 +85,8 @@ public class SwordController : MonoBehaviour
 						//hit.GetComponent<EnemyController>()?.playDamageEffect();
 						if (hit.GetComponent<EnemyController>() != null)
 						{
-							player.GetComponent<CharacterStats>().DoDamage(hit.GetComponent<CharacterStats>());
+							//player.GetComponent<CharacterStats>().DoDamage(hit.GetComponent<CharacterStats>());
+							DoDamageAndFreeze(hit.transform);
 						}
 					}
 				}
@@ -129,7 +134,7 @@ public class SwordController : MonoBehaviour
 		if (Vector2.Distance(transform.position, targetEnemies[targetIndex].position) < 0.5f)
 		{
 			//Debug.Log(targetEnemies.Count + " " + bounceCounter + " " + targetIndex);
-			player.GetComponent<CharacterStats>().DoDamage(targetEnemies[targetIndex].GetComponent<CharacterStats>());
+			DoDamageAndFreeze(targetEnemies[targetIndex]);
 			targetIndex++;
 			bounceCounter++;
 		}
@@ -139,7 +144,15 @@ public class SwordController : MonoBehaviour
 		}
 	}
 
-	public void SetupSword(Vector2 _direction, Vector2 _position, float _force, SwordType _swordType)
+	private void DoDamageAndFreeze(Transform target)
+	{
+		if (this.canVulnerability) target.GetComponent<CharacterStats>().SetVulnerableFor(3f, 0.1f);
+		player.GetComponent<CharacterStats>().DoDamage(target.GetComponent<CharacterStats>());
+		if (this.canTimeStop) target.GetComponent<EnemyController>().FreezeMovementFor(0.75f);
+		//if(this.canVulnerability) 
+	}
+
+	public void SetupSword(Vector2 _direction, Vector2 _position, float _force, SwordType _swordType, bool canTimeStop, bool canVulnerability)
 	{
 		this.gameObject.SetActive(true);
 
@@ -149,6 +162,9 @@ public class SwordController : MonoBehaviour
 		swordType = _swordType;
 		transform.position = throwPosition;
 		rb.velocity = throwDirection.normalized * throwForce;
+
+		this.canTimeStop = canTimeStop;
+		this.canVulnerability = canVulnerability;
 
 		isFlying = true;
 		animator.SetBool("isIdling", false);
@@ -204,8 +220,9 @@ public class SwordController : MonoBehaviour
 		if (!isReturning && collision.GetComponent<EnemyController>() != null)
 		{
 			//do single damage when isn't Spin Sword
-			//Spin Sword have  area damage and implemented in Updates()
-			if (!isSpinning) player.GetComponent<CharacterStats>().DoDamage(collision.GetComponent<CharacterStats>());
+			//Spin Sword have AOE damage and implemented in Updates()
+			if (!isSpinning) DoDamageAndFreeze(collision.transform);
+			//player.GetComponent<CharacterStats>().DoDamage(collision.GetComponent<CharacterStats>());
 
 
 			if (isSpinning && !isStopped)

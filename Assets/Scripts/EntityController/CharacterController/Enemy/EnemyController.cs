@@ -100,7 +100,12 @@ public class EnemyController : CharacterController
 		}
 	}
 
-	public IEnumerator FreezeMovementFor(float _freezeTime)
+	public void FreezeMovementFor(float freezeTime)
+	{
+		this.StartCoroutine(nameof(IEFreezeMovementFor), freezeTime);
+	}
+
+	private IEnumerator IEFreezeMovementFor(float _freezeTime)
 	{
 		FreezeMovement(true);
 		yield return new WaitForSeconds(_freezeTime);

@@ -47,7 +47,7 @@ public class DashSkill : Skill
 	{
 		if (createCloneOnStart)
 		{
-			player.skill.cloneSkill.CreateClone(player.transform, Vector2.zero);
+			player.skill.cloneSkill.UseSkill(player.transform, Vector2.zero);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class DashSkill : Skill
 	{
 		if (createCloneOnEnd)
 		{
-			player.skill.cloneSkill.CreateClone(player.transform, Vector2.zero);
+			player.skill.cloneSkill.UseSkill(player.transform, Vector2.zero);
 		}
 	}
 

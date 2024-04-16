@@ -4,6 +4,9 @@ public class PlayerCloneController : CloneObjectController
 {
 	[SerializeField] protected Transform attackCheck;
 	[SerializeField] protected float attackCheckRadius;
+
+	private float damageMultiplier;
+	private bool applyWeaponEffect;
 	protected override void Awake()
 	{
 		base.Awake();
@@ -47,9 +50,21 @@ public class PlayerCloneController : CloneObjectController
 			EnemyController enemy = hit.GetComponent<EnemyController>();
 			if (enemy != null)
 			{
-				PlayerManager.instance.player.GetComponent<CharacterStats>().DoDamage(enemy.GetComponent<CharacterStats>());
+				CharacterStats playerStats = PlayerManager.instance.player.GetComponent<CharacterStats>();
+				playerStats.DoDamageWithMultiplier(enemy.GetComponent<CharacterStats>(), damageMultiplier);
+				if (this.applyWeaponEffect)
+				{
+					foreach (var item in InventoryManager.instance.GetEquipmentItemsList())
+					{
+						if (item.itemData.haveEffect)
+						{
+							item.itemData.ExecuteNegativeEffect(hit.transform);
+							playerStats.DoMagicalDamage(enemy.stats);
+						}
+					}
+				}
 				if (Random.Range(0, 1.0f) < duplicateProbability && canDuplicate)
-					SkillManager.instance.cloneSkill.CreateClone(enemy.transform, new Vector2(.5f * facingDirection, 0));
+					SkillManager.instance.cloneSkill.UseSkill(enemy.transform, new Vector2(.5f * facingDirection, 0));
 			}
 		}
 	}
@@ -59,4 +74,10 @@ public class PlayerCloneController : CloneObjectController
 		needToFadeAway = true;
 	}
 
+	public void SetUpClone(Transform _newTransform, Vector3 _offSet, float _cloneObjectDuration, bool _canDuplicate, float _duplicateProbability, float damageMultiplier, bool applyWeaponEffect)
+	{
+		base.SetUpClone(_newTransform, _offSet, _cloneObjectDuration, _canDuplicate, _duplicateProbability);
+		this.damageMultiplier = damageMultiplier;
+		this.applyWeaponEffect = applyWeaponEffect;
+	}
 }

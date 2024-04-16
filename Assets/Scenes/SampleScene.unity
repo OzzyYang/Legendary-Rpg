@@ -1201,10 +1201,18 @@ MonoBehaviour:
   playerCloneObject: {fileID: 2370648923460415811, guid: 436bb5c393ee3734598942eb759ae655, type: 3}
   crystalObject: {fileID: 3820628240129050058, guid: 8b15a066f637fb346a622efe2b51dcef, type: 3}
   cloneDuration: 3
-  canDuplicate: 1
+  canDuplicate: 0
   duplicateProbability: 0.5
   createCrystalInsteadClone: 0
   ultimateSkillCreateNum: 6
+  canCreateClone: 0
+  damageMultiplier: 0
+  unlockCreateCloneButton: {fileID: 1529537553}
+  isCloneAggresive: 0
+  applyWeaponEffect: 0
+  unlockAggresiveCloneButton: {fileID: 215495163}
+  unlockCrystakMirageButton: {fileID: 955022271}
+  unlockMutilpleMirageButton: {fileID: 1330112998}
 --- !u!114 &131366407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1221,15 +1229,24 @@ MonoBehaviour:
   swordObject: {fileID: 3499680971787087158, guid: fe376ba590ca21841a6f813640902f7d, type: 3}
   swordType: 3
   throwForce: 12
+  unlockBouncySwordButton: {fileID: 543495552}
   bounceForcePercentage: 1.2
   bounceTimes: 3
+  unlockPierceSwordButton: {fileID: 586703212}
   pierceForcePercentage: 3.5
   pireceTimes: 10
+  unlockSpinSwordButton: {fileID: 1540014901}
   spinForcePercentage: 2
   maxMoveDistance: 8
   spinningDamageTime: 0.2
   dotObject: {fileID: 5176732616738664435, guid: 026c423bb5b1f2043917c37c0bd1b585, type: 3}
   dotsNum: 40
+  canThrowSword: 0
+  unlockSwordButton: {fileID: 1455954974}
+  canTimeStop: 0
+  unlockTimeStopButton: {fileID: 108012534}
+  canVulnerability: 0
+  unlockVulnerabilityButton: {fileID: 814162354}
 --- !u!114 &131366408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,6 +1299,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   hotKetsSetting: 6a0000006b0000006c000000620000006e0000006d000000
+  unlockBlackHoleButton: {fileID: 219996211}
 --- !u!114 &131366409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8397,7 +8415,7 @@ MonoBehaviour:
   skillDescription: 'The enemies will be given a weak condition.
 
     They will take
-    10% more damage.'
+    an additional 10% damage.'
   prerequisiteSkills:
   - {fileID: 108012534}
   exclusiveSkills: []
@@ -79311,40 +79329,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: lightningPrefab
-      value: 
-      objectReference: {fileID: 115817180692989687, guid: c2fec86e5985c9140a3ab3357d4fae2c, type: 3}
-    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: damage.baseValue
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: whatIsGround.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: fireDamage.baseValue
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: evasionRate.baseValue
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: frostDamage.baseValue
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: lightningDamge.baseValue
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 863839872084912140, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: hitMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: db1e8e09160f0a0479207f97d244d89c, type: 2}
-    - target: {fileID: 863839872084912140, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: hitFlashDuration
-      value: 0.2
+      propertyPath: maxHealth.baseValue
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 1803362438907177515, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -79353,14 +79339,6 @@ PrefabInstance:
     - target: {fileID: 1803362438907177515, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6047914743271244761, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: movement.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6047914743271244761, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: movement.y
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6529526857648604369, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_RootOrder
@@ -79409,10 +79387,6 @@ PrefabInstance:
     - target: {fileID: 6529526857648604371, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8962225258272315429, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
