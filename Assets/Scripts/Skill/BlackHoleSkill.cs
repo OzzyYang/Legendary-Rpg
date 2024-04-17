@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BlackHoleSkill : Skill
 {
+	[Space]
+	[Header("Skill Special Info")]
 	[SerializeField] private GameObject blackHoleObject;
 	[SerializeField] private GameObject hotKeyTextObject;
 	[SerializeField] private float blackHoleMaxSize;
@@ -53,6 +55,7 @@ public class BlackHoleSkill : Skill
 	protected override void Awake()
 	{
 		base.Awake();
+		this.skillData.unlocked = true;
 	}
 
 	protected override void Start()
@@ -70,7 +73,7 @@ public class BlackHoleSkill : Skill
 	protected override void Update()
 	{
 		base.Update();
-		if (Input.GetKeyDown(KeyCode.Z))
+		if (Input.GetKeyDown(shortcut))
 		{
 			UseSkill();
 		}

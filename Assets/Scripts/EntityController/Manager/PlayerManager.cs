@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-	public static PlayerManager instance;
-	public PlayerController player;
+	public static PlayerManager instance { get; private set; }
+	[SerializeField] private PlayerController playerInstance;
+	public PlayerController player
+	{
+		get { return playerInstance; }
+		private set { playerInstance = value; }
+	}
+
 
 	private void Awake()
 	{
