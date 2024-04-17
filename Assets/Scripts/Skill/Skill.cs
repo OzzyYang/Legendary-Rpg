@@ -2,13 +2,34 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
+	[Header("Skill Basic Info")]
+	[SerializeField] protected BasicSkillData skillData;
 	[SerializeField] protected float skillCoolDownTime;
+	[SerializeField] protected KeyCode shortcut;
+
+	public BasicSkillData data
+	{
+		get { return skillData; }
+		protected set { skillData = value; }
+	}
+
 	protected PlayerController player;
-	protected float coolDownTimer;
+	public float coolDownTimer { get; protected set; }
 
 	protected virtual void Awake()
 	{
+		UpdateFromSkillData();
+	}
+	private void OnValidate()
+	{
+		UpdateFromSkillData();
+	}
 
+	protected virtual void UpdateFromSkillData()
+	{
+		if (this.skillData == null) return;
+		this.skillCoolDownTime = skillData.skillCoolDownTime;
+		this.shortcut = skillData.shortCut;
 	}
 
 	protected virtual void Start()

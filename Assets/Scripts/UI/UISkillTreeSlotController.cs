@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+	[SerializeField] private BasicSkillData skillData;
 	[SerializeField] private Sprite skillIcon;
 	[SerializeField] private string skillName;
 	[TextArea]
@@ -17,6 +18,11 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 	[SerializeField] private bool unlocked = false;
 
 
+	private void Awake()
+	{
+		if (this.skillData?.skillName == "BlackHole") Debug.Log(this.skillData.unlocked);
+	}
+
 	public bool IsUnlocked() => unlocked;
 	public Action OnUnlockedChanged { get; private set; }
 	private Button skillButton;
@@ -26,6 +32,7 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 		skillButton = GetComponent<Button>();
 		this.OnUnlockedChanged += this.UpdateSkillSlot;
 	}
+
 
 	public bool CanUnlock()
 	{
@@ -64,7 +71,8 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 
 	private void OnValidate()
 	{
-		this.UpdateSkillContent();
+
+		this.UpdateFromSkillData();
 	}
 	private void UpdateSkillContent()
 	{
@@ -80,5 +88,17 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 	public void OnPointerExit(PointerEventData eventData)
 	{
 		UIManager.instance.GetComponent<UIManager>().GetMenuPageController().HideSkillTreeToolTip();
+	}
+
+	private void UpdateFromSkillData()
+	{
+		if (this.skillData != null)
+		{
+			this.skillIcon = this.skillData.skillIcon;
+			this.skillName = this.skillData.skillName;
+			this.skillDescription = this.skillData.skillDescription;
+			this.name = "Skill Tree Slot - " + this.skillName;
+			this.GetComponent<Image>().sprite = this.skillIcon;
+		}
 	}
 }

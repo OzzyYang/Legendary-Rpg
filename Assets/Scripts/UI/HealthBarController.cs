@@ -3,33 +3,36 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
-	private CharacterController character;
-	private CharacterStats characterStats;
+	[SerializeField] protected CharacterController character;
+	[SerializeField] protected CharacterStats characterStats;
 
-	private Slider slider;
-	// Start is called before the first frame update
-	void Start()
+	[SerializeField] protected Slider slider;
+
+	protected virtual void Awake()
 	{
-		character = GetComponentInParent<CharacterController>();
-		characterStats = GetComponentInParent<CharacterStats>();
-		slider = GetComponentInChildren<Canvas>().GetComponentInChildren<Slider>();
+	}
+
+	// Start is called before the first frame update
+	protected virtual void Start()
+	{
 		UpdateHealthValue();
 		character.onFlipped += FlipUi;
 		characterStats.OnCurrentHealthChanged += UpdateHealthValue;
+		characterStats.maxHealth.OnStatValueChanged += UpdateHealthValue;
 	}
 
 	// Update is called once per frame
-	void Update()
+	protected virtual void Update()
 	{
 
 	}
 
-	private void FlipUi()
+	protected virtual void FlipUi()
 	{
 		transform.Rotate(0, 180, 0);
 	}
 
-	private void UpdateHealthValue()
+	protected virtual void UpdateHealthValue()
 	{
 
 		slider.maxValue = characterStats.maxHealth.GetValue();
@@ -39,7 +42,6 @@ public class HealthBarController : MonoBehaviour
 	private void OnDisable()
 	{
 		character.onFlipped -= FlipUi;
-
 	}
 
 }
