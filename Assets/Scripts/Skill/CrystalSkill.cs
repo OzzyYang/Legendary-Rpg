@@ -34,13 +34,15 @@ public class CrystalSkill : Skill
 	protected override void Start()
 	{
 		base.Start();
+		//base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
 		coolDownTimer = skillCoolDownTime;
 		if (this.unlockCreateCrystalButton != null)
 		{
 			this.unlockCreateCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
 				this.canCreateCrystal = this.unlockCreateCrystalButton.IsUnlocked();
-				Debug.Log(1);
+				this.skillData.maxAvailableTimes = 1;
+				base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
 			});
 		}
 		if (this.unlockMirageBlinkButton != null)
@@ -48,7 +50,7 @@ public class CrystalSkill : Skill
 			this.unlockMirageBlinkButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
 				this.canMirageBlink = this.unlockMirageBlinkButton.IsUnlocked();
-				Debug.Log(2);
+
 			});
 		}
 		if (this.unlockExplosiveCrystalButton != null)
@@ -78,6 +80,9 @@ public class CrystalSkill : Skill
 			{
 				this.CanUseMultiStack = this.unlockMultipleCrystalsButton.IsUnlocked();
 				this.stackSize = 3;
+				this.skillData.maxAvailableTimes = 3;
+				if (coolDownTimer < 0) coolDownTimer = skillCoolDownTime;
+				base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
 			});
 		}
 	}
@@ -101,7 +106,9 @@ public class CrystalSkill : Skill
 		{
 			tempCrystal = Instantiate(crystalStack[crystalStack.Count - 1], player.transform.position, Quaternion.identity);
 			crystalStack.Remove(crystalStack[crystalStack.Count - 1]);
+			base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
 			tempCrystal.GetComponent<CrystalController>().SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, 0, null);
+			if (coolDownTimer < 0) coolDownTimer = skillCoolDownTime;
 		}
 
 		if (CanUseMultiStack) return;
@@ -133,9 +140,6 @@ public class CrystalSkill : Skill
 
 	}
 
-
-
-
 	protected override void Update()
 	{
 		stackSize = (!CanUseMultiStack || stackSize == 0) ? 1 : stackSize;
@@ -144,12 +148,14 @@ public class CrystalSkill : Skill
 		if (coolDownTimer >= 0 && crystalStack.Count < stackSize)
 			coolDownTimer -= Time.deltaTime;
 
-		if (coolDownTimer < 0)
+		if (coolDownTimer < 0 && crystalStack.Count < stackSize)
 		{
-			coolDownTimer = skillCoolDownTime;
-			if (crystalStack.Count < stackSize)
-				crystalStack.Add(crystalPrefab);
+			crystalStack.Add(crystalPrefab);
+			base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
+			if (CanUseMultiStack) coolDownTimer = skillCoolDownTime;
 		}
+		//To make cooldown UI works.
+		if (stackSize == crystalStack.Count) coolDownTimer = -0.1f;
 		if (Input.GetKeyDown(KeyCode.F) && CanUseSkill())
 		{
 			this.UseSkill();

@@ -13,11 +13,11 @@ public class UISkillBarSlotController : MonoBehaviour
 
 	private void Awake()
 	{
-		this.UpdateFromSkillData();
 		skillManager = SkillManager.instance;
 	}
 	void Start()
 	{
+		this.UpdateFromSkillData();
 
 	}
 
@@ -45,9 +45,19 @@ public class UISkillBarSlotController : MonoBehaviour
 			background.sprite = skillData.skillIcon;
 			mask.sprite = skillData.skillIcon;
 			shortcutText.text = skillData.shortCut.ToString();
-			availableTimesText.text = skillData.maxAvailableTimes > 1 ? skillData.maxAvailableTimes.ToString() : "";
+			UpdateSkillAvailableTimes(1);
 			this.name = "Skill Bar Slot - " + skillData.skillName;
 		}
+	}
+
+	public void UpdateSkillAvailableTimes(int availableTimes)
+	{
+		availableTimesText.text = skillData.maxAvailableTimes > 1 ? availableTimes + "/" + skillData.maxAvailableTimes.ToString() : "";
+	}
+
+	public void Setup(BasicSkillData skillData)
+	{
+		this.skillData = skillData;
 	}
 
 }
