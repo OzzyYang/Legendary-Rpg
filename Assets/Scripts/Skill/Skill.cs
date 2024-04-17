@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Skill : MonoBehaviour
@@ -7,6 +8,8 @@ public class Skill : MonoBehaviour
 	[SerializeField] protected float skillCoolDownTime;
 	[SerializeField] protected KeyCode shortcut;
 
+	public Action<int> OnAvailableTimesChanged { get; set; }
+	public int availableTimes { get; private set; }
 	public BasicSkillData data
 	{
 		get { return skillData; }

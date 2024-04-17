@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CloneSkill : Skill
+public class MirageSkill : Skill
 {
 	[SerializeField] private GameObject playerCloneObject;
 	[SerializeField] private GameObject crystalObject;

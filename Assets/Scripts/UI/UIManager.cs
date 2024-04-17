@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-	[SerializeField] private GameObject menuPages;
 	[SerializeField] private GameObject uiParent;
+	[SerializeField] private GameObject menuPages;
+	[SerializeField] private GameObject inGameUI;
 	public static UIManager instance;
 	private void Start()
 	{
