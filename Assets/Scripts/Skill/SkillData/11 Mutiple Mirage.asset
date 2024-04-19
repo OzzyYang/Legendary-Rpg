@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7be5d34b0610cb94ca999b9e1d670f05, type: 3}
-  m_Name: Dash - Here I am
+  m_Name: 11 Mutiple Mirage
   m_EditorClassIdentifier: 
-  skillName: Dash - "Here I am"
-  skillIcon: {fileID: 938421845, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  skillDescription: You leave a mirage when you dash.
-  skillCoolDownTime: 0.2
-  shortCut: 304
+  skillName: Multiple Mirage
+  skillIcon: {fileID: -1698427825, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  skillDescription: 'Your mirage can spawn another mirage with a certain probability.
+
+    *Only
+    one upgrade can be chosen.*'
+  skillCoolDownTime: 0
+  shortCut: 0
   prerequisiteSkills: []
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1
-  baseSkill: {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
+  baseSkill: {fileID: 0}
