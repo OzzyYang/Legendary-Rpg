@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7be5d34b0610cb94ca999b9e1d670f05, type: 3}
-  m_Name: Dash - Actually here I am
+  m_Name: 02 Sword (Time Stop)
   m_EditorClassIdentifier: 
-  skillName: Skill Tree Slot - Dash - "Actually here I am"
-  skillIcon: {fileID: -1331556987, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  skillDescription: You create a mirage after you dash.
-  skillCoolDownTime: 0.2
-  shortCut: 304
+  skillName: Sword (Time Stop)
+  skillIcon: {fileID: -1263708677, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  skillDescription: The  life clock of hit enemies will stop, meaning that they can't
+    move and attack for a while.
+  skillCoolDownTime: 0
+  shortCut: 0
   prerequisiteSkills: []
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1
-  baseSkill: {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
+  baseSkill: {fileID: 0}
