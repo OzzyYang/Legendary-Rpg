@@ -12,15 +12,14 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 	[TextArea]
 	[SerializeField] private string skillDescription;
 
-	[SerializeField] private List<UISkillTreeSlotController> prerequisiteSkills;
-	[SerializeField] private List<UISkillTreeSlotController> exclusiveSkills;
+	[SerializeField] private List<BasicSkillData> prerequisiteSkills;
+	[SerializeField] private List<BasicSkillData> exclusiveSkills;
 
 	[SerializeField] private bool unlocked = false;
 
 
 	private void Awake()
 	{
-		if (this.skillData?.skillName == "BlackHole") Debug.Log(this.skillData.unlocked);
 	}
 
 	public bool IsUnlocked() => unlocked;
@@ -30,7 +29,8 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 	private void Start()
 	{
 		skillButton = GetComponent<Button>();
-		this.OnUnlockedChanged += this.UpdateSkillSlot;
+		UpdateSkillSlotUI();
+		OnUnlockedChanged += UpdateSkillSlotUI;
 	}
 
 
@@ -38,11 +38,11 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 	{
 		for (int i = 0; i < prerequisiteSkills.Count; i++)
 		{
-			if (!prerequisiteSkills[i].IsUnlocked()) return false;
+			if (!prerequisiteSkills[i].unlocked) return false;
 		}
 		for (int i = 0; i < exclusiveSkills.Count; i++)
 		{
-			if (exclusiveSkills[i].IsUnlocked()) return false;
+			if (exclusiveSkills[i].unlocked) return false;
 		}
 		return true;
 	}
@@ -51,20 +51,20 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 	{
 		if (CanUnlock())
 		{
-			this.unlocked = true;
+			unlocked = skillData.unlocked = true;
 			OnUnlockedChanged?.Invoke();
 		}
 		else
-			Debug.Log("Can't unlock skill " + this.skillName);
+			Debug.Log("Can't unlock skill " + skillName);
 	}
 
 	public void LockSkill()
 	{
-		this.unlocked = false;
+		unlocked = skillData.unlocked = false;
 		OnUnlockedChanged?.Invoke();
 	}
 
-	public void UpdateSkillSlot()
+	public void UpdateSkillSlotUI()
 	{
 		skillButton.interactable = !unlocked;
 	}
@@ -72,17 +72,17 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 	private void OnValidate()
 	{
 
-		this.UpdateFromSkillData();
+		UpdateFromSkillData();
 	}
 	private void UpdateSkillContent()
 	{
-		this.name = "Skill Tree Slot - " + this.skillName;
-		this.GetComponent<Image>().sprite = this.skillIcon;
+		name = "Skill Tree Slot - " + skillName;
+		this.GetComponent<Image>().sprite = skillIcon;
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		UIManager.instance.GetComponent<UIManager>().GetMenuPageController().ShowSkillToolTip(this.skillName, this.skillDescription);
+		UIManager.instance.GetComponent<UIManager>().GetMenuPageController().ShowSkillToolTip(skillName, skillDescription);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
@@ -92,13 +92,16 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 
 	private void UpdateFromSkillData()
 	{
-		if (this.skillData != null)
+		if (skillData != null)
 		{
-			this.skillIcon = this.skillData.skillIcon;
-			this.skillName = this.skillData.skillName;
-			this.skillDescription = this.skillData.skillDescription;
-			this.name = "Skill Tree Slot - " + this.skillName;
-			this.GetComponent<Image>().sprite = this.skillIcon;
+			skillIcon = skillData.skillIcon;
+			skillName = skillData.skillName;
+			skillDescription = skillData.skillDescription;
+			unlocked = skillData.unlocked;
+			prerequisiteSkills = skillData.prerequisiteSkills;
+			exclusiveSkills = skillData.exclusiveSkills;
+			name = "Skill Tree Slot - " + skillName;
+			GetComponent<Image>().sprite = skillIcon;
 		}
 	}
 }

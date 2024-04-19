@@ -18,7 +18,7 @@ MonoBehaviour:
 
     You are invincible during
     the time of dashing.'
-  skillCoolDownTime: 0.2
+  skillCoolDownTime: 0.5
   shortCut: 304
   prerequisiteSkills: []
   exclusiveSkills: []

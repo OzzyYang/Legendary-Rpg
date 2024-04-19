@@ -95,11 +95,10 @@ public class PlayerController : CharacterController
 	private void CheckForInput()
 	{
 		//check dash input
-		if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dashSkill.CanUseSkill())
+		if (Input.GetKeyDown(KeyCode.LeftShift))
 		{
 			if (isWallDetected()) return;
 			DashDirectionController(Input.GetAxisRaw("Horizontal"));
-			//stateMachine.ChangeState(dashState);
 			SkillManager.instance.dashSkill.UseSkill();
 		}
 

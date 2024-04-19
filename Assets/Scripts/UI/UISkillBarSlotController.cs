@@ -17,7 +17,8 @@ public class UISkillBarSlotController : MonoBehaviour
 	}
 	void Start()
 	{
-		this.UpdateFromSkillData();
+		UpdateFromSkillData();
+		UpdateSkillAvailableTimes(1);
 
 	}
 
@@ -30,6 +31,11 @@ public class UISkillBarSlotController : MonoBehaviour
 	private void RefreshCoolDownUI()
 	{
 		if (skillData == null) return;
+		if (!skillData.unlocked)
+		{
+			this.mask.fillAmount = 1;
+			return;
+		}
 
 		this.mask.fillAmount = skillManager.skillList[skillData].coolDownTimer / skillData.skillCoolDownTime;
 	}
