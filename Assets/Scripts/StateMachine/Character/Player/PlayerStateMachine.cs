@@ -1,22 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlayerStateMachine : MonoBehaviour
+public class PlayerStateMachine : CharacterStateMachine
 {
-    public PlayerState currentState { get; private set; }
-    
+	public override void ChangeState(CharacterState _newState)
+	{
+		base.ChangeState(_newState);
+	}
 
-    public void Initialize(PlayerState _startState)
-    {
-        currentState = _startState;
-        currentState.Enter();
-    }
-
-    public void ChangeState(PlayerState _newState)
-    {
-        currentState.Exit();
-        currentState= _newState;
-        currentState.Enter();
-    }
+	public override void Initialize(CharacterState _startState)
+	{
+		base.Initialize(_startState);
+	}
 }

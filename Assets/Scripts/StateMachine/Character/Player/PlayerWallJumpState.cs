@@ -26,6 +26,10 @@ public class PlayerWallJumpState : PlayerState
 			stateMachine.ChangeState(player.idleState);
 			return;
 		}
+		else
+		{
+			stateMachine.ChangeState(player.levitateState);
+		}
 
 	}
 

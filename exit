@@ -1,0 +1,120 @@
+[33mcommit b4b32c9b6d69ac1fe871bb645de02145d2aa61dd[m[33m ([m[1;36mHEAD -> [m[1;32m0.1.2[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 4a3640a 735af18
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Thu Mar 7 01:35:08 2024 +0800
+
+    Merge pull request #4 from OzzyYang/0.1.2
+    
+    Tile Pallete, Cinemachine, parallax background, endless background finished.
+
+[33mcommit 735af18f25fc790191ce9ccaca61c2ab45ab4046[m[33m ([m[1;31morigin/0.1.2[m[33m)[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Wed Mar 6 22:24:13 2024 +0800
+
+    Tile Pallete, Cinemachine, parallax background, endless background finished.
+
+[33mcommit 4a3640a15485c8a0de9fceeeecd0b945b57375d2[m
+Merge: 98b5541 43280f7
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Tue Mar 5 01:03:39 2024 +0800
+
+    Merge pull request #3 from OzzyYang/0.1.2
+    
+    Grounded State, Levitation State, Jump State, Idle State, Move State …
+
+[33mcommit 43280f75d98e4acb8394f694cdbb205eafd6be55[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Tue Mar 5 01:02:43 2024 +0800
+
+    Wall Slide State, Wall Jump State, Attack State , Attack Combo Fnished.
+
+[33mcommit 06b4961ac629689895ca56b87f8700f6e4cfac95[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Mon Mar 4 15:06:30 2024 +0800
+
+    Dash state Improvements, wall slide state, wall jump state finished.
+
+[33mcommit bc34414d00b883af053e666f1e876d486ae8676f[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Thu Feb 29 23:45:45 2024 +0800
+
+    Collision Check, Flip, Dash State Fnished.
+
+[33mcommit d89360029dfaa02d13591c20f431b7223177add9[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Thu Feb 29 01:27:50 2024 +0800
+
+    Grounded State, Levitation State, Jump State, Idle State, Move State Fnished
+
+[33mcommit 98b554167f71f2ac478790ba375e29d975cf8f46[m
+Merge: b07d5c0 44c81e5
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Wed Jan 17 22:46:55 2024 +0800
+
+    Merge pull request #2 from OzzyYang/0.1.1
+    
+    Basic feature finished
+
+[33mcommit 44c81e5fac5a191d0db4b41d47c7d5a44711f8ef[m[33m ([m[1;31morigin/0.1.1[m[33m)[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Wed Jan 17 22:44:09 2024 +0800
+
+    Basic state machine finished.
+
+[33mcommit 34679263914b822d512653af5266f7722c250c8f[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Tue Jan 16 16:24:23 2024 +0800
+
+    Skeleton attack finsihed.
+
+[33mcommit 07287407c814cce41340924901eb09496cb9486f[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Mon Jan 15 23:12:43 2024 +0800
+
+    Enemy move collision finished.
+    Refractor character scripts code to implement code reuse.
+
+[33mcommit 187afd432b9c6b77152333784531e41eb59a376a[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Tue Jan 9 21:56:26 2024 +0800
+
+    attack animation being interrupted fixed.
+
+[33mcommit 4c13a07c6ea72b8e320feada7ec2fcea6bc2e324[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Tue Jan 9 19:37:29 2024 +0800
+
+    Attack Combo finshied.
+
+[33mcommit b07d5c0af264e7ccf8839f612d1fc2e017d08df4[m
+Merge: 6f35be5 7984087
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Fri Jan 5 18:23:13 2024 +0800
+
+    Merge pull request #1 from OzzyYang/0.1.1
+    
+    Basic movement and jump mechanics finshed.
+
+[33mcommit 798408740df5569f63e1795d5bebc3cffe674471[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Fri Jan 5 18:21:01 2024 +0800
+
+    Dash ability completed;
+
+[33mcommit 79670f4511c440e3f86b28edbf1a7cee30f610d5[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Thu Jan 4 22:00:41 2024 +0800
+
+    Basic movement and jump mechanics finshed.
+
+[33mcommit 6f35be555eec6965252573be83fb7a2933964cdf[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Wed Jan 3 16:43:10 2024 +0800
+
+    init
+
+[33mcommit e357eee74fe6c0d0715def2a6ff562dc44dd13ee[m
+Author: Ozzy Yang <freefantasystation@163.com>
+Date:   Wed Jan 3 16:33:58 2024 +0800
+
+    Initial commit
