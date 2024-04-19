@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce85f762c57ed8844a8c51837b6f8a36, type: 3}
-  m_Name: Black Hole
+  m_Name: 17 Dodge
   m_EditorClassIdentifier: 
-  skillName: Black Hole
-  skillIcon: {fileID: 400477540, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  skillDescription: You can summon a black hole, whoever into it will take a ton
-    of damage.
-  skillCoolDownTime: 10
-  shortCut: 122
+  skillName: Dodge
+  skillIcon: {fileID: 84724980, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  skillDescription: You will get more 10% of base evasion rate.
+  skillCoolDownTime: 0
+  shortCut: 0
   prerequisiteSkills: []
   exclusiveSkills: []
   unlocked: 0

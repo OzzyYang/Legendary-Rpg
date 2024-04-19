@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce85f762c57ed8844a8c51837b6f8a36, type: 3}
-  m_Name: Dash
+  m_Name: 12 Crystal
   m_EditorClassIdentifier: 
-  skillName: Dash
-  skillIcon: {fileID: -547730515, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  skillDescription: 'You can dash to avoid of attack.
+  skillName: Crystal
+  skillIcon: {fileID: 1534190214, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  skillDescription: 'You can create a crystal takes magical damage.
 
-    You are invincible during
-    the time of dashing.'
-  skillCoolDownTime: 0.2
-  shortCut: 304
+    And you
+    can teleport to your crystal''s position.'
+  skillCoolDownTime: 3
+  shortCut: 102
   prerequisiteSkills: []
   exclusiveSkills: []
   unlocked: 0

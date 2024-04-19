@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class DashSkill : Skill
 {
-	[SerializeField] bool canDash;
 	[SerializeField] GameObject unlockDashButton;
 
 	[SerializeField] bool createCloneOnStart;
@@ -11,7 +10,11 @@ public class DashSkill : Skill
 	[SerializeField] bool createCloneOnEnd;
 	[SerializeField] GameObject unlockCreateCloneOnEndButton;
 
-	public override bool CanUseSkill() => base.CanUseSkill() && this.canDash;
+	public override void UseSkill()
+	{
+		if (CanUseSkill()) player.stateMachine.ChangeState(player.dashState);
+		base.UseSkill();
+	}
 
 	protected override void Awake()
 	{
@@ -19,7 +22,9 @@ public class DashSkill : Skill
 		if (unlockDashButton != null)
 			unlockDashButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canDash = unlockDashButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
+				this.unlocked = unlockDashButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
+				if (unlocked) UnlockSkill();
+				else LockSkill();
 			});
 		if (unlockCreateCloneOnStartButton != null)
 			unlockCreateCloneOnStartButton.GetComponent<Button>().onClick.AddListener(() =>
@@ -59,9 +64,4 @@ public class DashSkill : Skill
 		}
 	}
 
-	public override void UseSkill()
-	{
-		base.UseSkill();
-		player.stateMachine.ChangeState(player.dashState);
-	}
 }
