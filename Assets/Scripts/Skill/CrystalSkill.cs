@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class CrystalSkill : Skill
 {
 	[Header("Unlock Info")]
-	public bool canCreateCrystal;
 	[SerializeField] private UISkillTreeSlotController unlockCreateCrystalButton;
 	//Create Clone Instead of Crystal
 	public bool canMirageBlink;
@@ -34,40 +33,42 @@ public class CrystalSkill : Skill
 	protected override void Start()
 	{
 		base.Start();
-		//base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
 		coolDownTimer = skillCoolDownTime;
-		if (this.unlockCreateCrystalButton != null)
+		if (unlockCreateCrystalButton != null)
 		{
-			this.unlockCreateCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			unlockCreateCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canCreateCrystal = this.unlockCreateCrystalButton.IsUnlocked();
-				this.skillData.maxAvailableTimes = 1;
-				base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
+				SetSkillUnlocked(unlockCreateCrystalButton.IsUnlocked());
+				if (unlocked)
+				{
+					skillData.maxAvailableTimes = 1;
+					OnAvailableTimesChanged?.Invoke(crystalStack.Count);
+				}
 			});
 		}
-		if (this.unlockMirageBlinkButton != null)
+		if (unlockMirageBlinkButton != null)
 		{
-			this.unlockMirageBlinkButton.GetComponent<Button>().onClick.AddListener(() =>
+			unlockMirageBlinkButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canMirageBlink = this.unlockMirageBlinkButton.IsUnlocked();
+				canMirageBlink = unlockMirageBlinkButton.IsUnlocked();
 
 			});
 		}
-		if (this.unlockExplosiveCrystalButton != null)
+		if (unlockExplosiveCrystalButton != null)
 		{
-			this.unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canExplode = this.unlockExplosiveCrystalButton.IsUnlocked();
+				canExplode = unlockExplosiveCrystalButton.IsUnlocked();
 			});
 		}
-		if (this.unlockExplosiveCrystalButton != null)
+		if (unlockExplosiveCrystalButton != null)
 		{
-			this.unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canExplode = this.unlockExplosiveCrystalButton.IsUnlocked();
+				canExplode = unlockExplosiveCrystalButton.IsUnlocked();
 			});
 		}
-		if (this.unlockHomingCrystalButton != null)
+		if (unlockHomingCrystalButton != null)
 		{
 			this.unlockHomingCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
@@ -88,12 +89,9 @@ public class CrystalSkill : Skill
 	}
 	public override bool CanUseSkill()
 	{
-		if (!canCreateCrystal) return false;
-		if (crystalStack.Count > 0 || crystal != null)
-		{
-			return true;
-		}
-		return false;
+		if (CanUseMultiStack && crystalStack.Count >= 1) return true;
+		if (base.CanUseSkill()) return (crystalStack.Count > 0 || crystal != null);
+		else return false;
 	}
 
 	public override void UseSkill()
@@ -162,6 +160,6 @@ public class CrystalSkill : Skill
 		}
 	}
 
-	//just for clone skill create crystall instead player clone in use.
+	//just for clone skill creating crystall instead of player clone in use.
 	public float getCrystalDuration() => this.crystalDuration;
 }

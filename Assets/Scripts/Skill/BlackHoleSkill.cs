@@ -14,32 +14,26 @@ public class BlackHoleSkill : Skill
 	[SerializeField] private float qteDuration;
 	[SerializeField] private AnimationCurve blackHoleGrowCurve;
 	[SerializeField] private List<KeyCode> hotKetsSetting;
-	private bool canCreateBlackHole;
 	[SerializeField] private UISkillTreeSlotController unlockBlackHoleButton;
 	public bool isReleasingSkill { get; private set; }
 	public GameObject blackHole { get; private set; }
 	public override bool CanUseSkill()
 	{
-		if (!canCreateBlackHole) return false;
-		if (coolDownTimer <= 0 && !isReleasingSkill)
-		{
-			coolDownTimer = skillCoolDownTime;
-			return true;
-		}
-
-		return false;
+		return base.CanUseSkill() && !isReleasingSkill;
 	}
 
 	public override void UseSkill()
 	{
 		if (CanUseSkill())
 		{
-			base.UseSkill();
 			isReleasingSkill = true;
 			blackHole = blackHole == null ? Instantiate(blackHoleObject) : blackHole;
 			blackHole.SetActive(false);
-			StartCoroutine("FlyUpForAndReleaseBlackHole", 0.25f);
+			StartCoroutine(nameof(FlyUpForAndReleaseBlackHole), 0.25f);
+			coolDownTimer = skillCoolDownTime;
+			Debug.Log(this.GetType() + " Used.");
 		}
+
 	}
 
 	protected IEnumerator FlyUpForAndReleaseBlackHole(float _seconds)
@@ -55,7 +49,6 @@ public class BlackHoleSkill : Skill
 	protected override void Awake()
 	{
 		base.Awake();
-		this.skillData.unlocked = true;
 	}
 
 	protected override void Start()
@@ -65,7 +58,7 @@ public class BlackHoleSkill : Skill
 		{
 			this.unlockBlackHoleButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canCreateBlackHole = this.unlockBlackHoleButton.IsUnlocked();
+				this.unlocked = this.unlockBlackHoleButton.IsUnlocked();
 			});
 		}
 	}

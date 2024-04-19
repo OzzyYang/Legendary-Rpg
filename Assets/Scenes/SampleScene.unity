@@ -1169,9 +1169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillData: {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
-  skillCoolDownTime: 0.2
+  skillCoolDownTime: 0.5
   shortcut: 304
-  canDash: 0
   unlockDashButton: {fileID: 1071239451}
   createCloneOnStart: 0
   unlockCreateCloneOnStartButton: {fileID: 361214090}
@@ -1326,7 +1325,6 @@ MonoBehaviour:
   skillData: {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}
   skillCoolDownTime: 3
   shortcut: 102
-  canCreateCrystal: 0
   unlockCreateCrystalButton: {fileID: 976825741}
   canMirageBlink: 0
   unlockMirageBlinkButton: {fileID: 1713814142}
@@ -2106,7 +2104,7 @@ MonoBehaviour:
   prerequisiteSkills:
   - {fileID: 1529537553}
   exclusiveSkills: []
-  unlocked: 0
+  unlocked: 1
 --- !u!114 &219996212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10550,7 +10548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillData: {fileID: 0}
+  skillData: {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
   skillIcon: {fileID: -547730515, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Dash
   skillDescription: 'You can dash to avoid of attack.
