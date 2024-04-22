@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class ParrySkill : Skill
 {
-	[SerializeField] private bool canParry;
 	[SerializeField] private UISkillTreeSlotController unlockParryButton;
 	[SerializeField] private bool canRestoreOnParry;
 	[SerializeField] private float restoreAmount;
@@ -12,12 +11,13 @@ public class ParrySkill : Skill
 	[SerializeField] private bool canCreateCloneOnParry;
 	[SerializeField] private UISkillTreeSlotController unlockCreateCloneOnParryButton;
 
-	public override bool CanUseSkill() => base.CanUseSkill() && this.canParry;
-
 	public override void UseSkill()
 	{
-		base.UseSkill();
-		player.stateMachine.ChangeState(player.counterAttackState);
+		if (CanUseSkill())
+		{
+			base.UseSkill();
+			player.stateMachine.ChangeState(player.counterAttackState);
+		}
 	}
 
 	protected override void Awake()
@@ -32,7 +32,7 @@ public class ParrySkill : Skill
 		{
 			this.unlockParryButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canParry = this.unlockParryButton.IsUnlocked();
+				this.unlocked = this.unlockParryButton.IsUnlocked();
 			});
 		}
 		if (this.unlockRestoreOnParryButton != null)
@@ -51,7 +51,6 @@ public class ParrySkill : Skill
 		}
 		player.OnCounterAttackSuccessful += this.RestoreOnCounter;
 		player.OnCounterAttackSuccessful += this.CreateCloneOnParry;
-		//player.OnCounterAttackSuccessful.Invoke
 	}
 
 	private void RestoreOnCounter(Transform enemyTarget)
@@ -68,7 +67,7 @@ public class ParrySkill : Skill
 	public void CreateCloneOnParry(Transform enemyTarget)
 	{
 		if (this.canCreateCloneOnParry)
-			StartCoroutine("CreateCloneDelayFor", enemyTarget);
+			StartCoroutine(nameof(CreateCloneDelayFor), enemyTarget);
 	}
 
 	public void CreateCloneOnCounter(Transform _target)

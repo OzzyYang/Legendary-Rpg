@@ -18,7 +18,8 @@ MonoBehaviour:
     of damage.
   skillCoolDownTime: 10
   shortCut: 122
-  prerequisiteSkills: []
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}
   exclusiveSkills: []
   unlocked: 1
   maxAvailableTimes: 1

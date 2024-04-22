@@ -18,6 +18,23 @@ public class InventoryManager : MonoBehaviour
 	public Action OnInventoryListChanged { get; set; }
 	public Action OnStashListChanged { get; set; }
 	public Action OnEquipmentListChanged { get; set; }
+
+	public int currency { get; private set; }
+	public Action<int> OnCurrencyChanged { get; set; }
+	public int IncreaseCurrency(int numToIncrease)
+	{
+		currency += numToIncrease;
+		OnCurrencyChanged?.Invoke(currency);
+		return currency;
+	}
+
+	public int DecreaseCurrency(int numToDecrease)
+	{
+		currency -= numToDecrease;
+		if (currency < 0) currency = 0;
+		OnCurrencyChanged?.Invoke(currency);
+		return currency;
+	}
 	private void Awake()
 	{
 		if (instance == null)
@@ -34,7 +51,7 @@ public class InventoryManager : MonoBehaviour
 		stashItemsDict = new Dictionary<ItemData, InventoryItem>();
 		equipmentItems = new List<InventoryItem>();
 		equipmentItemsDict = new Dictionary<EquipmentType, InventoryItem>();
-
+		currency = 30000;
 	}
 
 	public List<InventoryItem> GetEquipmentItemsList() => new(this.equipmentItems);

@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be5d34b0610cb94ca999b9e1d670f05, type: 3}
   m_Name: 08 Time Mirage (Aggresive)
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: Time Mirage (Aggresive)
   skillIcon: {fileID: 1105768241, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillDescription: Your mirage will have 80% of your damage and hit effects.
   skillCoolDownTime: 0
   shortCut: 0
-  prerequisiteSkills: []
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1
-  baseSkill: {fileID: 0}
+  baseSkill: {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}

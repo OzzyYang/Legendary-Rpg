@@ -22,5 +22,5 @@ MonoBehaviour:
   shortCut: 102
   prerequisiteSkills: []
   exclusiveSkills: []
-  unlocked: 0
+  unlocked: 1
   maxAvailableTimes: 1

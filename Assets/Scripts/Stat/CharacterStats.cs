@@ -384,9 +384,7 @@ public class CharacterStats : MonoBehaviour
 	private IEnumerator IESetVulnerableFor(CoroutineParams parameters)
 	{
 		SetVulnerable(true, parameters.multiplier);
-		Debug.Log(1);
 		yield return new WaitForSeconds(parameters.seconds);
-		Debug.Log(2);
 		SetVulnerable(false, parameters.multiplier);
 	}
 

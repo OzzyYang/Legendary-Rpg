@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Restore with parry
   skillIcon: {fileID: -1698851337, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  skillDescription: 
+  skillDescription: You will restore little health when you parry successfully.
   skillCoolDownTime: 0
-  shortCut: 0
-  prerequisiteSkills: []
+  shortCut: 113
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: 03c119a5e0c63ee44afc12c81c2dce01, type: 2}
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1
-  baseSkill: {fileID: 0}
+  baseSkill: {fileID: 11400000, guid: 03c119a5e0c63ee44afc12c81c2dce01, type: 2}

@@ -15,9 +15,10 @@ MonoBehaviour:
   skillName: Dash - "Here I am"
   skillIcon: {fileID: 938421845, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillDescription: You leave a mirage when you dash.
-  skillCoolDownTime: 0.2
+  skillCoolDownTime: 0.5
   shortCut: 304
-  prerequisiteSkills: []
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1

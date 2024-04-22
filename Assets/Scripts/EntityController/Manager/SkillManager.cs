@@ -32,6 +32,7 @@ public class SkillManager : MonoBehaviour
 			skillList.Add(dashSkill.data, dashSkill);
 			skillList.Add(blackHoleSkill.data, blackHoleSkill);
 			skillList.Add(crystalSkill.data, crystalSkill);
+
 		}
 
 	}

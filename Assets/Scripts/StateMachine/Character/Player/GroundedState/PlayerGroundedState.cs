@@ -29,9 +29,8 @@ public class PlayerGroundedState : PlayerState
 			return;
 		}
 
-		if (Input.GetKeyDown(KeyCode.Q) && player.skill.parrySkill.CanUseSkill())
+		if (Input.GetKeyDown(KeyCode.Q))
 		{
-			//stateMachine.ChangeState(player.counterAttackState);
 			player.skill.parrySkill.UseSkill();
 			return;
 		}

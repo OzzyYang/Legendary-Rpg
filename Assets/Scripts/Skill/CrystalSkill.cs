@@ -51,7 +51,11 @@ public class CrystalSkill : Skill
 			unlockMirageBlinkButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
 				canMirageBlink = unlockMirageBlinkButton.IsUnlocked();
-
+				if (canMirageBlink)
+				{
+					skillData = unlockMirageBlinkButton.skill;
+					OnSkillUpdated?.Invoke(skillData as UpgradeSkillData);
+				}
 			});
 		}
 		if (unlockExplosiveCrystalButton != null)
@@ -59,39 +63,46 @@ public class CrystalSkill : Skill
 			unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
 				canExplode = unlockExplosiveCrystalButton.IsUnlocked();
-			});
-		}
-		if (unlockExplosiveCrystalButton != null)
-		{
-			unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				canExplode = unlockExplosiveCrystalButton.IsUnlocked();
+				if (canExplode)
+				{
+					skillData = unlockExplosiveCrystalButton.skill;
+					OnSkillUpdated?.Invoke(skillData as UpgradeSkillData);
+				}
 			});
 		}
 		if (unlockHomingCrystalButton != null)
 		{
-			this.unlockHomingCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			unlockHomingCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canMoveToEnemy = this.unlockHomingCrystalButton.IsUnlocked();
+				canMoveToEnemy = unlockHomingCrystalButton.IsUnlocked();
+				if (canMoveToEnemy)
+				{
+					skillData = unlockHomingCrystalButton.skill;
+					OnSkillUpdated?.Invoke(skillData as UpgradeSkillData);
+				}
 			});
 		}
-		if (this.unlockMultipleCrystalsButton != null)
+		if (unlockMultipleCrystalsButton != null)
 		{
-			this.unlockMultipleCrystalsButton.GetComponent<Button>().onClick.AddListener(() =>
+			unlockMultipleCrystalsButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.CanUseMultiStack = this.unlockMultipleCrystalsButton.IsUnlocked();
-				this.stackSize = 3;
-				this.skillData.maxAvailableTimes = 3;
-				if (coolDownTimer < 0) coolDownTimer = skillCoolDownTime;
-				base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
+				CanUseMultiStack = unlockMultipleCrystalsButton.IsUnlocked();
+				if (canMoveToEnemy)
+				{
+					skillData = unlockMultipleCrystalsButton.skill;
+					maxAvailableTimes = stackSize = skillData.maxAvailableTimes;
+					if (coolDownTimer < 0) coolDownTimer = skillCoolDownTime;
+					OnAvailableTimesChanged?.Invoke(crystalStack.Count);
+					OnSkillUpdated?.Invoke(skillData as UpgradeSkillData);
+				}
 			});
 		}
 	}
 	public override bool CanUseSkill()
 	{
 		if (CanUseMultiStack && crystalStack.Count >= 1) return true;
-		if (base.CanUseSkill()) return (crystalStack.Count > 0 || crystal != null);
-		else return false;
+		if (crystal != null) return true;
+		return base.CanUseSkill();
 	}
 
 	public override void UseSkill()

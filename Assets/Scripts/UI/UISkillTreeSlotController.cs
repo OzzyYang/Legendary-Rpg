@@ -17,7 +17,11 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 
 	[SerializeField] private bool unlocked = false;
 
-
+	public BasicSkillData skill
+	{
+		get { return skillData; }
+		private set { skillData = value; }
+	}
 	private void Awake()
 	{
 	}
@@ -100,8 +104,17 @@ public class UISkillTreeSlotController : MonoBehaviour, IPointerEnterHandler, IP
 			unlocked = skillData.unlocked;
 			prerequisiteSkills = skillData.prerequisiteSkills;
 			exclusiveSkills = skillData.exclusiveSkills;
-			name = "Skill Tree Slot - " + skillName;
-			GetComponent<Image>().sprite = skillIcon;
 		}
+		else
+		{
+			skillIcon = null;
+			skillDescription = "";
+			unlocked = false;
+			prerequisiteSkills = null;
+			exclusiveSkills = null;
+
+		}
+		name = "Skill Tree Slot - " + skillName;
+		GetComponent<Image>().sprite = skillIcon;
 	}
 }

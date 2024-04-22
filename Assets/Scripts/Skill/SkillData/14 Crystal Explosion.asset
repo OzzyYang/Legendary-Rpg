@@ -17,10 +17,12 @@ MonoBehaviour:
   skillDescription: 'The crystal can explode.
 
     *Only one upgrade can be chosen.*'
-  skillCoolDownTime: 0
-  shortCut: 0
-  prerequisiteSkills: []
-  exclusiveSkills: []
-  unlocked: 0
+  skillCoolDownTime: 3
+  shortCut: 102
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}
+  exclusiveSkills:
+  - {fileID: 11400000, guid: c98c7685c9606b74cbb9204161305eeb, type: 2}
+  unlocked: 1
   maxAvailableTimes: 1
-  baseSkill: {fileID: 0}
+  baseSkill: {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}

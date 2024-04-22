@@ -16,9 +16,11 @@ MonoBehaviour:
   skillIcon: {fileID: 1796972912, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillDescription: You create a mirage when parry successfully.
   skillCoolDownTime: 0
-  shortCut: 0
-  prerequisiteSkills: []
+  shortCut: 113
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: 03c119a5e0c63ee44afc12c81c2dce01, type: 2}
+  - {fileID: 11400000, guid: c0ebd00ac34b5d74da5d9d4e431a61b3, type: 2}
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1
-  baseSkill: {fileID: 0}
+  baseSkill: {fileID: 11400000, guid: 03c119a5e0c63ee44afc12c81c2dce01, type: 2}
