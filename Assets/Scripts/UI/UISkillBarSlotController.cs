@@ -37,7 +37,14 @@ public class UISkillBarSlotController : MonoBehaviour
 			return;
 		}
 
-		this.mask.fillAmount = skillManager.skillList[skillData].coolDownTimer / skillData.skillCoolDownTime;
+		if (skillData is UpgradeSkillData)
+		{
+			this.mask.fillAmount = skillManager.skillList[(skillData as UpgradeSkillData).baseSkill].coolDownTimer / skillData.skillCoolDownTime;
+		}
+		else
+		{
+			this.mask.fillAmount = skillManager.skillList[skillData].coolDownTimer / skillData.skillCoolDownTime;
+		}
 	}
 
 	private void OnValidate()
@@ -64,6 +71,7 @@ public class UISkillBarSlotController : MonoBehaviour
 	public void Setup(BasicSkillData skillData)
 	{
 		this.skillData = skillData;
+		UpdateFromSkillData();
 	}
 
 }

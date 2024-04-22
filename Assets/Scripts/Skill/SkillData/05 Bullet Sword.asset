@@ -19,9 +19,12 @@ MonoBehaviour:
     *Only one upgrade
     can be chosen.*'
   skillCoolDownTime: 0
-  shortCut: 0
-  prerequisiteSkills: []
-  exclusiveSkills: []
+  shortCut: 324
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
+  exclusiveSkills:
+  - {fileID: 11400000, guid: fde76ba8e3862fe45ac9b90ec9bc0a5d, type: 2}
+  - {fileID: 11400000, guid: b8488688b7bb0484ebaf0bb9343bdbb2, type: 2}
   unlocked: 0
   maxAvailableTimes: 1
-  baseSkill: {fileID: 0}
+  baseSkill: {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}

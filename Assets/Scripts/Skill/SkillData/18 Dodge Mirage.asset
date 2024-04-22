@@ -17,8 +17,9 @@ MonoBehaviour:
   skillDescription: 
   skillCoolDownTime: 0
   shortCut: 0
-  prerequisiteSkills: []
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: a174541a9c73c9242b8dff4bce0ff68a, type: 2}
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1
-  baseSkill: {fileID: 0}
+  baseSkill: {fileID: 11400000, guid: a174541a9c73c9242b8dff4bce0ff68a, type: 2}

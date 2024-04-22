@@ -4,7 +4,7 @@ public class UIManager : MonoBehaviour
 {
 	[SerializeField] private GameObject uiParent;
 	[SerializeField] private GameObject menuPages;
-	[SerializeField] private GameObject inGameUI;
+	[SerializeField] private UIInGameUIController inGameUI;
 	public static UIManager instance;
 	private void Start()
 	{
@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Tab))
 		{
 			menuPages.SetActive(!menuPages.activeSelf);
+			inGameUI.gameObject.SetActive(!menuPages.activeSelf);
 		}
 	}
 

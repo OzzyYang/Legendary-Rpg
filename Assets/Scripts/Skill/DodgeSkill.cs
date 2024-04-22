@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class DodgeSkill : Skill
 {
-	public bool canDodge;
+
 	[Range(0f, 1f)]
 	[SerializeField] private float increaseByPercentage;
 	[SerializeField] private UISkillTreeSlotController unlockDodgeButton;
@@ -33,13 +33,14 @@ public class DodgeSkill : Skill
 	protected override void Start()
 	{
 		base.Start();
+		IncreaseEvasionRateByPercentage();
 		player.GetComponent<PlayerStats>().OnBaseEvasionRateChanged += this.IncreaseEvasionRateByPercentage;
 		player.GetComponent<PlayerStats>().OnAvoidAttack += this.UseSkill;
 		if (this.unlockDodgeButton != null)
 		{
 			this.unlockDodgeButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canDodge = this.unlockDodgeButton.IsUnlocked();
+				this.unlocked = this.unlockDodgeButton.IsUnlocked();
 				this.IncreaseEvasionRateByPercentage();
 			});
 		}
@@ -54,7 +55,7 @@ public class DodgeSkill : Skill
 
 	private void IncreaseEvasionRateByPercentage()
 	{
-		if (canDodge)
+		if (unlocked)
 		{
 			var playerStats = player.GetComponent<PlayerStats>();
 			playerStats.evasionRate.SetDefaultValue(playerStats.evasionRate.GetValue() * (1 + increaseByPercentage));

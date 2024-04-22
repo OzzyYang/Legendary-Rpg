@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be5d34b0610cb94ca999b9e1d670f05, type: 3}
   m_Name: 21 Dash - Actually here I am
   m_EditorClassIdentifier: 
-  skillName: Skill Tree Slot - Dash - "Actually here I am"
+  skillName: Dash - "Actually here I am"
   skillIcon: {fileID: -1331556987, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillDescription: You create a mirage after you dash.
-  skillCoolDownTime: 0.2
+  skillCoolDownTime: 0.5
   shortCut: 304
-  prerequisiteSkills: []
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
+  - {fileID: 11400000, guid: 2e6af9db2900c904f887ac5df8d0528c, type: 2}
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1

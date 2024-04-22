@@ -32,20 +32,21 @@ public class UIMenuPageController : MonoBehaviour
 
 	private void Awake()
 	{
-		InventoryManager.instance.OnInventoryListChanged += this.UpdateInventorySlots;
-		InventoryManager.instance.OnEquipmentListChanged += this.UpdateEquipmentSlots;
-		InventoryManager.instance.OnStashListChanged += this.UpdateStashSlots;
-		InventoryManager.instance.OnInventoryListChanged += this.UpdateCraftButtonStatus;
-		InventoryManager.instance.OnStashListChanged += this.UpdateCraftButtonStatus;
+		InventoryManager.instance.OnInventoryListChanged += UpdateInventorySlots;
+		InventoryManager.instance.OnEquipmentListChanged += UpdateEquipmentSlots;
+		InventoryManager.instance.OnStashListChanged += UpdateStashSlots;
+		InventoryManager.instance.OnInventoryListChanged += UpdateCraftButtonStatus;
+		InventoryManager.instance.OnStashListChanged += UpdateCraftButtonStatus;
 
 	}
+
 	void Start()
 	{
-		this.character = PlayerManager.instance.player.gameObject;
-		this.UpdateStatsFrom(character.GetComponent<CharacterStats>());
-		this.itemToolTip.SetActive(false);
-		this.ShowCraftItemInfo(null);
-		this.ShowCraftSlotsListByType(EquipmentType.Weapon);
+		character = PlayerManager.instance.player.gameObject;
+		UpdateStatsFrom(character.GetComponent<CharacterStats>());
+		itemToolTip.SetActive(false);
+		ShowCraftItemInfo(null);
+		ShowCraftSlotsListByType(EquipmentType.Weapon);
 	}
 
 	void Update()
@@ -133,16 +134,16 @@ public class UIMenuPageController : MonoBehaviour
 	}
 	private void UpdateCraftButtonStatus()
 	{
-		if (this.selectedItemInfo != null)
-			this.EnableCraftButton(InventoryManager.instance.CanCraftItem(selectedItemInfo));
+		if (selectedItemInfo != null)
+			EnableCraftButton(InventoryManager.instance.CanCraftItem(selectedItemInfo));
 	}
 
 
 	public void SwitchToPage(GameObject pageToSwitch)
 	{
-		for (int i = 0; i < this.transform.childCount; i++)
+		for (int i = 0; i < transform.childCount; i++)
 		{
-			this.transform.GetChild(i).gameObject.SetActive(false);
+			transform.GetChild(i).gameObject.SetActive(false);
 		}
 		pageToSwitch?.SetActive(true);
 	}
@@ -167,7 +168,6 @@ public class UIMenuPageController : MonoBehaviour
 		TextMeshProUGUI skillDescription = skillTreeToolTip.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
 		skillName.text = newSkillName;
 		skillDescription.text = newSkillDescription;
-		//skillTreeToolTip.transform.position = Input.mousePosition + new Vector3(10, -10);
 		skillTreeToolTip.GetComponent<UIToolTipController>().Show();
 	}
 	public void HideSkillTreeToolTip() => skillTreeToolTip.GetComponent<UIToolTipController>().Hide();
@@ -187,7 +187,7 @@ public class UIMenuPageController : MonoBehaviour
 		{
 			itemName.text = "";
 			itemDescription.text = "";
-			this.EnableCraftButton(false);
+			EnableCraftButton(false);
 			return;
 		}
 		itemName.text = itemInfo.itemName;
@@ -196,15 +196,8 @@ public class UIMenuPageController : MonoBehaviour
 		{
 			Instantiate(itemSlotPrefab, itemMaterialsParent).GetComponent<UIItemSlotController>().UpdateData(material);
 		}
-		if (itemInfo.canBeCrafted && InventoryManager.instance.CanCraftItem(itemInfo))
-		{
-			this.EnableCraftButton(true);
-		}
-		else
-		{
-			this.EnableCraftButton(false);
-		}
-		this.selectedItemInfo = itemInfo;
+		EnableCraftButton(itemInfo.canBeCrafted && InventoryManager.instance.CanCraftItem(itemInfo));
+		selectedItemInfo = itemInfo;
 	}
 
 	private void EnableCraftButton(bool enable)
@@ -270,7 +263,7 @@ public class UIMenuPageController : MonoBehaviour
 	public void CraftEquipment()
 	{
 		InventoryManager.instance.CraftItem(selectedItemInfo);
-		this.EnableCraftButton(selectedItemInfo.canBeCrafted && InventoryManager.instance.CanCraftItem(selectedItemInfo));
+		EnableCraftButton(selectedItemInfo.canBeCrafted && InventoryManager.instance.CanCraftItem(selectedItemInfo));
 	}
 	#endregion
 
@@ -289,7 +282,7 @@ public class UIMenuPageController : MonoBehaviour
 		StringBuilder sb = FormatContentByType(itemInfo);
 		itemDescription.text = sb.ToString();
 
-		this.itemToolTip.GetComponent<UIToolTipController>().Show();
+		itemToolTip.GetComponent<UIToolTipController>().Show();
 	}
 
 	private StringBuilder FormatContentByType(ItemData itemInfo)
@@ -323,12 +316,13 @@ public class UIMenuPageController : MonoBehaviour
 		return sb;
 	}
 
-	public void HideItemToolTip() => this.itemToolTip.GetComponent<UIToolTipController>().Hide();
+	public void HideItemToolTip() => itemToolTip.GetComponent<UIToolTipController>().Hide();
 
 	private string FormateContentFromStat(StatType statType, Stat stat)
 	{
 		if (stat == null || stat.GetValue() <= 0) return "";
 		return statType.ToString() + ": " + stat.GetValue().ToString() + "\n";
 	}
+
 	#endregion
 }

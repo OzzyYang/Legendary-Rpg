@@ -17,9 +17,10 @@ MonoBehaviour:
   skillDescription: The  life clock of hit enemies will stop, meaning that they can't
     move and attack for a while.
   skillCoolDownTime: 0
-  shortCut: 0
-  prerequisiteSkills: []
+  shortCut: 324
+  prerequisiteSkills:
+  - {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
   exclusiveSkills: []
   unlocked: 0
   maxAvailableTimes: 1
-  baseSkill: {fileID: 0}
+  baseSkill: {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}

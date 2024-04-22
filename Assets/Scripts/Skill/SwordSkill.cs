@@ -42,7 +42,6 @@ public class SwordSkill : Skill
 	private List<GameObject> dots;
 
 	[Header("Passive Skill Info")]
-	public bool canThrowSword;
 	[SerializeField] private UISkillTreeSlotController unlockSwordButton;
 	public bool canTimeStop;
 	[SerializeField] private UISkillTreeSlotController unlockTimeStopButton;
@@ -52,16 +51,19 @@ public class SwordSkill : Skill
 
 	public override bool CanUseSkill()
 	{
-		if (!canThrowSword) return false;
+		if (!unlocked) return false;
 		return player.sword == null || !player.sword.gameObject.activeSelf;
 	}
 
 	public override void UseSkill()
 	{
-		base.UseSkill();
-		player.sword = player.sword == null ? GameObject.Instantiate(swordObject) : player.sword;
-		ChangeSwordProperties(swordType);
-		player.sword.GetComponent<SwordController>().SetupSword(CaculateAimDirection(), player.transform.position, currentThrowForce, swordType, canTimeStop, canVulnerability);
+		if (CanUseSkill())
+		{
+			base.UseSkill();
+			player.sword = player.sword == null ? GameObject.Instantiate(swordObject) : player.sword;
+			ChangeSwordProperties(swordType);
+			player.sword.GetComponent<SwordController>().SetupSword(CaculateAimDirection(), player.transform.position, currentThrowForce, swordType, canTimeStop, canVulnerability);
+		}
 	}
 
 	private Vector2 CaculateAimDirection()
@@ -87,8 +89,8 @@ public class SwordSkill : Skill
 		{
 			this.unlockSwordButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canThrowSword = this.unlockSwordButton.IsUnlocked();
-				if (canThrowSword) this.swordType = SwordType.Regular;
+				this.unlocked = this.unlockSwordButton.IsUnlocked();
+				if (unlocked) this.swordType = SwordType.Regular;
 			});
 		}
 		if (this.unlockTimeStopButton != null)

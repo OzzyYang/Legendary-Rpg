@@ -10,6 +10,7 @@ public class Skill : MonoBehaviour
 
 	public bool unlocked { get; protected set; }
 	public Action<int> OnAvailableTimesChanged { get; set; }
+	public Action<UpgradeSkillData> OnSkillUpdated { get; set; }
 	public int availableTimes { get; protected set; }
 	public int maxAvailableTimes { get; protected set; }
 	public BasicSkillData data
@@ -36,6 +37,7 @@ public class Skill : MonoBehaviour
 		this.skillCoolDownTime = skillData.skillCoolDownTime;
 		this.shortcut = skillData.shortCut;
 		this.unlocked = skillData.unlocked;
+		this.maxAvailableTimes = skillData.maxAvailableTimes;
 	}
 
 	protected virtual void Start()

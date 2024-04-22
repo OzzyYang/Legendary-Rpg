@@ -17,7 +17,6 @@ public class MirageSkill : Skill
 	private int createTimes = 1;
 
 	[Header("Unlock Info")]
-	public bool canCreateClone;
 	public float damageMultiplier;
 	[SerializeField] private UISkillTreeSlotController unlockCreateCloneButton;
 	public bool isCloneAggresive;
@@ -25,16 +24,6 @@ public class MirageSkill : Skill
 	[SerializeField] private UISkillTreeSlotController unlockAggresiveCloneButton;
 	[SerializeField] private UISkillTreeSlotController unlockCrystakMirageButton;
 	[SerializeField] private UISkillTreeSlotController unlockMutilpleMirageButton;
-
-	public override bool CanUseSkill()
-	{
-		return base.CanUseSkill() && canCreateClone;
-	}
-
-	public override void UseSkill()
-	{
-		base.UseSkill();
-	}
 
 	public void UseSkill(Transform _newTransform, Vector3 _offSet)
 	{
@@ -86,7 +75,7 @@ public class MirageSkill : Skill
 		{
 			this.unlockCreateCloneButton.GetComponent<Button>().onClick.AddListener(() =>
 			{
-				this.canCreateClone = this.unlockCreateCloneButton.IsUnlocked();
+				this.unlocked = this.unlockCreateCloneButton.IsUnlocked();
 				this.damageMultiplier = 0.3f;
 			});
 		}

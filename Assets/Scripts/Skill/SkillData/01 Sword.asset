@@ -16,7 +16,7 @@ MonoBehaviour:
   skillIcon: {fileID: 1566854771, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillDescription: You can throw your sword to hit enemies.
   skillCoolDownTime: 0
-  shortCut: 0
+  shortCut: 324
   prerequisiteSkills: []
   exclusiveSkills: []
   unlocked: 0
