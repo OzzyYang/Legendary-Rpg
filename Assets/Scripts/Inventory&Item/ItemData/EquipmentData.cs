@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 public enum EquipmentType
 {
@@ -35,15 +36,9 @@ public class EquipmentData : ItemData
 	public Stat frostDamage;
 	public Stat lightningDamge;
 
-	public EquipmentData(ItemType itemType, string itemName, Sprite icon) : base(itemType, itemName, icon)
-	{
-		this.itemType = ItemType.Equipment;
-	}
+	public void AddModifiersToPlayer() => this.AddModifiers(PlayerManager.Instance.Player.GetComponent<CharacterStats>());
 
-
-	public void AddModifiersToPlayer() => this.AddModifiers(PlayerManager.instance.player.GetComponent<CharacterStats>());
-
-	public void RemoveModifiersFromPlayer() => this.RemoveModifiers(PlayerManager.instance.player.GetComponent<CharacterStats>());
+	public void RemoveModifiersFromPlayer() => this.RemoveModifiers(PlayerManager.Instance.Player.GetComponent<CharacterStats>());
 
 
 	public void AddModifiers(CharacterStats target)
@@ -86,6 +81,71 @@ public class EquipmentData : ItemData
 		target.fireDamage.RemoveModifier(this.fireDamage.GetValue());
 		target.frostDamage.RemoveModifier(this.frostDamage.GetValue());
 		target.lightningDamge.RemoveModifier(this.lightningDamge.GetValue());
+	}
+
+	public override string GetItemDescription()
+	{
+		var result = new StringBuilder();
+
+		if (itemDescription.Length > 0 || haveEffect)
+			result.Append("¡ñ Properties" + "\n");
+		result.Append(FormatContent() + "\n");
+		if (itemDescription.Length > 0)
+		{
+			result.AppendLine();
+			result.Append("¡ñ Description" + "\n");
+			result.Append(itemDescription + "\n");
+		}
+		if (haveEffect)
+		{
+			result.AppendLine();
+			if (effectDatas.Count <= 1)
+			{
+				result.Append("¡ñ Unique Effect" + "\n");
+				result.Append(effectDatas[0].GetEffectDescription());
+			}
+			else
+			{
+				result.Append("¡ñ Unique Effects" + "\n");
+				int count = 0;
+				foreach (var effect in effectDatas)
+				{
+					result.Append($"{++count}.{effect.GetEffectDescription()}" + "\n");
+				}
+			}
+		}
+
+		return result.ToString();
+	}
+
+
+	private string FormatContent()
+	{
+		StringBuilder sb = new StringBuilder();
+
+		sb.Append(FormateContentFromStat(StatType.Strength, strength));
+		sb.Append(FormateContentFromStat(StatType.Agility, agility));
+		sb.Append(FormateContentFromStat(StatType.Intelligence, intelligence));
+		sb.Append(FormateContentFromStat(StatType.Vitality, vitality));
+		sb.Append(FormateContentFromStat(StatType.Damage, damage));
+		sb.Append(FormateContentFromStat(StatType.CriticalRate, criticalRate));
+		sb.Append(FormateContentFromStat(StatType.CriticalMultiplier, criticalMultiplier));
+		sb.Append(FormateContentFromStat(StatType.FireDamage, fireDamage));
+		sb.Append(FormateContentFromStat(StatType.FrostDamage, frostDamage));
+		sb.Append(FormateContentFromStat(StatType.LightningDamge, lightningDamge));
+		sb.Append(FormateContentFromStat(StatType.Armor, armor));
+		sb.Append(FormateContentFromStat(StatType.EvasionRate, evasionRate));
+		sb.Append(FormateContentFromStat(StatType.MagicResistance, magicResistance));
+		sb.Append(FormateContentFromStat(StatType.MaxHealth, maxHealth));
+		//delete the last '\n'
+		sb.Remove(sb.Length - 1, 1);
+		return sb.ToString();
+	}
+
+	private string FormateContentFromStat(StatType statType, Stat stat)
+	{
+		if (stat == null || stat.GetValue() == 0) return "";
+		return $"{statType}: {(stat.GetValue() >= 0 ? "+" : "")}{stat.GetValue()}\n";
 	}
 }
 

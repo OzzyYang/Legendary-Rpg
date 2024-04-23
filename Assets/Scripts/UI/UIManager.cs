@@ -6,7 +6,8 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private GameObject menuPages;
 	[SerializeField] private UIInGameUIController inGameUI;
 	public static UIManager instance;
-	private void Start()
+
+	private void Awake()
 	{
 		if (instance == null)
 		{
@@ -14,9 +15,9 @@ public class UIManager : MonoBehaviour
 		}
 		else
 		{
-			Destroy(this.gameObject);
+			Destroy(gameObject);
 		}
-		this.menuPages.SetActive(false);
+		menuPages.SetActive(false);
 	}
 
 	public void SwitchToPage(GameObject pageToSwitch)
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
 
 		pageToSwitch?.SetActive(true);
 	}
+
 	public UIMenuPageController GetMenuPageController() => this.menuPages.GetComponent<UIMenuPageController>();
 
 	private void Update()

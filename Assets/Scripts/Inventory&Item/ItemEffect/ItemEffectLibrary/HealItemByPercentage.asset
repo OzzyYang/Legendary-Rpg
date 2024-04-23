@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4afed2167745a1b4388c8fac973873ab, type: 3}
   m_Name: HealItemByPercentage
   m_EditorClassIdentifier: 
-  effectName: Heal Item By Percentage
+  effectName: Restore health by percentage
   effectType: 0
+  effectDescription: Restore 10% of your max health.
   increaseType: 0
   increasePercentage: 0.1
   increasePoints: 0

@@ -8,6 +8,7 @@ public class BuffEffect : ItemEffectData
 	[SerializeField] private StatType buffType;
 	[SerializeField] private float value;
 	[SerializeField] private float duration = 4;
+
 	private Stat statToModify;
 
 	private void OnValidate()

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +13,7 @@ public class UIMenuPageController : MonoBehaviour
 
 	[Header("Character page")]
 	[SerializeField] List<GameObject> statsSlotParentList;
-	[SerializeField] GameObject itemToolTip;
+	[SerializeField] UIToolTipController itemToolTip;
 	[SerializeField] GameObject character;
 
 	[Header("Skill Tree page")]
@@ -29,24 +28,32 @@ public class UIMenuPageController : MonoBehaviour
 	[SerializeField] List<EquipmentData> craftAmuletList;
 	[SerializeField] List<EquipmentData> craftFlaskList;
 	private ItemData selectedItemInfo;
+	[SerializeField] private GameObject selectedPage;
 
 	private void Awake()
 	{
-		InventoryManager.instance.OnInventoryListChanged += UpdateInventorySlots;
-		InventoryManager.instance.OnEquipmentListChanged += UpdateEquipmentSlots;
-		InventoryManager.instance.OnStashListChanged += UpdateStashSlots;
-		InventoryManager.instance.OnInventoryListChanged += UpdateCraftButtonStatus;
-		InventoryManager.instance.OnStashListChanged += UpdateCraftButtonStatus;
+		InventoryManager.Instance.OnInventoryListChanged += UpdateInventorySlots;
+		InventoryManager.Instance.OnEquipmentListChanged += UpdateEquipmentSlots;
+		InventoryManager.Instance.OnStashListChanged += UpdateStashSlots;
+		InventoryManager.Instance.OnInventoryListChanged += UpdateCraftButtonStatus;
+		InventoryManager.Instance.OnStashListChanged += UpdateCraftButtonStatus;
 
 	}
-
 	void Start()
 	{
-		character = PlayerManager.instance.player.gameObject;
+		character = PlayerManager.Instance.Player.gameObject;
 		UpdateStatsFrom(character.GetComponent<CharacterStats>());
-		itemToolTip.SetActive(false);
+		itemToolTip.Hide();
 		ShowCraftItemInfo(null);
 		ShowCraftSlotsListByType(EquipmentType.Weapon);
+		UpdateInventorySlots();
+		UpdateEquipmentSlots();
+		UpdateStashSlots();
+		SwitchToPage(selectedPage);
+	}
+	private void OnValidate()
+	{
+		SwitchToPage(selectedPage);
 	}
 
 	void Update()
@@ -56,7 +63,7 @@ public class UIMenuPageController : MonoBehaviour
 
 	private void UpdateInventorySlots()
 	{
-		var inventoryItemsList = InventoryManager.instance.GetInventoryItemsList();
+		var inventoryItemsList = InventoryManager.Instance.GetInventoryItemsList();
 		foreach (var inventorySlotsParent in inventorySlotsParents)
 		{
 			//clear all the slots
@@ -74,7 +81,7 @@ public class UIMenuPageController : MonoBehaviour
 
 	private void UpdateStashSlots()
 	{
-		var stashItemsList = InventoryManager.instance.GetStashItemsList();
+		var stashItemsList = InventoryManager.Instance.GetStashItemsList();
 		foreach (var stashSlotsParent in stashSlotsParents)
 		{
 			//clear all the slots
@@ -92,7 +99,7 @@ public class UIMenuPageController : MonoBehaviour
 
 	private void UpdateEquipmentSlots()
 	{
-		var equipmentItemsList = InventoryManager.instance.GetEquipmentItemsList();
+		var equipmentItemsList = InventoryManager.Instance.GetEquipmentItemsList();
 		foreach (var equipmentSlotsParent in equipmentSlotsParents)
 		{
 			for (int i = 0; i < equipmentSlotsParent.transform.childCount; i++)
@@ -135,7 +142,7 @@ public class UIMenuPageController : MonoBehaviour
 	private void UpdateCraftButtonStatus()
 	{
 		if (selectedItemInfo != null)
-			EnableCraftButton(InventoryManager.instance.CanCraftItem(selectedItemInfo));
+			EnableCraftButton(InventoryManager.Instance.CanCraftItem(selectedItemInfo));
 	}
 
 
@@ -145,7 +152,14 @@ public class UIMenuPageController : MonoBehaviour
 		{
 			transform.GetChild(i).gameObject.SetActive(false);
 		}
-		pageToSwitch?.SetActive(true);
+		if (pageToSwitch == null)
+		{
+			transform.GetChild(0).gameObject.SetActive(true);
+		}
+		else
+		{
+			pageToSwitch.SetActive(true);
+		}
 	}
 
 	#region Character Page
@@ -164,11 +178,7 @@ public class UIMenuPageController : MonoBehaviour
 	#region Skill Tree Page
 	public void ShowSkillToolTip(string newSkillName, string newSkillDescription)
 	{
-		TextMeshProUGUI skillName = skillTreeToolTip.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-		TextMeshProUGUI skillDescription = skillTreeToolTip.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
-		skillName.text = newSkillName;
-		skillDescription.text = newSkillDescription;
-		skillTreeToolTip.GetComponent<UIToolTipController>().Show();
+		skillTreeToolTip.GetComponent<UIToolTipController>().Show(newSkillName, newSkillDescription);
 	}
 	public void HideSkillTreeToolTip() => skillTreeToolTip.GetComponent<UIToolTipController>().Hide();
 	#endregion
@@ -191,12 +201,12 @@ public class UIMenuPageController : MonoBehaviour
 			return;
 		}
 		itemName.text = itemInfo.itemName;
-		itemDescription.text = FormatContentByType(itemInfo).ToString();
+		itemDescription.text = itemInfo.GetItemDescription();
 		foreach (var material in itemInfo.ingredients)
 		{
 			Instantiate(itemSlotPrefab, itemMaterialsParent).GetComponent<UIItemSlotController>().UpdateData(material);
 		}
-		EnableCraftButton(itemInfo.canBeCrafted && InventoryManager.instance.CanCraftItem(itemInfo));
+		EnableCraftButton(itemInfo.canBeCrafted && InventoryManager.Instance.CanCraftItem(itemInfo));
 		selectedItemInfo = itemInfo;
 	}
 
@@ -262,67 +272,19 @@ public class UIMenuPageController : MonoBehaviour
 	}
 	public void CraftEquipment()
 	{
-		InventoryManager.instance.CraftItem(selectedItemInfo);
-		EnableCraftButton(selectedItemInfo.canBeCrafted && InventoryManager.instance.CanCraftItem(selectedItemInfo));
+		InventoryManager.Instance.CraftItem(selectedItemInfo);
+		EnableCraftButton(selectedItemInfo.canBeCrafted && InventoryManager.Instance.CanCraftItem(selectedItemInfo));
 	}
 	#endregion
 
 	#region Item Tool Tip
 	public void ShowItemToolTip(ItemData itemInfo)
 	{
-		if (itemInfo == null) return;
-		//this.itemToolTip.transform.position = Input.mousePosition;
-		TextMeshProUGUI itemName, itemType, itemDescription;
-		itemName = itemToolTip.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-		itemType = itemToolTip.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-		itemDescription = itemToolTip.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-		itemName.text = itemInfo.itemName.ToString();
-		itemType.text = itemInfo.itemType.ToString();
-
-		StringBuilder sb = FormatContentByType(itemInfo);
-		itemDescription.text = sb.ToString();
-
-		itemToolTip.GetComponent<UIToolTipController>().Show();
+		if (itemInfo == null || itemToolTip == null) return;
+		itemToolTip.Show(itemInfo.itemName.ToString(), itemInfo.itemType.ToString(), itemInfo.GetItemDescription());
 	}
 
-	private StringBuilder FormatContentByType(ItemData itemInfo)
-	{
-		StringBuilder sb = new StringBuilder();
-		switch (itemInfo.itemType)
-		{
-			case ItemType.Material:
-				{
-					break;
-				}
-			case ItemType.Equipment:
-				{
-					sb.Append(FormateContentFromStat(StatType.Strength, (itemInfo as EquipmentData).strength));
-					sb.Append(FormateContentFromStat(StatType.Agility, (itemInfo as EquipmentData).agility));
-					sb.Append(FormateContentFromStat(StatType.Intelligence, (itemInfo as EquipmentData).intelligence));
-					sb.Append(FormateContentFromStat(StatType.Vitality, (itemInfo as EquipmentData).vitality));
-					sb.Append(FormateContentFromStat(StatType.Damage, (itemInfo as EquipmentData).damage));
-					sb.Append(FormateContentFromStat(StatType.CriticalRate, (itemInfo as EquipmentData).criticalRate));
-					sb.Append(FormateContentFromStat(StatType.CriticalMultiplier, (itemInfo as EquipmentData).criticalMultiplier));
-					sb.Append(FormateContentFromStat(StatType.FireDamage, (itemInfo as EquipmentData).fireDamage));
-					sb.Append(FormateContentFromStat(StatType.FrostDamage, (itemInfo as EquipmentData).frostDamage));
-					sb.Append(FormateContentFromStat(StatType.LightningDamge, (itemInfo as EquipmentData).lightningDamge));
-					sb.Append(FormateContentFromStat(StatType.Armor, (itemInfo as EquipmentData).armor));
-					sb.Append(FormateContentFromStat(StatType.EvasionRate, (itemInfo as EquipmentData).evasionRate)); sb.Append(FormateContentFromStat(StatType.MagicResistance, (itemInfo as EquipmentData).magicResistance));
-					sb.Append(FormateContentFromStat(StatType.MaxHealth, (itemInfo as EquipmentData).maxHealth));
-					break;
-				}
-		}
-		if (itemInfo.effectDescription != null && itemInfo.effectDescription.Length > 0) sb.Append("\nSpecial Effect: " + itemInfo.effectDescription);
-		return sb;
-	}
-
-	public void HideItemToolTip() => itemToolTip.GetComponent<UIToolTipController>().Hide();
-
-	private string FormateContentFromStat(StatType statType, Stat stat)
-	{
-		if (stat == null || stat.GetValue() <= 0) return "";
-		return statType.ToString() + ": " + stat.GetValue().ToString() + "\n";
-	}
+	public void HideItemToolTip() => itemToolTip.Hide();
 
 	#endregion
 }

@@ -22,7 +22,7 @@ public class LightningController : MonoBehaviour
 			{
 				EnemyController enemy = hit.GetComponent<EnemyController>();
 				CharacterStats enemyStats = hit.GetComponent<CharacterStats>();
-				enemyStats.ReduceHealth(PlayerManager.instance.player.GetComponent<CharacterStats
+				enemyStats.ReduceHealth(PlayerManager.Instance.Player.GetComponent<CharacterStats
 					>().lightningDamge.GetValue(), this.name);
 			}
 		}

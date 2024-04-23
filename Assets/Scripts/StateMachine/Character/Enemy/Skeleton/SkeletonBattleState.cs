@@ -14,7 +14,7 @@ public class SkeletonBattleState : EnemyState
 		base.Enter();
 		enemy.SetVelocity(0, rb.velocity.y);
 		stateTimer = (enemy as SkeletonController).battleTime;
-		player = PlayerManager.instance.player.gameObject;
+		player = PlayerManager.Instance.Player.gameObject;
 	}
 
 	public override void Exit()

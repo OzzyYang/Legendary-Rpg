@@ -9,10 +9,10 @@ public enum IncreaseType
 [CreateAssetMenu(fileName = "Heal Item Effect", menuName = "Data/Item Effect/Heal Item Effect")]
 public class HealItemEffect : ItemEffectData
 {
-	[SerializeField] public IncreaseType increaseType;
+	public IncreaseType increaseType;
 	[Range(0f, 1f)]
-	[SerializeField] public float increasePercentage;
-	[SerializeField] public float increasePoints;
+	public float increasePercentage;
+	public float increasePoints;
 
 	public override bool canExecutePositiveEffect(Transform target)
 	{

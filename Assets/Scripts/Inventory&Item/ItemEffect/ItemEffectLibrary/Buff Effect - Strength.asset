@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectName: Buff Effect - Strength
   effectType: 0
+  effectDescription: Increase strength by 40 points for 4 seconds.
   buffType: 0
   value: 40
   duration: 4

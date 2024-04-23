@@ -18,6 +18,9 @@ MonoBehaviour:
   canBeCrafted: 0
   ingredients: []
   dropChance: 100
+  haveEffect: 0
+  effectDatas: []
+  itemDescription: 
   equipmentType: 0
   strength:
     baseValue: 5
@@ -35,7 +38,7 @@ MonoBehaviour:
     baseValue: 1
     modifiers: []
   criticalRate:
-    baseValue: 0.1
+    baseValue: 4
     modifiers: []
   criticalMultiplier:
     baseValue: 0

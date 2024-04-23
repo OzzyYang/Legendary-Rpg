@@ -19,7 +19,7 @@ public class UIHealthBarController : HealthBarController
 
 	protected override void Start()
 	{
-		this.character = playerManager.player;
+		this.character = playerManager.Player;
 		this.characterStats = this.character.GetComponent<CharacterStats>();
 		this.slider = GetComponentInChildren<Slider>();
 		this.healthText = GetComponentInChildren<TextMeshProUGUI>();

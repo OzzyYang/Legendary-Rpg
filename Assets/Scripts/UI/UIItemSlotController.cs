@@ -53,15 +53,15 @@ public class UIItemSlotController : MonoBehaviour, IPointerDownHandler, IPointer
 		{
 			case ItemType.Material:
 				{
-					if (inventoryItem.itemData.haveEffect && inventoryItem.itemData.ExecutePositiveEffect(PlayerManager.instance.player.transform))
+					if (inventoryItem.itemData.haveEffect && inventoryItem.itemData.ExecutePositiveEffect(PlayerManager.Instance.Player.transform))
 					{
-						InventoryManager.instance.RemoveItem(inventoryItem.itemData);
+						InventoryManager.Instance.RemoveItem(inventoryItem.itemData);
 					}
 					break;
 				}
 			case ItemType.Equipment:
 				{
-					InventoryManager.instance.EquipItem(this.inventoryItem.itemData);
+					InventoryManager.Instance.EquipItem(this.inventoryItem.itemData);
 					break;
 				}
 		}

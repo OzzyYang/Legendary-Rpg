@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectName: Thunder Strike Effect
   effectType: 1
+  effectDescription: Strike enemies with a thunder strike, inflicting an extra 10
+    points of damage.
   thunderStrikePrefab: {fileID: 4613779699957855787, guid: e22c8aac8dd654f458493e164d3cccfa, type: 3}
   damage: 10

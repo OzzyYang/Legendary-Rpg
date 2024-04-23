@@ -81,8 +81,9 @@ public class CharacterStats : MonoBehaviour
 
 	protected virtual void Start()
 	{
-		this.currentHealth = this.maxHealth.GetValue();
-		this.criticalMultiplier.SetDefaultValue(150);
+		currentHealth = maxHealth.GetValue();
+		maxHealth.OnStatValueChanged += ClampHealth;
+		criticalMultiplier.SetDefaultValue(150);
 
 		ignitedDuration = 4;
 		frozenDuration = 4;
@@ -339,25 +340,33 @@ public class CharacterStats : MonoBehaviour
 
 	public virtual float IncreseHealth(float healthToIncrese, string increaseReason)
 	{
-		if (healthToIncrese < 0) throw new ArgumentOutOfRangeException("damage must be Non-negative!");
-		if (this.currentHealth == this.maxHealth.GetValue()) return this.currentHealth;
-		Debug.Log(this.character.name + "'s current health been increased " + healthToIncrese + " points because of " + increaseReason);
+		if (healthToIncrese < 0) throw new ArgumentOutOfRangeException("Damage must be Non-negative!");
+		if (currentHealth == maxHealth.GetValue()) return currentHealth;
+		Debug.Log(character.name + "'s current health been increased " + healthToIncrese + " points because of " + increaseReason);
 		healthToIncrese = Mathf.RoundToInt(healthToIncrese);
-		healthToIncrese = Mathf.Clamp(healthToIncrese, 0, this.maxHealth.GetValue() - this.currentHealth);
-		this.currentHealth += healthToIncrese;
-		if (this.OnCurrentHealthChanged != null) OnCurrentHealthChanged();
-		return this.currentHealth;
+		healthToIncrese = Mathf.Clamp(healthToIncrese, 0, maxHealth.GetValue() - currentHealth);
+		currentHealth += healthToIncrese;
+		OnCurrentHealthChanged?.Invoke();
+		return currentHealth;
 	}
 	public virtual float ReduceHealth(float _damage, string attackerName)
 	{
-		if (_damage < 0) throw new ArgumentOutOfRangeException("damage must be Non-negative!");
-		Debug.Log(this.character.name + " has been damaged " + _damage + " points by " + attackerName);
-		this.currentHealth -= _damage;
-		if (this.OnCurrentHealthChanged != null) OnCurrentHealthChanged();
+		if (_damage < 0) throw new ArgumentOutOfRangeException("Damage must be Non-negative!");
+		Debug.Log(character.name + " has been damaged " + _damage + " points by " + attackerName);
+		currentHealth -= _damage;
+		OnCurrentHealthChanged?.Invoke();
 		if (currentHealth <= 0) Die();
-		return this.currentHealth;
+		return currentHealth;
 	}
 
+	private void ClampHealth()
+	{
+		if (currentHealth > maxHealth.GetValue())
+		{
+			currentHealth = maxHealth.GetValue();
+			OnCurrentHealthChanged?.Invoke();
+		}
+	}
 	protected virtual void Die()
 	{
 		character.BeDead();
@@ -397,21 +406,35 @@ public class CharacterStats : MonoBehaviour
 	{
 		switch (statType)
 		{
-			case StatType.Strength: return this.strength;
-			case StatType.Agility: return this.agility;
-			case StatType.Intelligence: return this.intelligence;
-			case StatType.Vitality: return this.vitality;
-			case StatType.Damage: return this.damage;
-			case StatType.CriticalRate: return this.criticalRate;
-			case StatType.CriticalMultiplier: return this.criticalMultiplier;
-			case StatType.MaxHealth: return this.maxHealth;
-			case StatType.EvasionRate: return this.evasionRate;
-			case StatType.Armor: return this.armor;
-			case StatType.MagicResistance: return this.magicResistance;
-			case StatType.FireDamage: return this.fireDamage;
-			case StatType.FrostDamage: return this.frostDamage;
-			case StatType.LightningDamge: return this.lightningDamge;
+			case StatType.Strength: return strength;
+			case StatType.Agility: return agility;
+			case StatType.Intelligence: return intelligence;
+			case StatType.Vitality: return vitality;
+			case StatType.Damage: return damage;
+			case StatType.CriticalRate: return criticalRate;
+			case StatType.CriticalMultiplier: return criticalMultiplier;
+			case StatType.MaxHealth: return maxHealth;
+			case StatType.EvasionRate: return evasionRate;
+			case StatType.Armor: return armor;
+			case StatType.MagicResistance: return magicResistance;
+			case StatType.FireDamage: return fireDamage;
+			case StatType.FrostDamage: return frostDamage;
+			case StatType.LightningDamge: return lightningDamge;
 			default: return null;
 		}
+	}
+
+	public string GetStatDescriptionByType(StatType statType)
+	{
+
+		//var result = new StringBuilder();
+
+		return statType switch
+		{
+			StatType.Strength or StatType.Agility or StatType.Intelligence or StatType.Vitality or StatType.Damage or StatType.FireDamage or StatType.FrostDamage or StatType.LightningDamge or StatType.Armor or StatType.MagicResistance or StatType.MaxHealth => $"",
+			_ => ""
+		};
+
+
 	}
 }

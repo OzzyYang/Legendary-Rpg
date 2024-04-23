@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9f39f1da2558904eb1130e7d840a4d6, type: 3}
-  m_Name: GoodSwordData
+  m_Name: KnightSwordData
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: GoodSword
-  Icon: {fileID: 1806198009, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemName: KnightSword
+  Icon: {fileID: 1724600912, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   canBeCrafted: 0
   ingredients: []
   dropChance: 100
   haveEffect: 0
   effectDatas: []
+  itemDescription: 
   equipmentType: 0
   strength:
     baseValue: 5
@@ -37,7 +38,7 @@ MonoBehaviour:
     baseValue: 1
     modifiers: []
   criticalRate:
-    baseValue: 0.1
+    baseValue: 3
     modifiers: []
   criticalMultiplier:
     baseValue: 0

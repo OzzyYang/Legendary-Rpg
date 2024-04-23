@@ -42,7 +42,7 @@ public class Skill : MonoBehaviour
 
 	protected virtual void Start()
 	{
-		player = PlayerManager.instance.player.GetComponent<PlayerController>();
+		player = PlayerManager.Instance.Player.GetComponent<PlayerController>();
 	}
 
 	protected virtual void Update()

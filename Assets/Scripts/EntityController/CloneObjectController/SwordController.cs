@@ -43,7 +43,7 @@ public class SwordController : MonoBehaviour
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
-		player = PlayerManager.instance.player;
+		player = PlayerManager.Instance.Player;
 	}
 
 	// Start is called before the first frame update

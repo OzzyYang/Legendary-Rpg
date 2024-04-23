@@ -32,7 +32,7 @@ public class PlayerCloneController : CloneObjectController
 
 		if (enemy == null)
 		{
-			transform.rotation = PlayerManager.instance.player.transform.rotation;
+			transform.rotation = PlayerManager.Instance.Player.transform.rotation;
 		}
 		else if (enemy.position.x < transform.position.x)
 		{
@@ -50,11 +50,11 @@ public class PlayerCloneController : CloneObjectController
 			EnemyController enemy = hit.GetComponent<EnemyController>();
 			if (enemy != null)
 			{
-				CharacterStats playerStats = PlayerManager.instance.player.GetComponent<CharacterStats>();
+				CharacterStats playerStats = PlayerManager.Instance.Player.GetComponent<CharacterStats>();
 				playerStats.DoDamageWithMultiplier(enemy.GetComponent<CharacterStats>(), damageMultiplier);
 				if (this.applyWeaponEffect)
 				{
-					foreach (var item in InventoryManager.instance.GetEquipmentItemsList())
+					foreach (var item in InventoryManager.Instance.GetEquipmentItemsList())
 					{
 						if (item.itemData.haveEffect)
 						{

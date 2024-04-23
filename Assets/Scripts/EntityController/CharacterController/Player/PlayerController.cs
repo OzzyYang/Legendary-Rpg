@@ -126,7 +126,7 @@ public class PlayerController : CharacterController
 
 			{
 				this.stats.DoDamage(enemy.stats);
-				foreach (var item in InventoryManager.instance.GetEquipmentItemsList())
+				foreach (var item in InventoryManager.Instance.GetEquipmentItemsList())
 				{
 					if (item.itemData.haveEffect)
 					{
@@ -176,9 +176,9 @@ public class PlayerController : CharacterController
 	{
 
 		if (item == null) return false;
-		if (InventoryManager.instance.CanAddItem(item))
+		if (InventoryManager.Instance.CanAddItem(item))
 		{
-			InventoryManager.instance.AddItem(item);
+			InventoryManager.Instance.AddItem(item);
 			return true;
 		}
 		else

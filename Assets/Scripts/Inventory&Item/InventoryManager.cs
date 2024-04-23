@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, ISaveManager
 {
-	public static InventoryManager instance { get; private set; }
+	public static InventoryManager Instance { get; private set; }
 
 	[SerializeField] private List<InventoryItem> inventoryItems;
 	private Dictionary<ItemData, InventoryItem> inventoryItemsDict;
@@ -19,27 +20,32 @@ public class InventoryManager : MonoBehaviour
 	public Action OnStashListChanged { get; set; }
 	public Action OnEquipmentListChanged { get; set; }
 
-	public int currency { get; private set; }
+	[SerializeField] private int currency;
+	public int Currency
+	{
+		get { return currency; }
+		private set { currency = value; }
+	}
 	public Action<int> OnCurrencyChanged { get; set; }
 	public int IncreaseCurrency(int numToIncrease)
 	{
-		currency += numToIncrease;
-		OnCurrencyChanged?.Invoke(currency);
-		return currency;
+		Currency += numToIncrease;
+		OnCurrencyChanged?.Invoke(Currency);
+		return Currency;
 	}
 
 	public int DecreaseCurrency(int numToDecrease)
 	{
-		currency -= numToDecrease;
-		if (currency < 0) currency = 0;
-		OnCurrencyChanged?.Invoke(currency);
-		return currency;
+		Currency -= numToDecrease;
+		if (Currency < 0) Currency = 0;
+		OnCurrencyChanged?.Invoke(Currency);
+		return Currency;
 	}
 	private void Awake()
 	{
-		if (instance == null)
+		if (Instance == null)
 		{
-			instance = this;
+			Instance = this;
 		}
 		else
 		{
@@ -51,7 +57,7 @@ public class InventoryManager : MonoBehaviour
 		stashItemsDict = new Dictionary<ItemData, InventoryItem>();
 		equipmentItems = new List<InventoryItem>();
 		equipmentItemsDict = new Dictionary<EquipmentType, InventoryItem>();
-		currency = 30000;
+		Currency = 30000;
 	}
 
 	public List<InventoryItem> GetEquipmentItemsList() => new(this.equipmentItems);
@@ -272,5 +278,58 @@ public class InventoryManager : MonoBehaviour
 		return result;
 	}
 
+	public void LoadData(GameData data)
+	{
+		currency = data.currency;
 
+		var allItemData = GetAllItemData();
+
+		if (allItemData != null)
+		{
+			foreach (var pair in data.inventory)
+			{
+				AddItem(allItemData[pair.Key], pair.Value);
+			}
+			foreach (var pair in data.stash)
+			{
+				AddItem(allItemData[pair.Key], pair.Value);
+			}
+		}
+	}
+
+	public void SaveData(ref GameData data)
+	{
+		data.currency = currency;
+		foreach (var item in inventoryItems)
+		{
+			if (!data.inventory.TryAdd(item.itemData.itemId, item.stackSize))
+			{
+				data.inventory[item.itemData.itemId] = item.stackSize;
+			}
+		}
+		foreach (var item in stashItems)
+		{
+			if (!data.stash.TryAdd(item.itemData.itemId, item.stackSize))
+			{
+				data.stash[item.itemData.itemId] = item.stackSize;
+			}
+		}
+	}
+
+	private Dictionary<string, ItemData> GetAllItemData()
+	{
+		var result = new Dictionary<string, ItemData>();
+		string[] allItemId = AssetDatabase.FindAssets("", new[] { "Assets/Scripts/Inventory&Item/ItemData/ItemDataBase" });
+
+		if (allItemId.Length == 0) return null;
+
+		foreach (var itemId in allItemId)
+		{
+			if (itemId == null) continue;
+			var path = AssetDatabase.GUIDToAssetPath(itemId);
+			var itemData = AssetDatabase.LoadAssetAtPath<ItemData>(path);
+			result.Add(itemId, itemData);
+		}
+		return result;
+	}
 }

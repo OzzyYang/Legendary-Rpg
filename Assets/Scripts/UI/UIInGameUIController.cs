@@ -11,9 +11,9 @@ public class UIInGameUIController : MonoBehaviour
 
 	private void Start()
 	{
-		this.UpdateSkillBar();
-		this.UpdateCurrencyUI(InventoryManager.instance.currency);
-		InventoryManager.instance.OnCurrencyChanged += UpdateCurrencyUI;
+		UpdateSkillBar();
+		UpdateCurrencyUI(InventoryManager.Instance.Currency);
+		InventoryManager.Instance.OnCurrencyChanged += UpdateCurrencyUI;
 	}
 
 	private void UpdateSkillBar()

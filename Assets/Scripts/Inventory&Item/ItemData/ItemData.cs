@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 public enum ItemType
@@ -11,6 +13,7 @@ public enum ItemType
 public class ItemData : ScriptableObject
 {
 	[Header("Item Info")]
+	public string itemId;
 	public ItemType itemType;
 	public string itemName;
 	public Sprite Icon;
@@ -24,19 +27,15 @@ public class ItemData : ScriptableObject
 	public bool haveEffect;
 	public List<ItemEffectData> effectDatas;
 	[TextArea]
-	public string effectDescription;
-
-	public ItemData(ItemType itemType, string itemName, Sprite icon)
-	{
-		this.itemType = itemType;
-		this.itemName = itemName;
-		Icon = icon;
-	}
+	[SerializeField] protected string itemDescription;
 
 	private void OnValidate()
 	{
 		canBeCrafted = ingredients?.Count != 0;
 		haveEffect = effectDatas != null && effectDatas.Count > 0;
+#if UNITY_EDITOR
+		itemId = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(this));
+#endif
 	}
 
 	public bool ExecuteNegativeEffect(Transform target)
@@ -66,4 +65,31 @@ public class ItemData : ScriptableObject
 		}
 		return true;
 	}
+
+	public virtual string GetItemDescription()
+	{
+		var result = new StringBuilder();
+		result.Append(itemDescription + "\n");
+		if (haveEffect)
+		{
+			if (effectDatas.Count <= 1)
+			{
+				result.Append($"Usage:{effectDatas[0].GetEffectDescription()}");
+
+			}
+			else
+			{
+				int count = 0;
+				foreach (var effect in effectDatas)
+				{
+					result.Append($"Usage{++count}: {effect.GetEffectDescription()}" + "\n");
+				}
+			}
+		}
+		return result.ToString();
+	}
+
+
+
+
 }

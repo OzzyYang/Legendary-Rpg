@@ -10,22 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9f39f1da2558904eb1130e7d840a4d6, type: 3}
-  m_Name: ThunderSwordData
+  m_Name: GoodSwordData
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: ThunderSword
-  Icon: {fileID: 1815423734, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemName: GoodSword
+  Icon: {fileID: 1806198009, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   canBeCrafted: 0
   ingredients: []
-  dropChance: 0
-  haveEffect: 1
-  effectDatas:
-  - {fileID: 11400000, guid: 55aad48b427e9004aa217b92bb7237fa, type: 2}
-  - {fileID: 11400000, guid: d51e3f1e9e6d0844f81e444b3cc7c47c, type: 2}
-  effectDescription: Attack with thunder strike effect.
+  dropChance: 100
+  haveEffect: 0
+  effectDatas: []
+  itemDescription: 
   equipmentType: 0
   strength:
-    baseValue: 0
+    baseValue: 5
     modifiers: []
   agility:
     baseValue: 0
@@ -37,10 +35,10 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   damage:
-    baseValue: 0
+    baseValue: 1
     modifiers: []
   criticalRate:
-    baseValue: 0
+    baseValue: 3
     modifiers: []
   criticalMultiplier:
     baseValue: 0
@@ -64,5 +62,5 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   lightningDamge:
-    baseValue: 30
+    baseValue: 0
     modifiers: []

@@ -110,7 +110,7 @@ public class BlackHoleController : MonoBehaviour
 	private void ShrinkBlackHole()
 	{
 		CanGrow = false;
-		PlayerManager.instance.player.stateMachine.ChangeState(PlayerManager.instance.player.levitateState);
+		PlayerManager.Instance.Player.stateMachine.ChangeState(PlayerManager.Instance.Player.levitateState);
 
 	}
 

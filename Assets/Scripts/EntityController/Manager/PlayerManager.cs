@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour, ISaveManager
 {
-	public static PlayerManager instance { get; private set; }
+	public static PlayerManager Instance { get; private set; }
 	[SerializeField] private PlayerController playerInstance;
-	public PlayerController player
+	public PlayerController Player
 	{
 		get { return playerInstance; }
 		private set { playerInstance = value; }
@@ -13,19 +13,18 @@ public class PlayerManager : MonoBehaviour
 
 	private void Awake()
 	{
-		if (instance != null)
-			Destroy(instance.gameObject);
+		if (Instance != null)
+			Destroy(Instance.gameObject);
 		else
-			instance = this;
+			Instance = this;
 	}
-	// Start is called before the first frame update
-	void Start()
+
+	public void LoadData(GameData data)
 	{
 
 	}
 
-	// Update is called once per frame
-	void Update()
+	public void SaveData(ref GameData data)
 	{
 
 	}

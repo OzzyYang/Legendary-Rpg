@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectName: Health Potion
   effectType: 0
+  effectDescription: Restore 50% of your max health.
   increaseType: 0
   increasePercentage: 0.5
   increasePoints: 30

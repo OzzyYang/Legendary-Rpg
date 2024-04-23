@@ -114,7 +114,7 @@ public class CrystalController : CloneObjectController
 		{
 			if (hit.GetComponent<EnemyController>() != null)
 			{
-				CharacterStats playerStats = PlayerManager.instance.player.GetComponent<CharacterStats>();
+				CharacterStats playerStats = PlayerManager.Instance.Player.GetComponent<CharacterStats>();
 				playerStats.DoMagicalDamage(hit.GetComponent<CharacterStats>());
 			}
 		}
