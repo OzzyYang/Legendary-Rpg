@@ -62,16 +62,13 @@ public class CrystalController : CloneObjectController
 
 	}
 
-	public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMoveToEnemy, int _searchStrategy, Transform target)
+	public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMoveToEnemy, int searchStrategy, Transform target)
 	{
 		this.timer = this.crytalDuration = _crystalDuration;
 		this.canExplode = _canExplode;
 		this.canMoveToEnemy = _canMoveToEnemy;
-
-
-		switch (_searchStrategy)
+		switch (searchStrategy)
 		{
-
 			case 0:// search closest enemy 
 				{
 					enemyTarget = FindClosestEnemyIn(transform.position, 20);
@@ -80,13 +77,12 @@ public class CrystalController : CloneObjectController
 
 			case 1:// search enemy randomly
 				{
-					GameObject blackHole = SkillManager.instance.blackHoleSkill.blackHole;
+					GameObject blackHole = SkillManager.instance.BlackHoleSkill.BlackHole;
 					enemyTarget = FindEnemyRandomlyIn(transform.position, blackHole.GetComponent<CircleCollider2D>().bounds.size.x / 2);
 					break;
 				}
 			case 2:// choose given target
 				{
-
 					enemyTarget = target;
 					break;
 				}

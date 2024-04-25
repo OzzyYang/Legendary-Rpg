@@ -64,7 +64,7 @@ public class PlayerCloneController : CloneObjectController
 					}
 				}
 				if (Random.Range(0, 1.0f) < duplicateProbability && canDuplicate)
-					SkillManager.instance.cloneSkill.UseSkill(enemy.transform, new Vector2(.5f * facingDirection, 0));
+					SkillManager.instance.CloneSkill.UseSkill(enemy.transform, new Vector2(.5f * facingDirection, 0));
 			}
 		}
 	}

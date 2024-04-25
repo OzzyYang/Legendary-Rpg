@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -7,21 +6,39 @@ public class SaveManager : MonoBehaviour
 {
 	public static SaveManager Instance { get; private set; }
 	[SerializeField] private string savedFileName;
-
+	[SerializeField] private bool encryptData;
 	private GameData gameData;
 	private List<ISaveManager> saveManagers;
 	private FileDataHandler dataHandler;
+
+
+	[ContextMenu("Delete Data")]
+	private void DeleteFileData()
+	{
+		dataHandler = new FileDataHandler(Application.persistentDataPath, savedFileName, encryptData);
+		dataHandler.Delete();
+	}
+	[ContextMenu("Open Data")]
+	private void OpenFileData()
+	{
+		dataHandler = new FileDataHandler(Application.persistentDataPath, savedFileName, encryptData);
+		dataHandler.OpenInEditor();
+	}
+
 	private void Awake()
 	{
 		if (Instance != null)
 			Destroy(gameObject);
 		else
 			Instance = this;
+
+		dataHandler = new FileDataHandler(Application.persistentDataPath, savedFileName, encryptData);
+		saveManagers = FindAllSaveManagers();
+		//LoadGame();
 	}
+
 	private void Start()
 	{
-		dataHandler = new FileDataHandler(Application.persistentDataPath, savedFileName);
-		saveManagers = FindAllSaveManagers();
 		LoadGame();
 	}
 
@@ -63,9 +80,6 @@ public class SaveManager : MonoBehaviour
 	private void OnApplicationQuit()
 	{
 		SaveGame();
-#if UNITY_EDITOR
-		System.Diagnostics.Process.Start(Path.Combine(Application.persistentDataPath, savedFileName));
-#endif
 	}
 
 	private List<ISaveManager> FindAllSaveManagers()

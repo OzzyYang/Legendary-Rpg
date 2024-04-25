@@ -9,8 +9,8 @@ public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IS
 	[SerializeField] private List<TValue> values;
 	public void OnBeforeSerialize()
 	{
-		keys?.Clear();
-		values?.Clear();
+		keys = new List<TKey>();
+		values = new List<TValue>();
 		foreach (var pair in this)
 		{
 			keys.Add(pair.Key);

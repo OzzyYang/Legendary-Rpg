@@ -19,7 +19,7 @@ public class PlayerAimSwordState : PlayerState
 	public override void Exit()
 	{
 		base.Exit();
-		player.skill.swordSkill.NeedAimLine(false);
+		player.skill.SwordSkill.NeedAimLine(false);
 	}
 
 	public override void Update()
@@ -34,6 +34,6 @@ public class PlayerAimSwordState : PlayerState
 		}
 		Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		player.FlipController((mousePosition.x - player.transform.position.x) >= 0 ? 1 : -1);
-		player.skill.swordSkill.NeedAimLine(true);
+		player.skill.SwordSkill.NeedAimLine(true);
 	}
 }

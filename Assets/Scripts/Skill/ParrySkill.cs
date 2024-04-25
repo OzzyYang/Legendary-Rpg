@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ParrySkill : Skill
 {
@@ -23,40 +22,46 @@ public class ParrySkill : Skill
 	protected override void Awake()
 	{
 		base.Awake();
+		if (unlockParryButton != null)
+		{
+			var buttonController = unlockParryButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockParry()
+			{
+				Unlocked = unlockParryButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockParry;
+		}
+		if (unlockRestoreOnParryButton != null)
+		{
+			var buttonController = unlockRestoreOnParryButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockRestoreOnParry()
+			{
+				canRestoreOnParry = unlockRestoreOnParryButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockRestoreOnParry;
+		}
+		if (unlockCreateCloneOnParryButton != null)
+		{
+			var buttonController = unlockCreateCloneOnParryButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockCreateCloneOnParry()
+			{
+				canCreateCloneOnParry = unlockCreateCloneOnParryButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockCreateCloneOnParry;
+		}
+		player.OnCounterAttackSuccessful += RestoreOnCounter;
+		player.OnCounterAttackSuccessful += CreateCloneOnParry;
 	}
 
 	protected override void Start()
 	{
 		base.Start();
-		if (this.unlockParryButton != null)
-		{
-			this.unlockParryButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.unlocked = this.unlockParryButton.IsUnlocked();
-			});
-		}
-		if (this.unlockRestoreOnParryButton != null)
-		{
-			this.unlockRestoreOnParryButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.canRestoreOnParry = this.unlockRestoreOnParryButton.IsUnlocked();
-			});
-		}
-		if (this.unlockCreateCloneOnParryButton != null)
-		{
-			this.unlockCreateCloneOnParryButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.canCreateCloneOnParry = this.unlockCreateCloneOnParryButton.IsUnlocked();
-			});
-		}
-		player.OnCounterAttackSuccessful += this.RestoreOnCounter;
-		player.OnCounterAttackSuccessful += this.CreateCloneOnParry;
 	}
 
 	private void RestoreOnCounter(Transform enemyTarget)
 	{
-		if (this.canRestoreOnParry)
-			player.GetComponent<CharacterStats>().IncreseHealth(this.restoreAmount, this.GetType().ToString());
+		if (canRestoreOnParry)
+			player.GetComponent<CharacterStats>().IncreseHealth(restoreAmount, GetType().ToString());
 	}
 
 	protected override void Update()
@@ -66,21 +71,13 @@ public class ParrySkill : Skill
 
 	public void CreateCloneOnParry(Transform enemyTarget)
 	{
-		if (this.canCreateCloneOnParry)
+		if (canCreateCloneOnParry)
 			StartCoroutine(nameof(CreateCloneDelayFor), enemyTarget);
-	}
-
-	public void CreateCloneOnCounter(Transform _target)
-	{
-		//if (canCreateCloneOnParry)
-		//{
-		//	StartCoroutine("CreateCloneDelayFor", _target);
-		//}
 	}
 
 	private IEnumerator CreateCloneDelayFor(Transform _target)
 	{
 		yield return new WaitForSeconds(0.5f);
-		player.skill.cloneSkill.UseSkill(_target, new Vector2(1.5f * player.facingDirection, 0));
+		player.skill.CloneSkill.UseSkill(_target, new Vector2(1.5f * player.facingDirection, 0));
 	}
 }

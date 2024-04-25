@@ -31,7 +31,7 @@ public class PlayerGroundedState : PlayerState
 
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
-			player.skill.parrySkill.UseSkill();
+			player.skill.ParrySkill.UseSkill();
 			return;
 		}
 
@@ -58,14 +58,14 @@ public class PlayerGroundedState : PlayerState
 
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 		{
-			if (player.skill.swordSkill.CanUseSkill())
+			if (player.skill.SwordSkill.CanUseSkill())
 			{
 				stateMachine.ChangeState(player.aimSwordState);
 				return;
 			}
 			else
 			{
-				player.skill.swordSkill.ReturnToPlayer();
+				player.skill.SwordSkill.ReturnToPlayer();
 			}
 		}
 

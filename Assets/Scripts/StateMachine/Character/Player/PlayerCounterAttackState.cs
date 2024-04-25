@@ -36,7 +36,7 @@ public class PlayerCounterAttackState : PlayerState
 					player.OnCounterAttackSuccessful?.Invoke(enemy.transform);
 					if (!hasCreatedClone)
 					{
-						player.skill.parrySkill.CreateCloneOnCounter(enemy.transform);
+						player.skill.ParrySkill.CreateCloneOnParry(enemy.transform);
 						hasCreatedClone = true;
 					}
 				}

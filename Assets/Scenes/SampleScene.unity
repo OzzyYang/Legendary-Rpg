@@ -156,7 +156,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -175,15 +175,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: 88139dd9aaa2e7d41ac0295328c1037b, type: 2}
   skillIcon: {fileID: -1331556987, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Dash - "Actually here I am"
   skillDescription: You create a mirage after you dash.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
-  - {fileID: 11400000, guid: 2e6af9db2900c904f887ac5df8d0528c, type: 2}
+  - {fileID: 1071239453}
+  - {fileID: 361214092}
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &30697341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,7 +996,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1014,13 +1015,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: ede791f62b5c56c45bffb82436c98e75, type: 2}
   skillIcon: {fileID: -1263708677, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Sword (Time Stop)
   skillDescription: The  life clock of hit enemies will stop, meaning that they can't
     move and attack for a while.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
+  - {fileID: 1455954974}
   exclusiveSkills: []
   unlocked: 0
 --- !u!114 &108012535
@@ -1126,7 +1128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 131366403}
-  - component: {fileID: 131366405}
   - component: {fileID: 131366404}
   - component: {fileID: 131366406}
   - component: {fileID: 131366407}
@@ -1134,6 +1135,7 @@ GameObject:
   - component: {fileID: 131366409}
   - component: {fileID: 131366410}
   - component: {fileID: 131366411}
+  - component: {fileID: 131366405}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -1154,7 +1156,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &131366404
 MonoBehaviour:
@@ -1171,6 +1173,7 @@ MonoBehaviour:
   skillData: {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
   skillCoolDownTime: 0.5
   shortcut: 304
+  unlocked: 0
   unlockDashButton: {fileID: 1071239451}
   createCloneOnStart: 0
   unlockCreateCloneOnStartButton: {fileID: 361214090}
@@ -1204,6 +1207,7 @@ MonoBehaviour:
   skillData: {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}
   skillCoolDownTime: 0
   shortcut: 0
+  unlocked: 0
   playerCloneObject: {fileID: 2370648923460415811, guid: 436bb5c393ee3734598942eb759ae655, type: 3}
   crystalObject: {fileID: 3820628240129050058, guid: 8b15a066f637fb346a622efe2b51dcef, type: 3}
   cloneDuration: 3
@@ -1216,8 +1220,8 @@ MonoBehaviour:
   isCloneAggresive: 0
   applyWeaponEffect: 0
   unlockAggresiveCloneButton: {fileID: 215495163}
-  unlockCrystakMirageButton: {fileID: 955022271}
-  unlockMutilpleMirageButton: {fileID: 1330112998}
+  unlockCrystalMirageButton: {fileID: 955022271}
+  unlockMutipleMirageButton: {fileID: 1330112998}
 --- !u!114 &131366407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1233,8 +1237,9 @@ MonoBehaviour:
   skillData: {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
   skillCoolDownTime: 0
   shortcut: 324
+  unlocked: 0
   swordObject: {fileID: 3499680971787087158, guid: fe376ba590ca21841a6f813640902f7d, type: 3}
-  swordType: 0
+  swordType: 3
   throwForce: 12
   unlockBouncySwordButton: {fileID: 543495552}
   bounceForcePercentage: 1.2
@@ -1268,6 +1273,7 @@ MonoBehaviour:
   skillData: {fileID: 11400000, guid: 733e2179540cc3c46ae065c30f55dc35, type: 2}
   skillCoolDownTime: 10
   shortcut: 122
+  unlocked: 0
   blackHoleObject: {fileID: 5432016169373432841, guid: 5f58498216285994bbe03c9275ee1f4c, type: 3}
   hotKeyTextObject: {fileID: 5944895393523623052, guid: c497bd0c9bd082346984df3b6d7a5a8a, type: 3}
   blackHoleMaxSize: 18
@@ -1323,6 +1329,7 @@ MonoBehaviour:
   skillData: {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}
   skillCoolDownTime: 3
   shortcut: 102
+  unlocked: 0
   unlockCreateCrystalButton: {fileID: 976825741}
   canMirageBlink: 0
   unlockMirageBlinkButton: {fileID: 1713814142}
@@ -1351,6 +1358,7 @@ MonoBehaviour:
   skillData: {fileID: 11400000, guid: 03c119a5e0c63ee44afc12c81c2dce01, type: 2}
   skillCoolDownTime: 0
   shortcut: 113
+  unlocked: 0
   unlockParryButton: {fileID: 1794416580}
   canRestoreOnParry: 0
   restoreAmount: 30
@@ -1372,7 +1380,8 @@ MonoBehaviour:
   skillData: {fileID: 11400000, guid: a174541a9c73c9242b8dff4bce0ff68a, type: 2}
   skillCoolDownTime: 0
   shortcut: 0
-  increaseByPercentage: 0.8
+  unlocked: 0
+  increaseByPercentage: 0.1
   unlockDodgeButton: {fileID: 313536782}
   canCreateCloneOnDodge: 0
   unlockCreateCloneOnDodgeButton: {fileID: 1052862938}
@@ -1996,7 +2005,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2015,12 +2024,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: e9eece08e54eafe4fb1fe4fa2000bb18, type: 2}
   skillIcon: {fileID: 1105768241, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Time Mirage (Aggresive)
   skillDescription: Your mirage will have 80% of your damage and hit effects.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}
+  - {fileID: 1529537553}
   exclusiveSkills: []
   unlocked: 0
 --- !u!114 &215495164
@@ -2150,7 +2160,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2169,15 +2179,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: 733e2179540cc3c46ae065c30f55dc35, type: 2}
   skillIcon: {fileID: 400477540, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Black Hole
   skillDescription: You can summon a black hole, whoever into it will take a ton
     of damage.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}
+  - {fileID: 1529537553}
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &219996212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2961,7 +2972,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2980,13 +2991,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: a174541a9c73c9242b8dff4bce0ff68a, type: 2}
   skillIcon: {fileID: 84724980, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Dodge
   skillDescription: You will get more 10% of base evasion rate.
   prerequisiteSkills: []
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &313536783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3609,7 +3621,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3628,6 +3640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: d2b8caf38f55ab842a13d0249a101395, type: 2}
   skillIcon: {fileID: -1515822578, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Homing Crystal
@@ -3636,10 +3649,10 @@ MonoBehaviour:
     *You can''t teleport
     to crystal''s position now.*'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}
-  - {fileID: 11400000, guid: a99749acccc0bd84d8dc52214b05a4e2, type: 2}
+  - {fileID: 976825741}
+  - {fileID: 658635660}
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &332227446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4036,7 +4049,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4055,14 +4068,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: 2e6af9db2900c904f887ac5df8d0528c, type: 2}
   skillIcon: {fileID: 938421845, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Dash - "Here I am"
   skillDescription: You leave a mirage when you dash.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
+  - {fileID: 1071239453}
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &361214093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4415,7 +4429,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4434,13 +4448,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: a4f81345c9c183445801be6f1a8da36b, type: 2}
   skillIcon: {fileID: 1796972912, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Parry Mirage
   skillDescription: You create a mirage when parry successfully.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: 03c119a5e0c63ee44afc12c81c2dce01, type: 2}
-  - {fileID: 11400000, guid: c0ebd00ac34b5d74da5d9d4e431a61b3, type: 2}
+  - {fileID: 1794416580}
+  - {fileID: 1446679085}
   exclusiveSkills: []
   unlocked: 0
 --- !u!114 &387775924
@@ -5918,10 +5933,10 @@ RectTransform:
   m_Father: {fileID: 1820410994}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -10}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &532539688
 MonoBehaviour:
@@ -6265,7 +6280,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6284,6 +6299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: fde76ba8e3862fe45ac9b90ec9bc0a5d, type: 2}
   skillIcon: {fileID: 305479155, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Bouncy Sword
@@ -6292,10 +6308,10 @@ MonoBehaviour:
     *Only one upgrade can
     be chosen.*'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
+  - {fileID: 1455954974}
   exclusiveSkills:
-  - {fileID: 11400000, guid: b8488688b7bb0484ebaf0bb9343bdbb2, type: 2}
-  - {fileID: 11400000, guid: b62f68df3909ae44d9a8dbf7163bf5fc, type: 2}
+  - {fileID: 1540014901}
+  - {fileID: 586703212}
   unlocked: 0
 --- !u!114 &543495553
 MonoBehaviour:
@@ -6966,7 +6982,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6985,6 +7001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: b62f68df3909ae44d9a8dbf7163bf5fc, type: 2}
   skillIcon: {fileID: -1182860804, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Bullet Sword
@@ -6993,10 +7010,10 @@ MonoBehaviour:
     *Only one upgrade
     can be chosen.*'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
+  - {fileID: 1455954974}
   exclusiveSkills:
-  - {fileID: 11400000, guid: fde76ba8e3862fe45ac9b90ec9bc0a5d, type: 2}
-  - {fileID: 11400000, guid: b8488688b7bb0484ebaf0bb9343bdbb2, type: 2}
+  - {fileID: 543495552}
+  - {fileID: 1540014901}
   unlocked: 0
 --- !u!114 &586703213
 MonoBehaviour:
@@ -7394,7 +7411,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &624892724
 MonoBehaviour:
@@ -7411,8 +7428,8 @@ MonoBehaviour:
   inventoryItems: []
   stashItems: []
   equipmentItems: []
-  stashSize: 16
-  currency: 0
+  stashSize: 12
+  currency: -30
 --- !u!1 &650453627
 GameObject:
   m_ObjectHideFlags: 0
@@ -7448,10 +7465,10 @@ RectTransform:
   m_Father: {fileID: 1820410994}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1100, y: -10}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &650453629
 MonoBehaviour:
@@ -7580,7 +7597,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7599,6 +7616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: a99749acccc0bd84d8dc52214b05a4e2, type: 2}
   skillIcon: {fileID: -185407324, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Crystal Explosion
@@ -7606,10 +7624,10 @@ MonoBehaviour:
 
     *Only one upgrade can be chosen.*'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}
+  - {fileID: 976825741}
   exclusiveSkills:
-  - {fileID: 11400000, guid: c98c7685c9606b74cbb9204161305eeb, type: 2}
-  unlocked: 1
+  - {fileID: 1713814142}
+  unlocked: 0
 --- !u!114 &658635661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9013,7 +9031,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9032,6 +9050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: d88c4fd186131b84a965445e0bf336dd, type: 2}
   skillIcon: {fileID: 2001759424, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Sword (Vulnerability)
@@ -9040,8 +9059,8 @@ MonoBehaviour:
     They will take
     an additional 10% damage.'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
-  - {fileID: 11400000, guid: ede791f62b5c56c45bffb82436c98e75, type: 2}
+  - {fileID: 1455954974}
+  - {fileID: 108012534}
   exclusiveSkills: []
   unlocked: 0
 --- !u!114 &814162355
@@ -9158,7 +9177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &821960118
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10006,7 +10025,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10025,6 +10044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: 32d979a7e5d0c9b44bc4ee89c4f8a328, type: 2}
   skillIcon: {fileID: 925843482, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Crystal Mirage
@@ -10033,10 +10053,10 @@ MonoBehaviour:
 
     *Only one upgrade can be chosen.*'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}
-  - {fileID: 11400000, guid: e9eece08e54eafe4fb1fe4fa2000bb18, type: 2}
+  - {fileID: 1529537553}
+  - {fileID: 215495163}
   exclusiveSkills:
-  - {fileID: 11400000, guid: e3917471036b3384295dbf18ec836f85, type: 2}
+  - {fileID: 1330112998}
   unlocked: 0
 --- !u!114 &955022272
 MonoBehaviour:
@@ -10414,7 +10434,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10433,6 +10453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}
   skillIcon: {fileID: 1534190214, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Crystal
@@ -10442,7 +10463,7 @@ MonoBehaviour:
     can teleport to your crystal''s position.'
   prerequisiteSkills: []
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &976825742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10572,10 +10593,10 @@ RectTransform:
   m_Father: {fileID: 1820410994}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 700, y: -10}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &980257121
 MonoBehaviour:
@@ -10686,7 +10707,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &980426704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11104,7 +11125,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1030483623
 MonoBehaviour:
@@ -11134,7 +11155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1041657469
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11228,7 +11249,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11247,14 +11268,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: e7c9d1358204aec48acc3ac517347eea, type: 2}
   skillIcon: {fileID: -2056414891, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Dodge Mirage
-  skillDescription: 
+  skillDescription: Create a mirage after dodge successfully.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: a174541a9c73c9242b8dff4bce0ff68a, type: 2}
+  - {fileID: 313536782}
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &1052862939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11453,7 +11475,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1065968917
 MonoBehaviour:
@@ -11501,7 +11523,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11520,6 +11542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: c55df31d8e557184e8a1488ed09ad3d7, type: 2}
   skillIcon: {fileID: -547730515, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Dash
@@ -11529,7 +11552,7 @@ MonoBehaviour:
     the time of dashing.'
   prerequisiteSkills: []
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &1071239454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13772,97 +13795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee021c31e823c243bfac500007e85f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1294800767
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1294800768}
-  - component: {fileID: 1294800770}
-  - component: {fileID: 1294800769}
-  - component: {fileID: 1294800771}
-  m_Layer: 5
-  m_Name: Backgroud
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1294800768
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1294800767}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1846605905}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1448.9253, y: 550.8129}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1294800769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1294800767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 143751887, guid: 2c6975fd4b67c244bb3e3a4c5d0a1572, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1294800770
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1294800767}
-  m_CullTransparentMesh: 1
---- !u!114 &1294800771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1294800767}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!1 &1319519679
 GameObject:
   m_ObjectHideFlags: 0
@@ -13957,7 +13889,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13976,6 +13908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: e3917471036b3384295dbf18ec836f85, type: 2}
   skillIcon: {fileID: -1698427825, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Multiple Mirage
@@ -13984,10 +13917,10 @@ MonoBehaviour:
     *Only
     one upgrade can be chosen.*'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}
-  - {fileID: 11400000, guid: e9eece08e54eafe4fb1fe4fa2000bb18, type: 2}
+  - {fileID: 1529537553}
+  - {fileID: 215495163}
   exclusiveSkills:
-  - {fileID: 11400000, guid: 32d979a7e5d0c9b44bc4ee89c4f8a328, type: 2}
+  - {fileID: 955022271}
   unlocked: 0
 --- !u!114 &1330112999
 MonoBehaviour:
@@ -14118,10 +14051,10 @@ RectTransform:
   m_Father: {fileID: 1820410994}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1500, y: -10}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1332034941
 MonoBehaviour:
@@ -14487,7 +14420,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14506,16 +14439,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: a859c7ac55236d946b1b5b528648a2c4, type: 2}
   skillIcon: {fileID: 1392627519, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Multiple Crystals
   skillDescription: You can create more crystals at time.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}
-  - {fileID: 11400000, guid: d2b8caf38f55ab842a13d0249a101395, type: 2}
-  - {fileID: 11400000, guid: a99749acccc0bd84d8dc52214b05a4e2, type: 2}
+  - {fileID: 976825741}
+  - {fileID: 332227445}
+  - {fileID: 658635660}
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &1412317548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15040,7 +14974,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15059,12 +14993,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: c0ebd00ac34b5d74da5d9d4e431a61b3, type: 2}
   skillIcon: {fileID: -1698851337, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Restore with parry
   skillDescription: You will restore little health when you parry successfully.
   prerequisiteSkills:
-  - {fileID: 11400000, guid: 03c119a5e0c63ee44afc12c81c2dce01, type: 2}
+  - {fileID: 1794416580}
   exclusiveSkills: []
   unlocked: 0
 --- !u!114 &1446679086
@@ -15334,7 +15269,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15447,6 +15382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
   skillIcon: {fileID: 1566854771, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Sword
@@ -16102,7 +16038,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16121,13 +16057,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: d6bd1bf047a069f45bea7483ebbff847, type: 2}
   skillIcon: {fileID: -354984904, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Time Mirage
   skillDescription: Your mirage can attack targets with 30% damge of yours.
   prerequisiteSkills: []
   exclusiveSkills: []
-  unlocked: 1
+  unlocked: 0
 --- !u!114 &1529537554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16255,7 +16192,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16274,6 +16211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: b8488688b7bb0484ebaf0bb9343bdbb2, type: 2}
   skillIcon: {fileID: -1087139212, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: ChainSaw Sword
@@ -16282,10 +16220,10 @@ MonoBehaviour:
     *Only one upgrade can be
     chosen.*'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: 368d731ea18d20649a428c94672a6038, type: 2}
+  - {fileID: 1455954974}
   exclusiveSkills:
-  - {fileID: 11400000, guid: b62f68df3909ae44d9a8dbf7163bf5fc, type: 2}
-  - {fileID: 11400000, guid: fde76ba8e3862fe45ac9b90ec9bc0a5d, type: 2}
+  - {fileID: 586703212}
+  - {fileID: 543495552}
   unlocked: 0
 --- !u!114 &1540014902
 MonoBehaviour:
@@ -17634,7 +17572,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -17653,6 +17591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: c98c7685c9606b74cbb9204161305eeb, type: 2}
   skillIcon: {fileID: -586606622, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Mirage Blink
@@ -17661,11 +17600,11 @@ MonoBehaviour:
     *Only
     one upgrade can be chosen.*'
   prerequisiteSkills:
-  - {fileID: 11400000, guid: c3e539e8e4f7686459d5748ae5112533, type: 2}
+  - {fileID: 976825741}
   exclusiveSkills:
-  - {fileID: 11400000, guid: a99749acccc0bd84d8dc52214b05a4e2, type: 2}
-  - {fileID: 11400000, guid: d2b8caf38f55ab842a13d0249a101395, type: 2}
-  - {fileID: 11400000, guid: a859c7ac55236d946b1b5b528648a2c4, type: 2}
+  - {fileID: 658635660}
+  - {fileID: 332227445}
+  - {fileID: 1412317547}
   unlocked: 0
 --- !u!114 &1713814143
 MonoBehaviour:
@@ -18536,7 +18475,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1846605905}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18555,6 +18494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf95f5c0914b324aa2a2724ddfeece1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiManager: {fileID: 1840105027}
   skillData: {fileID: 11400000, guid: 03c119a5e0c63ee44afc12c81c2dce01, type: 2}
   skillIcon: {fileID: 1426366811, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   skillName: Parry
@@ -19176,7 +19116,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1840105027
 MonoBehaviour:
@@ -19248,6 +19188,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1846605905}
+  - component: {fileID: 1846605907}
+  - component: {fileID: 1846605906}
   m_Layer: 5
   m_Name: SkillTreeArea
   m_TagString: Untagged
@@ -19262,12 +19204,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846605904}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1294800768}
   - {fileID: 1455954970}
   - {fileID: 108012533}
   - {fileID: 814162353}
@@ -19298,8 +19239,46 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 1448.9253, y: 550.8129}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1846605906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846605904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 143751887, guid: 2c6975fd4b67c244bb3e3a4c5d0a1572, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1846605907
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846605904}
+  m_CullTransparentMesh: 1
 --- !u!1 &1852599654
 GameObject:
   m_ObjectHideFlags: 0
@@ -20884,7 +20863,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2046006262
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20938,6 +20917,7 @@ MonoBehaviour:
   itemToolTip: {fileID: 1603461417}
   character: {fileID: 1943570801}
   skillTreeToolTip: {fileID: 821960117}
+  skillTreeSlotsParent: {fileID: 1846605904}
   craftItemInfoPanel: {fileID: 935465007}
   craftSlotPrefab: {fileID: 4777160728774454605, guid: ce6ca1d4f96a34947ba897688c17426c, type: 3}
   CraftSlotsParent: {fileID: 881021065}
@@ -20953,7 +20933,7 @@ MonoBehaviour:
   craftAmuletList:
   - {fileID: 11400000, guid: d4db8a0d14d58eb44bd346242e4d74b0, type: 2}
   craftFlaskList: []
-  selectedPage: {fileID: 1041657468}
+  selectedPage: {fileID: 980426703}
 --- !u!114 &2046006264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81183,7 +81163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2067553086086256925, guid: 47945a1cad249904f8e032cf7a9a2078, type: 3}
       propertyPath: m_text
-      value: Strength
+      value: Intelligence
       objectReference: {fileID: 0}
     - target: {fileID: 5035308565490321083, guid: 47945a1cad249904f8e032cf7a9a2078, type: 3}
       propertyPath: statName
@@ -82056,7 +82036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1446018180, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: evasionRate.baseValue
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1803362438907177515, guid: 463de08615e4bc94a8b06337f8e51d6d, type: 3}
       propertyPath: m_AnchorMax.x

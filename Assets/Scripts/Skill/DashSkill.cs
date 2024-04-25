@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DashSkill : Skill
 {
@@ -20,22 +19,32 @@ public class DashSkill : Skill
 	{
 		base.Awake();
 		if (unlockDashButton != null)
-			unlockDashButton.GetComponent<Button>().onClick.AddListener(() =>
+		{
+			var buttonController = unlockDashButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockDashSkill()
 			{
-				this.unlocked = unlockDashButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
-				if (unlocked) UnlockSkill();
-				else LockSkill();
-			});
+				Unlocked = buttonController.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockDashSkill;
+		}
 		if (unlockCreateCloneOnStartButton != null)
-			unlockCreateCloneOnStartButton.GetComponent<Button>().onClick.AddListener(() =>
+		{
+			var buttonController = unlockCreateCloneOnStartButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockCreateCloneOnStart()
 			{
-				this.createCloneOnStart = unlockCreateCloneOnStartButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
-			});
+				createCloneOnStart = buttonController.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockCreateCloneOnStart;
+		}
 		if (unlockCreateCloneOnEndButton != null)
-			unlockCreateCloneOnEndButton.GetComponent<Button>().onClick.AddListener(() =>
+		{
+			var buttonController = unlockCreateCloneOnEndButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockCreateCloneOnEnd()
 			{
-				this.createCloneOnEnd = unlockCreateCloneOnEndButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
-			});
+				createCloneOnEnd = unlockCreateCloneOnEndButton.GetComponent<UISkillTreeSlotController>().IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockCreateCloneOnEnd;
+		}
 	}
 
 	protected override void Start()
@@ -52,7 +61,7 @@ public class DashSkill : Skill
 	{
 		if (createCloneOnStart)
 		{
-			player.skill.cloneSkill.UseSkill(player.transform, Vector2.zero);
+			player.skill.CloneSkill.UseSkill(player.transform, Vector2.zero);
 		}
 	}
 
@@ -60,7 +69,7 @@ public class DashSkill : Skill
 	{
 		if (createCloneOnEnd)
 		{
-			player.skill.cloneSkill.UseSkill(player.transform, Vector2.zero);
+			player.skill.CloneSkill.UseSkill(player.transform, Vector2.zero);
 		}
 	}
 
