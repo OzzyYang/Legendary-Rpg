@@ -1,5 +1,7 @@
 using System;
+
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 public class FileDataHandler
@@ -7,7 +9,10 @@ public class FileDataHandler
 	private string dataDirPath = "";
 	private string dataFileName = "";
 
-	public FileDataHandler(string dataDirPath, string dataFileName)
+	private string codeWords = "ozzyyang";
+	private bool encryptData;
+
+	public FileDataHandler(string dataDirPath, string dataFileName, bool encryptData)
 	{
 		if (dataDirPath == null || dataFileName == null)
 			throw new ArgumentNullException("Error: directory of data can't be null!");
@@ -15,6 +20,7 @@ public class FileDataHandler
 			throw new ArgumentException("Error: directory of data can't be empty!");
 		this.dataDirPath = dataDirPath;
 		this.dataFileName = dataFileName;
+		this.encryptData = encryptData;
 	}
 
 	public void Save(GameData data)
@@ -23,7 +29,8 @@ public class FileDataHandler
 		try
 		{
 			Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-			string dataToStore = JsonUtility.ToJson(data, true);
+			string dataToStore = JsonUtility.ToJson(data, false);
+			if (encryptData) dataToStore = EncryptData(dataToStore);
 			using (FileStream stream = new(fullPath, FileMode.Create))
 			{
 				using (StreamWriter writer = new StreamWriter(stream))
@@ -55,6 +62,7 @@ public class FileDataHandler
 						dataToLoad = reader.ReadToEnd();
 					}
 				}
+				if (encryptData) dataToLoad = EncryptData(dataToLoad);
 				loadData = JsonUtility.FromJson<GameData>(dataToLoad);
 			}
 			catch (Exception e)
@@ -63,5 +71,32 @@ public class FileDataHandler
 			}
 		}
 		return loadData;
+	}
+
+	public void Delete()
+	{
+		string fullPath = Path.Combine(dataDirPath, dataFileName);
+
+		if (File.Exists(fullPath)) File.Delete(fullPath);
+	}
+
+	public void OpenInEditor()
+	{
+		string fullPath = Path.Combine(dataDirPath, dataFileName);
+
+		if (File.Exists(fullPath)) System.Diagnostics.Process.Start(fullPath);
+		else Debug.Log("The data file is not existed.");
+	}
+
+	private string EncryptData(string data)
+	{
+		var result = new StringBuilder();
+
+		for (int i = 0; i < data.Length; i++)
+		{
+			result.Append((char)(data[i] ^ codeWords[i % codeWords.Length]));
+		}
+
+		return result.ToString();
 	}
 }

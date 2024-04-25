@@ -5,8 +5,9 @@ public class UpgradeSkillData : BasicSkillData
 {
 	public BasicSkillData baseSkill;
 
-	private void OnValidate()
+	protected override void OnValidate()
 	{
+		base.OnValidate();
 		if (baseSkill == null) return;
 		this.skillCoolDownTime = baseSkill.skillCoolDownTime;
 		this.shortCut = baseSkill.shortCut;

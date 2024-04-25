@@ -18,6 +18,7 @@ public class UIMenuPageController : MonoBehaviour
 
 	[Header("Skill Tree page")]
 	[SerializeField] private GameObject skillTreeToolTip;
+	[SerializeField] private GameObject skillTreeSlotsParent;
 
 	[Header("Craft Page")]
 	[SerializeField] GameObject craftItemInfoPanel;
@@ -61,6 +62,8 @@ public class UIMenuPageController : MonoBehaviour
 		UpdateStatsFrom(character.GetComponent<CharacterStats>());
 	}
 
+
+	#region Update UI
 	private void UpdateInventorySlots()
 	{
 		var inventoryItemsList = InventoryManager.Instance.GetInventoryItemsList();
@@ -135,7 +138,6 @@ public class UIMenuPageController : MonoBehaviour
 							break;
 						}
 				}
-
 			}
 		}
 	}
@@ -162,6 +164,8 @@ public class UIMenuPageController : MonoBehaviour
 		}
 	}
 
+	#endregion
+
 	#region Character Page
 	public void UpdateStatsFrom(CharacterStats characterStats)
 	{
@@ -181,6 +185,20 @@ public class UIMenuPageController : MonoBehaviour
 		skillTreeToolTip.GetComponent<UIToolTipController>().Show(newSkillName, newSkillDescription);
 	}
 	public void HideSkillTreeToolTip() => skillTreeToolTip.GetComponent<UIToolTipController>().Hide();
+
+	public UISkillTreeSlotController[] GetAllUISkillTreeSlots()
+	{
+		return skillTreeSlotsParent.GetComponentsInChildren<UISkillTreeSlotController>();
+	}
+
+	public UISkillTreeSlotController GetUISkillTreeSlotBySkillData(BasicSkillData skillData)
+	{
+		foreach (var skillTreeSlot in GetAllUISkillTreeSlots())
+		{
+			if (skillData == skillTreeSlot.Skill) return skillTreeSlot;
+		}
+		return null;
+	}
 	#endregion
 
 	#region Craft Page

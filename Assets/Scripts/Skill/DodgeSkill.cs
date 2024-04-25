@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DodgeSkill : Skill
 {
@@ -20,7 +19,7 @@ public class DodgeSkill : Skill
 	{
 		if (this.CanUseSkill())
 		{
-			player.skill.cloneSkill.UseSkill(player.transform, Vector3.zero);
+			player.skill.CloneSkill.UseSkill(player.transform, Vector3.zero);
 			base.UseSkill();
 		}
 	}
@@ -28,34 +27,37 @@ public class DodgeSkill : Skill
 	protected override void Awake()
 	{
 		base.Awake();
+		if (unlockDodgeButton != null)
+		{
+			var buttonController = unlockDodgeButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockDodge()
+			{
+				Unlocked = unlockDodgeButton.IsUnlocked();
+				if (Unlocked) IncreaseEvasionRateByPercentage();
+			}
+			buttonController.OnUnlockedChanged += UnlockDodge;
+		}
+		if (unlockCreateCloneOnDodgeButton != null)
+		{
+			var buttonController = unlockCreateCloneOnDodgeButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockCreateCloneOnDodge()
+			{
+				canCreateCloneOnDodge = unlockCreateCloneOnDodgeButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockCreateCloneOnDodge;
+		}
+		player.GetComponent<PlayerStats>().OnBaseEvasionRateChanged += IncreaseEvasionRateByPercentage;
+		player.GetComponent<PlayerStats>().OnAvoidAttack += UseSkill;
 	}
 
 	protected override void Start()
 	{
 		base.Start();
-		IncreaseEvasionRateByPercentage();
-		player.GetComponent<PlayerStats>().OnBaseEvasionRateChanged += this.IncreaseEvasionRateByPercentage;
-		player.GetComponent<PlayerStats>().OnAvoidAttack += this.UseSkill;
-		if (this.unlockDodgeButton != null)
-		{
-			this.unlockDodgeButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.unlocked = this.unlockDodgeButton.IsUnlocked();
-				this.IncreaseEvasionRateByPercentage();
-			});
-		}
-		if (this.unlockCreateCloneOnDodgeButton != null)
-		{
-			this.unlockCreateCloneOnDodgeButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.canCreateCloneOnDodge = this.unlockCreateCloneOnDodgeButton.IsUnlocked();
-			});
-		}
 	}
 
 	private void IncreaseEvasionRateByPercentage()
 	{
-		if (unlocked)
+		if (Unlocked)
 		{
 			var playerStats = player.GetComponent<PlayerStats>();
 			playerStats.evasionRate.SetDefaultValue(playerStats.evasionRate.GetValue() * (1 + increaseByPercentage));

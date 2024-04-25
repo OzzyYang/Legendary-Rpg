@@ -18,10 +18,7 @@ public class UISkillBarSlotController : MonoBehaviour
 	void Start()
 	{
 		UpdateFromSkillData();
-		UpdateSkillAvailableTimes(1);
-
 	}
-
 
 	void Update()
 	{
@@ -31,19 +28,19 @@ public class UISkillBarSlotController : MonoBehaviour
 	private void RefreshCoolDownUI()
 	{
 		if (skillData == null) return;
-		if (!skillData.unlocked)
+		if (!UIManager.instance.GetMenuPageController().GetUISkillTreeSlotBySkillData(skillData).IsUnlocked())
 		{
-			this.mask.fillAmount = 1;
+			mask.fillAmount = 1;
 			return;
 		}
 
 		if (skillData is UpgradeSkillData)
 		{
-			this.mask.fillAmount = skillManager.skillList[(skillData as UpgradeSkillData).baseSkill].coolDownTimer / skillData.skillCoolDownTime;
+			mask.fillAmount = skillManager.SkillList[(skillData as UpgradeSkillData).baseSkill].CoolDownTimer / skillData.skillCoolDownTime;
 		}
 		else
 		{
-			this.mask.fillAmount = skillManager.skillList[skillData].coolDownTimer / skillData.skillCoolDownTime;
+			mask.fillAmount = skillManager.SkillList[skillData].CoolDownTimer / skillData.skillCoolDownTime;
 		}
 	}
 
@@ -58,7 +55,7 @@ public class UISkillBarSlotController : MonoBehaviour
 			background.sprite = skillData.skillIcon;
 			mask.sprite = skillData.skillIcon;
 			shortcutText.text = skillData.shortCut.ToString();
-			UpdateSkillAvailableTimes(1);
+			UpdateSkillAvailableTimes(0);
 			this.name = "Skill Bar Slot - " + skillData.skillName;
 		}
 	}

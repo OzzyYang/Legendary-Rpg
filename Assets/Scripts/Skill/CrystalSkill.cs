@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CrystalSkill : Skill
 {
@@ -15,7 +14,6 @@ public class CrystalSkill : Skill
 	[SerializeField] private UISkillTreeSlotController unlockHomingCrystalButton;
 	public bool CanUseMultiStack;
 	[SerializeField] private UISkillTreeSlotController unlockMultipleCrystalsButton;
-
 	[Space]
 	[Space]
 	[SerializeField] private GameObject crystalPrefab;
@@ -24,79 +22,88 @@ public class CrystalSkill : Skill
 	[SerializeField] private List<GameObject> crystalStack;
 	[SerializeField] private int stackSize = 1;
 
-
 	protected override void Awake()
 	{
 		base.Awake();
-
-	}
-	protected override void Start()
-	{
-		base.Start();
-		coolDownTimer = skillCoolDownTime;
 		if (unlockCreateCrystalButton != null)
 		{
-			unlockCreateCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			var buttonController = unlockCreateCrystalButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockCreateCrystal()
 			{
-				SetSkillUnlocked(unlockCreateCrystalButton.IsUnlocked());
-				if (unlocked)
+				Unlocked = buttonController.IsUnlocked();
+				if (Unlocked)
 				{
 					skillData.maxAvailableTimes = 1;
 					OnAvailableTimesChanged?.Invoke(crystalStack.Count);
 				}
-			});
+			}
+			buttonController.OnUnlockedChanged += UnlockCreateCrystal;
 		}
 		if (unlockMirageBlinkButton != null)
 		{
-			unlockMirageBlinkButton.GetComponent<Button>().onClick.AddListener(() =>
+			var buttonController = unlockMirageBlinkButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockMirageBlink()
 			{
-				canMirageBlink = unlockMirageBlinkButton.IsUnlocked();
+				canMirageBlink = buttonController.IsUnlocked();
 				if (canMirageBlink)
 				{
-					skillData = unlockMirageBlinkButton.skill;
+					skillData = unlockMirageBlinkButton.Skill;
 					OnSkillUpdated?.Invoke(skillData as UpgradeSkillData);
 				}
-			});
+			}
+			buttonController.OnUnlockedChanged += UnlockMirageBlink;
 		}
 		if (unlockExplosiveCrystalButton != null)
 		{
-			unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			var buttonController = unlockExplosiveCrystalButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockExplosiveCrystal()
 			{
-				canExplode = unlockExplosiveCrystalButton.IsUnlocked();
+				canExplode = buttonController.IsUnlocked();
 				if (canExplode)
 				{
-					skillData = unlockExplosiveCrystalButton.skill;
+					skillData = unlockExplosiveCrystalButton.Skill;
 					OnSkillUpdated?.Invoke(skillData as UpgradeSkillData);
 				}
-			});
+			}
+			buttonController.OnUnlockedChanged += UnlockExplosiveCrystal;
 		}
 		if (unlockHomingCrystalButton != null)
 		{
-			unlockHomingCrystalButton.GetComponent<Button>().onClick.AddListener(() =>
+			var buttonController = unlockHomingCrystalButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockHomingCrystal()
 			{
-				canMoveToEnemy = unlockHomingCrystalButton.IsUnlocked();
+				canMoveToEnemy = buttonController.IsUnlocked();
 				if (canMoveToEnemy)
 				{
-					skillData = unlockHomingCrystalButton.skill;
+					skillData = unlockHomingCrystalButton.Skill;
 					OnSkillUpdated?.Invoke(skillData as UpgradeSkillData);
 				}
-			});
+			}
+			buttonController.OnUnlockedChanged += UnlockHomingCrystal;
 		}
 		if (unlockMultipleCrystalsButton != null)
 		{
-			unlockMultipleCrystalsButton.GetComponent<Button>().onClick.AddListener(() =>
+			var buttonController = unlockMultipleCrystalsButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockMultipleCrystals()
 			{
-				CanUseMultiStack = unlockMultipleCrystalsButton.IsUnlocked();
-				if (canMoveToEnemy)
+				CanUseMultiStack = buttonController.IsUnlocked();
+				if (CanUseMultiStack)
 				{
-					skillData = unlockMultipleCrystalsButton.skill;
-					maxAvailableTimes = stackSize = skillData.maxAvailableTimes;
-					if (coolDownTimer < 0) coolDownTimer = skillCoolDownTime;
-					OnAvailableTimesChanged?.Invoke(crystalStack.Count);
+					skillData = unlockMultipleCrystalsButton.Skill;
+					MaxAvailableTimes = stackSize = skillData.maxAvailableTimes;
+					if (CoolDownTimer < 0) CoolDownTimer = skillCoolDownTime;
 					OnSkillUpdated?.Invoke(skillData as UpgradeSkillData);
+					OnAvailableTimesChanged?.Invoke(crystalStack.Count);
 				}
-			});
+			}
+			buttonController.OnUnlockedChanged += UnlockMultipleCrystals;
 		}
+	}
+
+	protected override void Start()
+	{
+		base.Start();
+		CoolDownTimer = skillCoolDownTime;
 	}
 	public override bool CanUseSkill()
 	{
@@ -107,7 +114,8 @@ public class CrystalSkill : Skill
 
 	public override void UseSkill()
 	{
-		base.UseSkill();
+		if (!CanUseSkill()) return;
+		else Debug.Log(GetType() + " Used.");
 
 		GameObject tempCrystal = null;
 
@@ -117,7 +125,7 @@ public class CrystalSkill : Skill
 			crystalStack.Remove(crystalStack[crystalStack.Count - 1]);
 			base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
 			tempCrystal.GetComponent<CrystalController>().SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, 0, null);
-			if (coolDownTimer < 0) coolDownTimer = skillCoolDownTime;
+			if (CoolDownTimer < 0) CoolDownTimer = skillCoolDownTime;
 		}
 
 		if (CanUseMultiStack) return;
@@ -133,7 +141,7 @@ public class CrystalSkill : Skill
 			if (canMirageBlink)
 			{
 				//create a clone at the player's position,and the player will move to crystal's location, and then detroy the crystal.
-				player.skill.cloneSkill.UseSkill(player.transform, Vector2.zero);
+				player.skill.CloneSkill.UseSkill(player.transform, Vector2.zero);
 				player.transform.position = crystal.transform.position;
 				crystal.GetComponent<CrystalController>().DestrotSelf();
 			}
@@ -152,25 +160,26 @@ public class CrystalSkill : Skill
 	protected override void Update()
 	{
 		stackSize = (!CanUseMultiStack || stackSize == 0) ? 1 : stackSize;
-		canMoveToEnemy = CanUseMultiStack ? true : canMoveToEnemy;
+		//canMoveToEnemy = CanUseMultiStack ? true : canMoveToEnemy;
 
-		if (coolDownTimer >= 0 && crystalStack.Count < stackSize)
-			coolDownTimer -= Time.deltaTime;
-
-		if (coolDownTimer < 0 && crystalStack.Count < stackSize)
+		if (crystalStack.Count < stackSize)
 		{
-			crystalStack.Add(crystalPrefab);
-			base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
-			if (CanUseMultiStack) coolDownTimer = skillCoolDownTime;
+			if (CoolDownTimer >= 0) CoolDownTimer -= Time.deltaTime;
+			else
+			{
+				crystalStack.Add(crystalPrefab);
+				base.OnAvailableTimesChanged?.Invoke(crystalStack.Count);
+				if (CanUseMultiStack) CoolDownTimer = skillCoolDownTime;
+			}
 		}
 		//To make cooldown UI works.
-		if (stackSize == crystalStack.Count) coolDownTimer = -0.1f;
+		if (stackSize == crystalStack.Count) CoolDownTimer = -0.1f;
 		if (Input.GetKeyDown(KeyCode.F) && CanUseSkill())
 		{
-			this.UseSkill();
+			UseSkill();
 		}
 	}
 
 	//just for clone skill creating crystall instead of player clone in use.
-	public float getCrystalDuration() => this.crystalDuration;
+	public float GetCrystalDuration() => crystalDuration;
 }

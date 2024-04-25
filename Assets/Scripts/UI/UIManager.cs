@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, ISaveManager
 {
 	[SerializeField] private GameObject uiParent;
 	[SerializeField] private GameObject menuPages;
@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 	{
 		if (instance == null)
 		{
-			instance = this.GetComponent<UIManager>();
+			instance = GetComponent<UIManager>();
 		}
 		else
 		{
@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
 		pageToSwitch?.SetActive(true);
 	}
 
-	public UIMenuPageController GetMenuPageController() => this.menuPages.GetComponent<UIMenuPageController>();
+	public UIMenuPageController GetMenuPageController() => menuPages.GetComponent<UIMenuPageController>();
 
 	private void Update()
 	{
@@ -41,4 +41,22 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
+	public void LoadData(GameData data)
+	{
+		foreach (var skillTreeSlot in GetMenuPageController().GetAllUISkillTreeSlots())
+		{
+			if (data.skills.TryGetValue(skillTreeSlot.Skill.skillId, out bool unlocked))
+			{
+				skillTreeSlot.SetSkillUnlockedIgnoreConditions(unlocked);
+			}
+		}
+	}
+
+	public void SaveData(ref GameData data)
+	{
+		foreach (var skillTreeSlot in GetMenuPageController().GetAllUISkillTreeSlots())
+		{
+			data.skills.Add(skillTreeSlot.Skill.skillId, skillTreeSlot.IsUnlocked());
+		};
+	}
 }

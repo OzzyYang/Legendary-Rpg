@@ -25,7 +25,7 @@ public class PlayerThrowSwordState : PlayerState
 		if (isTriggerCalled)
 		{
 			stateMachine.ChangeState(player.idleState);
-			player.skill.swordSkill.UseSkill();
+			player.skill.SwordSkill.UseSkill();
 		}
 	}
 }

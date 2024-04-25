@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BlackHoleSkill : Skill
 {
@@ -15,52 +14,53 @@ public class BlackHoleSkill : Skill
 	[SerializeField] private AnimationCurve blackHoleGrowCurve;
 	[SerializeField] private List<KeyCode> hotKetsSetting;
 	[SerializeField] private UISkillTreeSlotController unlockBlackHoleButton;
-	public bool isReleasingSkill { get; private set; }
-	public GameObject blackHole { get; private set; }
+	public bool IsReleasingSkill { get; private set; }
+	public GameObject BlackHole { get; private set; }
 	public override bool CanUseSkill()
 	{
-		return base.CanUseSkill() && !isReleasingSkill;
+		return base.CanUseSkill() && !IsReleasingSkill;
 	}
 
 	public override void UseSkill()
 	{
 		if (CanUseSkill())
 		{
-			isReleasingSkill = true;
-			blackHole = blackHole == null ? Instantiate(blackHoleObject) : blackHole;
-			blackHole.SetActive(false);
+			IsReleasingSkill = true;
+			BlackHole = BlackHole == null ? Instantiate(blackHoleObject) : BlackHole;
+			BlackHole.SetActive(false);
 			StartCoroutine(nameof(FlyUpForAndReleaseBlackHole), 0.25f);
-			coolDownTimer = skillCoolDownTime;
+			CoolDownTimer = skillCoolDownTime;
 			Debug.Log(this.GetType() + " Used.");
 		}
-
 	}
-
 	protected IEnumerator FlyUpForAndReleaseBlackHole(float _seconds)
 	{
 		player.SetVelocity(0, 24);
 		yield return new WaitForSeconds(_seconds);
 		player.stateMachine.ChangeState(player.blackHoleState);
-		blackHole.SetActive(true);
-		blackHole.GetComponent<BlackHoleController>().SetupBlackHole(blackHoleMaxSize, blackHoleGrowCurve, blackHoleGrowDuration, hotKetsSetting, qteDuration, player.transform.position);
+		BlackHole.SetActive(true);
+		BlackHole.GetComponent<BlackHoleController>().SetupBlackHole(blackHoleMaxSize, blackHoleGrowCurve, blackHoleGrowDuration, hotKetsSetting, qteDuration, player.transform.position);
 		player.SetVelocity(0, -0.2f);
 	}
 
 	protected override void Awake()
 	{
 		base.Awake();
+		if (unlockBlackHoleButton != null)
+		{
+			var buttonController = unlockBlackHoleButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockBlackHole()
+			{
+				Unlocked = buttonController.IsUnlocked();
+				if (Unlocked) Unlocked = unlockBlackHoleButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockBlackHole;
+		}
 	}
 
 	protected override void Start()
 	{
 		base.Start();
-		if (this.unlockBlackHoleButton != null)
-		{
-			this.unlockBlackHoleButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.unlocked = this.unlockBlackHoleButton.IsUnlocked();
-			});
-		}
 	}
 
 	protected override void Update()
@@ -70,7 +70,7 @@ public class BlackHoleSkill : Skill
 		{
 			UseSkill();
 		}
-		if (blackHole == null) isReleasingSkill = false;
+		if (BlackHole == null) IsReleasingSkill = false;
 	}
 
 }

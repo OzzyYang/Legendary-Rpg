@@ -9,16 +9,15 @@ public class UIInGameUIController : MonoBehaviour
 	[SerializeField] private GameObject currencyUI;
 
 
-	private void Start()
+	private void Awake()
 	{
-		UpdateSkillBar();
-		UpdateCurrencyUI(InventoryManager.Instance.Currency);
 		InventoryManager.Instance.OnCurrencyChanged += UpdateCurrencyUI;
+		InitializeSkillBar();
 	}
 
-	private void UpdateSkillBar()
+	private void InitializeSkillBar()
 	{
-		foreach (var skill in skillManager.skillList)
+		foreach (var skill in skillManager.SkillList)
 		{
 			UISkillBarSlotController skillSlot =
 			Instantiate(skillBarSlotPrefab, skillBar).GetComponent<UISkillBarSlotController>();
@@ -30,8 +29,7 @@ public class UIInGameUIController : MonoBehaviour
 
 	public void UpdateCurrencyUI(int currency)
 	{
-		if (currencyUI != null)
-			currencyUI.GetComponentInChildren<TextMeshProUGUI>().text = currency.ToString("#,#");
+		currencyUI.GetComponentInChildren<TextMeshProUGUI>().text = currency == 0 ? "0" : currency.ToString("#,#");
 	}
 
 	public void ShowInGameUI() => gameObject.SetActive(true);

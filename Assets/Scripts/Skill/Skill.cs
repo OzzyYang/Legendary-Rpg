@@ -7,24 +7,30 @@ public class Skill : MonoBehaviour
 	[SerializeField] protected BasicSkillData skillData;
 	[SerializeField] protected float skillCoolDownTime;
 	[SerializeField] protected KeyCode shortcut;
-
-	public bool unlocked { get; protected set; }
+	[SerializeField] private bool unlocked;
+	public bool Unlocked
+	{
+		get { return unlocked; }
+		protected set { unlocked = value; }
+	}
 	public Action<int> OnAvailableTimesChanged { get; set; }
 	public Action<UpgradeSkillData> OnSkillUpdated { get; set; }
-	public int availableTimes { get; protected set; }
-	public int maxAvailableTimes { get; protected set; }
-	public BasicSkillData data
+	public int AvailableTimes { get; protected set; }
+	public int MaxAvailableTimes { get; protected set; }
+	public BasicSkillData Data
 	{
 		get { return skillData; }
 		protected set { skillData = value; }
 	}
 
 	protected PlayerController player;
-	public float coolDownTimer { get; protected set; }
+	public float CoolDownTimer { get; protected set; }
 
 	protected virtual void Awake()
 	{
+		Debug.Log(GetType());
 		UpdateFromSkillData();
+		player = PlayerManager.Instance.Player;
 	}
 	private void OnValidate()
 	{
@@ -33,34 +39,31 @@ public class Skill : MonoBehaviour
 
 	protected virtual void UpdateFromSkillData()
 	{
-		if (this.skillData == null) return;
-		this.skillCoolDownTime = skillData.skillCoolDownTime;
-		this.shortcut = skillData.shortCut;
-		this.unlocked = skillData.unlocked;
-		this.maxAvailableTimes = skillData.maxAvailableTimes;
+		if (skillData == null) return;
+		skillCoolDownTime = skillData.skillCoolDownTime;
+		shortcut = skillData.shortCut;
+		MaxAvailableTimes = skillData.maxAvailableTimes;
 	}
 
 	protected virtual void Start()
 	{
-		player = PlayerManager.Instance.Player.GetComponent<PlayerController>();
 	}
 
 	protected virtual void Update()
 	{
-		if (coolDownTimer >= 0)
-			coolDownTimer -= Time.deltaTime;
+		if (CoolDownTimer >= 0) CoolDownTimer -= Time.deltaTime;
 	}
 
 	public virtual bool CanUseSkill()
 	{
-		if (!unlocked)
+		if (!Unlocked)
 		{
-			Debug.Log(this.GetType() + " needs to be unlocked.");
+			Debug.Log(GetType() + " needs to be unlocked.");
 			return false;
 		}
-		if (coolDownTimer > 0)
+		if (CoolDownTimer > 0)
 		{
-			Debug.Log(this.GetType() + " is on cooldown.");
+			Debug.Log(GetType() + " is on cooldown.");
 			return false;
 		}
 		return true;
@@ -70,20 +73,15 @@ public class Skill : MonoBehaviour
 	{
 		if (CanUseSkill())
 		{
-			coolDownTimer = skillCoolDownTime;
-			Debug.Log(this.GetType() + " Used.");
+			CoolDownTimer = skillCoolDownTime;
+			Debug.Log(GetType() + " Used.");
 		}
 	}
 
-	public virtual void LockSkill()
-	{
-		this.unlocked = skillData.unlocked = false;
-	}
+	public virtual void LockSkill() => Unlocked = false;
 
-	public virtual void UnlockSkill()
-	{
-		this.unlocked = skillData.unlocked = true;
-	}
+
+	public virtual void UnlockSkill() => Unlocked = true;
 
 	public virtual void SetSkillUnlocked(bool unlocked)
 	{
@@ -91,8 +89,6 @@ public class Skill : MonoBehaviour
 		else LockSkill();
 	}
 
-	protected virtual void InitializeSkill()
-	{
-		this.UpdateFromSkillData();
-	}
+	protected virtual void InitializeSkill() => UpdateFromSkillData();
+
 }

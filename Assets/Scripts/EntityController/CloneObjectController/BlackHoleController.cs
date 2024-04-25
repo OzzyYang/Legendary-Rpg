@@ -80,7 +80,7 @@ public class BlackHoleController : MonoBehaviour
 	{
 		foreach (var target in enemiesList)
 		{
-			SkillManager.instance.cloneSkill.UseSkill(target, new Vector2(1, 0));
+			SkillManager.instance.CloneSkill.UseSkill(target, new Vector2(1, 0));
 		}
 		//reset hotkeys that haven't been choosen, and destroy the hotkey text object
 		foreach (var hotkey in hotKeysChoosen)

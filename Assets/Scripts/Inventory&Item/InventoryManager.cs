@@ -57,16 +57,19 @@ public class InventoryManager : MonoBehaviour, ISaveManager
 		stashItemsDict = new Dictionary<ItemData, InventoryItem>();
 		equipmentItems = new List<InventoryItem>();
 		equipmentItemsDict = new Dictionary<EquipmentType, InventoryItem>();
+	}
+
+	private void Start()
+	{
 		Currency = 30000;
+		OnCurrencyChanged?.Invoke(currency);
+
 	}
 
 	public List<InventoryItem> GetEquipmentItemsList() => new(this.equipmentItems);
 
 	public List<InventoryItem> GetInventoryItemsList() => new(this.inventoryItems);
 	public List<InventoryItem> GetStashItemsList() => new(this.stashItems);
-
-
-
 
 
 	public bool CanCraftItem(ItemData itemInfo)
@@ -90,13 +93,13 @@ public class InventoryManager : MonoBehaviour, ISaveManager
 	//Before craft item, better to estimate if there is enough ingredients by using CanCraftItem();
 	public bool CraftItem(ItemData itemInfo)
 	{
-		if (this.CanCraftItem(itemInfo))
+		if (CanCraftItem(itemInfo))
 		{
 			foreach (var ingredient in itemInfo.ingredients)
 			{
-				this.RemoveItem(ingredient.itemData, ingredient.stackSize);
+				RemoveItem(ingredient.itemData, ingredient.stackSize);
 			}
-			this.AddItem(itemInfo);
+			AddItem(itemInfo);
 			return true;
 		}
 		else
@@ -281,7 +284,7 @@ public class InventoryManager : MonoBehaviour, ISaveManager
 	public void LoadData(GameData data)
 	{
 		currency = data.currency;
-
+		OnCurrencyChanged?.Invoke(currency);
 		var allItemData = GetAllItemData();
 
 		if (allItemData != null)
@@ -293,6 +296,10 @@ public class InventoryManager : MonoBehaviour, ISaveManager
 			foreach (var pair in data.stash)
 			{
 				AddItem(allItemData[pair.Key], pair.Value);
+			}
+			foreach (var id in data.equipments)
+			{
+				EquipItem(allItemData[id]);
 			}
 		}
 	}
@@ -313,6 +320,10 @@ public class InventoryManager : MonoBehaviour, ISaveManager
 			{
 				data.stash[item.itemData.itemId] = item.stackSize;
 			}
+		}
+		foreach (var item in equipmentItems)
+		{
+			data.equipments.Add(item.itemData.itemId);
 		}
 	}
 

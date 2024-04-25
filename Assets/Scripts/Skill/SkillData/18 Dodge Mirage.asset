@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be5d34b0610cb94ca999b9e1d670f05, type: 3}
   m_Name: 18 Dodge Mirage
   m_EditorClassIdentifier: 
+  skillId: e7c9d1358204aec48acc3ac517347eea
   skillName: Dodge Mirage
   skillIcon: {fileID: -2056414891, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  skillDescription: 
+  skillDescription: Create a mirage after dodge successfully.
   skillCoolDownTime: 0
   shortCut: 0
   prerequisiteSkills:

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MirageSkill : Skill
 {
@@ -22,15 +21,15 @@ public class MirageSkill : Skill
 	public bool isCloneAggresive;
 	public bool applyWeaponEffect;
 	[SerializeField] private UISkillTreeSlotController unlockAggresiveCloneButton;
-	[SerializeField] private UISkillTreeSlotController unlockCrystakMirageButton;
-	[SerializeField] private UISkillTreeSlotController unlockMutilpleMirageButton;
+	[SerializeField] private UISkillTreeSlotController unlockCrystalMirageButton;
+	[SerializeField] private UISkillTreeSlotController unlockMutipleMirageButton;
 
 	public void UseSkill(Transform _newTransform, Vector3 _offSet)
 	{
-		if (this.CanUseSkill())
+		if (CanUseSkill())
 		{
-			this.UseSkill();
-			this.CreateClone(_newTransform, _offSet);
+			UseSkill();
+			CreateClone(_newTransform, _offSet);
 		}
 	}
 
@@ -38,7 +37,7 @@ public class MirageSkill : Skill
 	{
 		if (createCrystalInsteadClone)
 		{
-			this.currentUltimateSkillCreateNum += ultimateSkillCreateNum;
+			currentUltimateSkillCreateNum += ultimateSkillCreateNum;
 			InvokeRepeating(nameof(CreateCrystal), 0, 0.1f);
 		}
 		else
@@ -51,63 +50,64 @@ public class MirageSkill : Skill
 
 	private void CreateCrystal()
 	{
-		Debug.Log(this.createTimes);
 		GameObject newClone = Instantiate(crystalObject, player.transform.position, Quaternion.identity);
-		newClone.GetComponent<CrystalController>().SetupCrystal(player.skill.crystalSkill.getCrystalDuration(), true, true, player.skill.blackHoleSkill.isReleasingSkill ? 1 : 0, null);
-		this.createTimes++;
-		if (this.createTimes > (player.skill.blackHoleSkill.isReleasingSkill ? currentUltimateSkillCreateNum : 1))
+		newClone.GetComponent<CrystalController>().SetupCrystal(player.skill.CrystalSkill.GetCrystalDuration(), true, true, player.skill.BlackHoleSkill.IsReleasingSkill ? 1 : 0, null);
+		createTimes++;
+		if (createTimes > (player.skill.BlackHoleSkill.IsReleasingSkill ? currentUltimateSkillCreateNum : 1))
 		{
 			CancelInvoke(nameof(CreateCrystal));
-			this.createTimes = 1;
-			this.currentUltimateSkillCreateNum = 0;
+			createTimes = 1;
+			currentUltimateSkillCreateNum = 0;
 		}
 	}
 
 	protected override void Awake()
 	{
 		base.Awake();
+		if (unlockCreateCloneButton != null)
+		{
+			var buttonController = unlockCreateCloneButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockCreateCloneSkill()
+			{
+				Unlocked = unlockCreateCloneButton.IsUnlocked();
+				damageMultiplier = 0.3f;
+			}
+			buttonController.OnUnlockedChanged += UnlockCreateCloneSkill;
+		}
+		if (unlockAggresiveCloneButton != null)
+		{
+			var buttonController = unlockAggresiveCloneButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockAggresiveClone()
+			{
+				isCloneAggresive = unlockAggresiveCloneButton.IsUnlocked();
+				damageMultiplier = 0.8f;
+				applyWeaponEffect = true;
+			}
+			buttonController.OnUnlockedChanged += UnlockAggresiveClone;
+		}
+		if (unlockCrystalMirageButton != null)
+		{
+			var buttonController = unlockCrystalMirageButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockCrystalMirage()
+			{
+				createCrystalInsteadClone = unlockCrystalMirageButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockCrystalMirage;
+		}
+		if (unlockMutipleMirageButton != null)
+		{
+			var buttonController = unlockMutipleMirageButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockMutipleMirage()
+			{
+				canDuplicate = unlockMutipleMirageButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockMutipleMirage;
+		}
 	}
 
 	protected override void Start()
 	{
 		base.Start();
-		if (this.unlockCreateCloneButton != null)
-		{
-			this.unlockCreateCloneButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.unlocked = this.unlockCreateCloneButton.IsUnlocked();
-				this.damageMultiplier = 0.3f;
-			});
-		}
-		if (this.unlockAggresiveCloneButton != null)
-		{
-			this.unlockAggresiveCloneButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.isCloneAggresive = this.unlockAggresiveCloneButton.IsUnlocked();
-				this.damageMultiplier = 0.8f;
-				this.applyWeaponEffect = true;
-			});
-		}
-		if (this.unlockCrystakMirageButton != null)
-		{
-			this.unlockCrystakMirageButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.createCrystalInsteadClone = this.unlockCrystakMirageButton.IsUnlocked();
-			});
-		}
-		if (this.unlockMutilpleMirageButton != null)
-		{
-			this.unlockMutilpleMirageButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.canDuplicate = this.unlockMutilpleMirageButton.IsUnlocked();
-			});
-		}
-	}
-
-	protected override void Update()
-	{
-		base.Update();
-
 	}
 
 }

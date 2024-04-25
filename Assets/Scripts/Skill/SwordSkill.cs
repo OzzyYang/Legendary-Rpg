@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 public enum SwordType
 {
 	Regular,
@@ -9,7 +7,6 @@ public enum SwordType
 	Pierce,
 	Spin
 }
-
 public class SwordSkill : Skill
 {
 	[SerializeField] private GameObject swordObject;
@@ -51,8 +48,8 @@ public class SwordSkill : Skill
 
 	public override bool CanUseSkill()
 	{
-		if (!unlocked) return false;
-		return player.sword == null || !player.sword.gameObject.activeSelf;
+		if (!Unlocked) return false;
+		return player.sword == null || !player.sword.activeSelf;
 	}
 
 	public override void UseSkill()
@@ -77,6 +74,61 @@ public class SwordSkill : Skill
 	protected override void Awake()
 	{
 		base.Awake();
+		if (unlockSwordButton != null)
+		{
+			var buttonController = unlockSwordButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockSword()
+			{
+				Unlocked = unlockSwordButton.IsUnlocked();
+				if (Unlocked) swordType = SwordType.Regular;
+			}
+			buttonController.OnUnlockedChanged += UnlockSword;
+		}
+		if (unlockTimeStopButton != null)
+		{
+			var buttonController = unlockTimeStopButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockTimeStop()
+			{
+				canTimeStop = unlockTimeStopButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockTimeStop;
+		}
+		if (unlockVulnerabilityButton != null)
+		{
+			var buttonController = unlockVulnerabilityButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockVulnerability()
+			{
+				canVulnerability = unlockVulnerabilityButton.IsUnlocked();
+			}
+			buttonController.OnUnlockedChanged += UnlockVulnerability;
+		}
+		if (unlockBouncySwordButton != null)
+		{
+			var buttonController = unlockBouncySwordButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockBouncySword()
+			{
+				if (buttonController.IsUnlocked()) swordType = SwordType.Bounce;
+			}
+			buttonController.OnUnlockedChanged += UnlockBouncySword;
+		}
+		if (unlockPierceSwordButton != null)
+		{
+			var buttonController = unlockPierceSwordButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockPierceSword()
+			{
+				if (buttonController.IsUnlocked()) swordType = SwordType.Pierce;
+			}
+			buttonController.OnUnlockedChanged += UnlockPierceSword;
+		}
+		if (unlockSpinSwordButton != null)
+		{
+			var buttonController = unlockSpinSwordButton.GetComponent<UISkillTreeSlotController>();
+			void UnlockSpinSword()
+			{
+				if (buttonController.IsUnlocked()) swordType = SwordType.Spin;
+			}
+			buttonController.OnUnlockedChanged += UnlockSpinSword;
+		}
 	}
 
 	protected override void Start()
@@ -84,50 +136,6 @@ public class SwordSkill : Skill
 		base.Start();
 		GenerateDot();
 		currentThrowForce = throwForce;
-
-		if (this.unlockSwordButton != null)
-		{
-			this.unlockSwordButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.unlocked = this.unlockSwordButton.IsUnlocked();
-				if (unlocked) this.swordType = SwordType.Regular;
-			});
-		}
-		if (this.unlockTimeStopButton != null)
-		{
-			this.unlockTimeStopButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.canTimeStop = this.unlockTimeStopButton.IsUnlocked();
-			});
-		}
-		if (this.unlockVulnerabilityButton != null)
-		{
-			this.unlockVulnerabilityButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.canVulnerability = this.unlockVulnerabilityButton.IsUnlocked();
-			});
-		}
-		if (this.unlockBouncySwordButton != null)
-		{
-			this.unlockBouncySwordButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.swordType = SwordType.Bounce;
-			});
-		}
-		if (this.unlockPierceSwordButton != null)
-		{
-			this.unlockPierceSwordButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.swordType = SwordType.Pierce;
-			});
-		}
-		if (this.unlockSpinSwordButton != null)
-		{
-			this.unlockSpinSwordButton.GetComponent<Button>().onClick.AddListener(() =>
-			{
-				this.swordType = SwordType.Spin;
-			});
-		}
 	}
 
 	protected override void Update()

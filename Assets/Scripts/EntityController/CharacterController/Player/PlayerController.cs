@@ -55,6 +55,7 @@ public class PlayerController : CharacterController
 	protected override void Awake()
 	{
 		base.Awake();
+		Debug.Log("Player Controller");
 		stateMachine = new PlayerStateMachine();
 		groundedState = new PlayerGroundedState(this, stateMachine as PlayerStateMachine, "isGrounded");
 		idleState = new PlayerIdleState(this, stateMachine as PlayerStateMachine, "isIdling");
@@ -99,7 +100,7 @@ public class PlayerController : CharacterController
 		{
 			if (isWallDetected()) return;
 			DashDirectionController(Input.GetAxisRaw("Horizontal"));
-			SkillManager.instance.dashSkill.UseSkill();
+			SkillManager.instance.DashSkill.UseSkill();
 		}
 
 		if (Input.GetKeyDown(KeyCode.R))
