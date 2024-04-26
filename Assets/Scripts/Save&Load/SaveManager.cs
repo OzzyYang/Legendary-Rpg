@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
 	public static SaveManager Instance { get; private set; }
 	[SerializeField] private string savedFileName;
 	[SerializeField] private bool encryptData;
+	[SerializeField] private bool needToSaveData = true;
+	[SerializeField] private bool needToLoadData = true;
 	private GameData gameData;
 	private List<ISaveManager> saveManagers;
 	private FileDataHandler dataHandler;
-
 
 	[ContextMenu("Delete Data")]
 	private void DeleteFileData()
@@ -34,17 +36,19 @@ public class SaveManager : MonoBehaviour
 
 		dataHandler = new FileDataHandler(Application.persistentDataPath, savedFileName, encryptData);
 		saveManagers = FindAllSaveManagers();
-		//LoadGame();
 	}
 
 	private void Start()
 	{
-		LoadGame();
+		Debug.Log(SceneManager.GetActiveScene().name);
+		if (needToLoadData) LoadGame();
 	}
 
 	public void NewGame()
 	{
+		DeleteFileData();
 		gameData = new GameData();
+
 	}
 
 	public void LoadGame()
@@ -61,9 +65,8 @@ public class SaveManager : MonoBehaviour
 		{
 			saveManager.LoadData(gameData);
 		}
-
 		Debug.Log("Game loaded!");
-		Debug.Log($"The currency is {gameData.currency}.");
+
 	}
 	public void SaveGame()
 	{
@@ -74,12 +77,11 @@ public class SaveManager : MonoBehaviour
 		}
 		dataHandler.Save(gameData);
 		Debug.Log("Game was saved!");
-		Debug.Log($"The currency is {gameData.currency}.");
 	}
 
 	private void OnApplicationQuit()
 	{
-		SaveGame();
+		if (needToSaveData) SaveGame();
 	}
 
 	private List<ISaveManager> FindAllSaveManagers()
@@ -88,4 +90,6 @@ public class SaveManager : MonoBehaviour
 		return new List<ISaveManager>(saveManagers);
 
 	}
+
+	public bool CheckForSavedFile() => dataHandler.Check();
 }

@@ -87,7 +87,7 @@ public class EquipmentData : ItemData
 	{
 		var result = new StringBuilder();
 
-		if (itemDescription.Length > 0 || haveEffect)
+		if (itemDescription != null || haveEffect)
 			result.Append("¡ñ Properties" + "\n");
 		result.Append(FormatContent() + "\n");
 		if (itemDescription.Length > 0)

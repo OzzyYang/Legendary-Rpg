@@ -28,7 +28,6 @@ public class Skill : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		Debug.Log(GetType());
 		UpdateFromSkillData();
 		player = PlayerManager.Instance.Player;
 	}

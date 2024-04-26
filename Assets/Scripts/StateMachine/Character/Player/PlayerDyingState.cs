@@ -12,6 +12,8 @@ public class PlayerDyingState : PlayerState
 	public override void Enter()
 	{
 		base.Enter();
+		UIManager.instance.PlayeEndScreen();
+
 	}
 
 	public override void Exit()

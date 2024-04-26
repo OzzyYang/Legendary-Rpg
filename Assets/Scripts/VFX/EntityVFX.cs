@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class EntityVFX : MonoBehaviour
+public class EntityVFX : VFX
 {
 	[SerializeField] private Material hitMaterial;
 	[SerializeField] private float hitFlashDuration;
@@ -19,9 +19,10 @@ public class EntityVFX : MonoBehaviour
 
 
 	// Start is called before the first frame update
-	void Start()
+	protected override void Start()
 	{
 		sR = GetComponent<SpriteRenderer>();
+
 		originMaterial = sR.material;
 		characterStats = GetComponentInParent<CharacterStats>();
 		hittedColor = new Color[2] { Color.white, Color.red };
@@ -31,7 +32,7 @@ public class EntityVFX : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	protected override void Update()
 	{
 
 	}
@@ -114,4 +115,5 @@ public class EntityVFX : MonoBehaviour
 		CancelInvoke(action.Method.Name);
 		sR.color = Color.white;
 	}
+
 }

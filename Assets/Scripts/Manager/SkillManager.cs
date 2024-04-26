@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillManager : MonoBehaviour, ISaveManager
+public class SkillManager : MonoBehaviour
 {
 	public static SkillManager instance;
 	public PlayerController player;
@@ -21,7 +21,6 @@ public class SkillManager : MonoBehaviour, ISaveManager
 		else
 		{
 			instance = this;
-			Debug.Log(GetType());
 			SkillList = new Dictionary<BasicSkillData, Skill>();
 			DashSkill = GetComponent<DashSkill>();
 			CloneSkill = GetComponent<MirageSkill>();
@@ -55,17 +54,4 @@ public class SkillManager : MonoBehaviour, ISaveManager
 	//	return result;
 	//}
 
-	public void LoadData(GameData data)
-	{
-		//foreach (var skillDataPair in data.skills)
-		//{
-
-		//}
-		Debug.Log("Skill data loaded!");
-	}
-
-	public void SaveData(ref GameData data)
-	{
-		Debug.Log("Skill data saved!");
-	}
 }

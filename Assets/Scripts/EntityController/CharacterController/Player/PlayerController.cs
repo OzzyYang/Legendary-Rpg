@@ -55,7 +55,6 @@ public class PlayerController : CharacterController
 	protected override void Awake()
 	{
 		base.Awake();
-		Debug.Log("Player Controller");
 		stateMachine = new PlayerStateMachine();
 		groundedState = new PlayerGroundedState(this, stateMachine as PlayerStateMachine, "isGrounded");
 		idleState = new PlayerIdleState(this, stateMachine as PlayerStateMachine, "isIdling");

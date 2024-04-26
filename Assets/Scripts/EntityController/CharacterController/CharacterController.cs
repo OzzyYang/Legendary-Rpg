@@ -64,8 +64,9 @@ public class CharacterController : MonoBehaviour
 
 	public virtual void BeDead()
 	{
-		stateMachine.ChangeState(this.dyingState);
-		this.isDead = true;
+		if (isDead) return;
+		stateMachine.ChangeState(dyingState);
+		isDead = true;
 	}
 
 	public virtual IEnumerator SlowCharacterFor(float _seconds)

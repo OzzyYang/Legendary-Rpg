@@ -11,8 +11,13 @@ public class DashSkill : Skill
 
 	public override void UseSkill()
 	{
-		if (CanUseSkill()) player.stateMachine.ChangeState(player.dashState);
-		base.UseSkill();
+		if (CanUseSkill())
+		{
+			player.stateMachine.ChangeState(player.dashState);
+			CoolDownTimer = skillCoolDownTime;
+			Debug.Log(GetType() + " Used.");
+		}
+
 	}
 
 	protected override void Awake()

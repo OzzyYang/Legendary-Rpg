@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f39f1da2558904eb1130e7d840a4d6, type: 3}
   m_Name: ArmuletData
   m_EditorClassIdentifier: 
+  itemId: d4db8a0d14d58eb44bd346242e4d74b0
   itemType: 1
   itemName: Armulet
   Icon: {fileID: -245851270, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
@@ -19,7 +20,8 @@ MonoBehaviour:
   ingredients: []
   dropChance: 100
   haveEffect: 0
-  effectData: {fileID: 0}
+  effectDatas: []
+  itemDescription: A armulet.
   equipmentType: 2
   strength:
     baseValue: 0
