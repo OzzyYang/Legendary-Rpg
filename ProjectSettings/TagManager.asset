@@ -18,7 +18,7 @@ TagManager:
   - Projectile
   - SkillEntity
   - Item
-  - 
+  - CheckPoint
   - 
   - 
   - 
@@ -54,6 +54,9 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 1105586723
+    locked: 0
+  - name: CheckPoint
+    uniqueID: 1514475501
     locked: 0
   - name: Player
     uniqueID: 3619439363

@@ -80,6 +80,7 @@ public class PlayerController : CharacterController
 		base.Start();
 		skill = SkillManager.instance;
 		stateMachine.Initialize(idleState);
+		transform.position = GameManager.Instance.LastCheckointPosition;
 		initialPos = transform.position;
 		RevertSlow();
 	}
