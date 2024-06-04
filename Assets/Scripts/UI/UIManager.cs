@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour, ISaveManager
 	[SerializeField] private UIVFX endScreen;
 	//[SerializeField] private TextMeshProUGUI endText;
 	public static UIManager instance;
-
 	//public UIVFX EndScreen { get { return endScreen; } private set { endScreen = value; } }
 
 	private void Awake()
@@ -55,6 +54,13 @@ public class UIManager : MonoBehaviour, ISaveManager
 				skillTreeSlot.SetSkillUnlockedIgnoreConditions(unlocked);
 			}
 		}
+		foreach (var item in data.volumeSettings)
+		{
+			if (menuPages.GetComponent<UIMenuPageController>().GetVolumeControllers().TryGetValue(item.Key, out UIVolumeController volumeController))
+			{
+				volumeController.AjustVolumeBySlider(volumeController.Slider.value = item.Value);
+			}
+		}
 	}
 
 	public void SaveData(ref GameData data)
@@ -63,6 +69,10 @@ public class UIManager : MonoBehaviour, ISaveManager
 		{
 			data.skills.Add(skillTreeSlot.Skill.skillId, skillTreeSlot.IsUnlocked());
 		};
+		foreach (var item in menuPages.GetComponent<UIMenuPageController>().GetVolumeControllers())
+		{
+			data.volumeSettings.Add(item.Key, item.Value.Slider.value);
+		}
 	}
 
 	public async void PlayeEndScreen()

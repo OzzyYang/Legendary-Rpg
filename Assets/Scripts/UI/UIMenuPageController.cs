@@ -31,6 +31,10 @@ public class UIMenuPageController : MonoBehaviour
 	private ItemData selectedItemInfo;
 	[SerializeField] private GameObject selectedPage;
 
+	[Header("Options page")]
+	[SerializeField] private UIVolumeController[] volumeControllers;
+
+
 	private void Awake()
 	{
 		InventoryManager.Instance.OnInventoryListChanged += UpdateInventorySlots;
@@ -295,6 +299,21 @@ public class UIMenuPageController : MonoBehaviour
 	}
 	#endregion
 
+
+	#region Options Page
+
+	public Dictionary<string, UIVolumeController> GetVolumeControllers()
+	{
+
+		var results = new Dictionary<string, UIVolumeController>();
+		if (volumeControllers == null || volumeControllers.Length <= 0) return results;
+		foreach (var item in volumeControllers)
+		{
+			results.Add(item.MixerParam, item);
+		}
+		return results;
+	}
+	#endregion
 	#region Item Tool Tip
 	public void ShowItemToolTip(ItemData itemInfo)
 	{

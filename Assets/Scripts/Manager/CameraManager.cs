@@ -10,7 +10,6 @@ public class CameraManager : MonoBehaviour
 	public GameObject player;
 	private Vector2 originalPosition;
 
-
 	private void Awake()
 	{
 		if (instance != null)
