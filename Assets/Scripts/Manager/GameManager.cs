@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour, ISaveManager
 		}
 	}
 
+	private void Start()
+	{
+		//AudioManager.insance.PlayBGMByIndex(0);
+	}
 
 
 	public void RestartGame()

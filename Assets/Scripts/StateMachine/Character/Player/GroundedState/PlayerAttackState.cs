@@ -27,6 +27,7 @@ public class PlayerAttackState : PlayerState
 		player.SetVelocity(player.attackMovement[attackCounter].x * player.facingDirection, player.attackMovement[attackCounter].y);
 
 		lastAttackTime = Time.time;
+		AudioManager.insance.PlaySFXByIndex(1);
 	}
 
 	public override void Exit()

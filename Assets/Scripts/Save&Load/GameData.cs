@@ -11,6 +11,8 @@ public class GameData
 	public SerializableDictionary<string, bool> skills;
 	public SerializableDictionary<string, bool> checkpoints;
 	public Vector2 lastCheckpointPosition;
+	//each volume setting is <AudioMixer Params, Volume Value>
+	public SerializableDictionary<string, float> volumeSettings;
 
 	public GameData()
 	{
@@ -21,6 +23,7 @@ public class GameData
 		skills = new SerializableDictionary<string, bool>();
 		checkpoints = new SerializableDictionary<string, bool>();
 		lastCheckpointPosition = new Vector2();
+		volumeSettings = new SerializableDictionary<string, float>();
 	}
 
 	public void ClearData()
@@ -32,5 +35,6 @@ public class GameData
 		skills.Clear();
 		checkpoints.Clear();
 		lastCheckpointPosition = new Vector2();
+		volumeSettings.Clear();
 	}
 }
